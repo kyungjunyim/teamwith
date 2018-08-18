@@ -31,8 +31,8 @@ public class ProfileController {
 	@Inject
 	MemberService memberService;
 
-	@RequestMapping(value = "/edit/{memberId}", method = RequestMethod.GET)
-	public String profileEditView(@PathVariable(value = "memberId") String memberId, Model model) {
+	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.GET)
+	public String profileEditView(@PathVariable(value = "memId") String memberId, Model model) {
 		try {
 			MemberVO mem = profileService.getMyInfo(memberId);
 
@@ -50,8 +50,8 @@ public class ProfileController {
 		return jspPath + "profileEdit";
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String profileEdit(MemberVO updateMemberInfo, 
+	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.POST)
+	public String profileEdit(@PathVariable(value = "memId")String memberId, MemberVO updateMemberInfo, 
 			String[] regionId, MemberSkillVO skill, Model model) {
 		try {
 			if (regionId == null) {

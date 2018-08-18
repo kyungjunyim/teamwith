@@ -100,9 +100,9 @@
 					<td id="role_name">개발역량</td>
 				</tr>
 				<c:forEach items="${memberSkills }" var="sk">
-					<c:if test="${applicationScope.skillList[sk.key][1]=='role-1'}">
+					<c:if test="${applicationScope.skillList[sk][1]=='role-1'}">
 						<tr>
-							<td class="profile_box_skill">${applicationScope.skillList[sk.key][0] }</td>
+							<td class="profile_box_skill">${applicationScope.skillList[sk][0] }</td>
 						</tr>
 					</c:if>
 				</c:forEach>
@@ -111,9 +111,9 @@
 					<td id="role_name">디자인역량</td>
 				</tr>
 				<c:forEach items="${memberSkills }" var="sk">
-					<c:if test="${applicationScope.skillList[sk.key][1]=='role-2'}">
+					<c:if test="${applicationScope.skillList[sk][1]=='role-2'}">
 						<tr>
-							<td class="profile_box_skill">${applicationScope.skillList[sk.key][0] }</td>
+							<td class="profile_box_skill">${applicationScope.skillList[sk][0] }</td>
 						</tr>
 					</c:if>
 				</c:forEach>
@@ -121,9 +121,9 @@
 					<td id="role_name">기획역량</td>
 				</tr>
 				<c:forEach items="${memberSkills }" var="sk">
-					<c:if test="${applicationScope.skillList[sk.key][1]=='role-3'}">
+					<c:if test="${applicationScope.skillList[sk][1]=='role-3'}">
 						<tr>
-							<td class="profile_box_skill">${applicationScope.skillList[sk.key][0] }</td>
+							<td class="profile_box_skill">${applicationScope.skillList[sk][0] }</td>
 						</tr>
 					</c:if>
 				</c:forEach>
@@ -131,9 +131,9 @@
 					<td id="role_name">기타역량</td>
 				</tr>
 				<c:forEach items="${memberSkills }" var="sk">
-					<c:if test="${applicationScope.skillList[sk.key][1]=='role-4'}">
+					<c:if test="${applicationScope.skillList[sk][1]=='role-4'}">
 						<tr>
-							<td class="profile_box_skill">${applicationScope.skillList[sk.key][0] }</td>
+							<td class="profile_box_skill">${applicationScope.skillList[sk][0] }</td>
 						</tr>
 					</c:if>
 				</c:forEach>
