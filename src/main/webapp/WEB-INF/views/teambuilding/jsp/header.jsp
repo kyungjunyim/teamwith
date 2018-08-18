@@ -8,22 +8,17 @@
 <body>
 	<nav class="navbar navbar-inverse fixed-top menu_bar">
 		<div class="container-fluid">
-			<form action="home.do" method="post" class="to_home">
 				<div class="navbar-header">
-					<img src="/resources/image/logo/logoBox.png" class="title_logo_box"> <img
-						src="/resources/image/logo/logoText.png" class="title_logo_text">
+					<a href="/"><img src="/resources/image/logo/logoBox.png" class="title_logo_box"></a>
+					<a href="/"><img src="/resources/image/logo/logoText.png" class="title_logo_text"></a>
 				</div>
-			</form>
 			<ul class="nav nav_menu_list">
 				<li class="nav_menu">
-					<a class="nav-link menu_link" href="searchTeam.do">팀</a>
+					<a class="nav-link menu_link" href="teamSearch">팀</a>
 				</li>
-				<li class="nav_menu"><a class="nav-link menu_link"
-					href="/teambuilding/jsp/member.jsp">회원</a></li>
-				<li class="nav_menu"><a class="nav-link menu_link"
-					href="searchPortfolio.do">포트폴리오</a></li>
-				<li class="nav_menu"><a class="nav-link menu_link commingSoon">공모전</a>
-				</li>
+				<li class="nav_menu"><a class="nav-link menu_link" href="/teambuilding/jsp/member.jsp">회원</a></li>
+				<li class="nav_menu"><a class="nav-link menu_link" href="searchPortfolio.do">포트폴리오</a></li>
+				<li class="nav_menu"><a class="nav-link menu_link commingSoon">공모전</a></li>
 			</ul>
 		</div>
 	</nav>

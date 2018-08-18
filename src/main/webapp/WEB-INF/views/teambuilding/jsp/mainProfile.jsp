@@ -12,8 +12,7 @@
 	</div>
 	<div class="row profile_info">
 		<div class="profile_text_name">${sessionScope.memberSimpleVO.memberName }</div>
-		<form action="home.do" method="post">
-			<input type="hidden" name="job" value="logout">
+		<form action="logout" method="get">
 			<button type="submit" class="btn_logout">로그아웃</button>
 		</form>
 	</div>
@@ -57,10 +56,7 @@
 		</div>
 	</div>
 	<div class="row profile_row profile_row_btn">
-		<form action="polog.do" method="post">
-			<input type="hidden" name="memberId" value="${sessionScope.memberSimpleVO.memberId }">
-			<button type="submit" class="btn btn-md btn_submit">나의 폴로그</button>
-		</form>
+			<button type="submit" class="btn btn-md btn_submit" onclick="location = '/${sessionScope.memberSimpleVO.memberId }'">나의 폴로그</button>
 	</div>
 </body>
 </html>

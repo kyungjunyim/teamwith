@@ -22,9 +22,7 @@
 	<c:if test="${not empty bestMemberList }">
 	<div class="row best_member_row_whole">
 		<c:forEach items="${bestMemberList }" var="bestMember" begin="0" end="3">
-		<form action="polog.do" method="post" id="bestMemberForm${bestMember.memberId }">
-			<input type="hidden" name="memberId" value="${bestMember.memberId }">
-			<div class="col-xs-6 main_content_col" onclick="$('#bestMemberForm${bestMember.memberId }').submit()">
+			<div class="col-xs-6 main_content_col" onclick="location = '/${bestMember.memberId }'">
 				<div class="row member_image_row">
 					<img src="${bestMember.memberPic }" class="member_image">
 				</div>
@@ -37,7 +35,6 @@
 					</div>
 				</div>
 			</div>
-		</form>
 		</c:forEach>
 	</div>
 	</c:if>

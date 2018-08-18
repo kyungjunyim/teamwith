@@ -44,9 +44,7 @@
 			<c:if test="${status.index % 2 == 0 }">
 				<div class="row main_row_whole">
 			</c:if>
-			<form action="teamDetail.do" method="post" id="recentTeamForm${recommendedTeam.teamId }">
-				<input type="hidden" name="teamId" value="${recommendedTeam.teamId }">
-				<div class="col-xs-6 main_content_row" onclick="$('#recommendTeamForm${recommendedTeam.teamId }').submit();">
+				<div class="col-xs-6 main_content_row" onclick="location = 'teamSearch/${fn:substringAfter(recommendedTeam.teamId, 'team-') }'">
 					<div class="row main_content">
 						<div class="col-xs-6 main_image_col">
 							<img src="${recommendedTeam.teamPic }" class="main_image">
@@ -64,7 +62,6 @@
 						</div>
 					</div>
 				</div>
-			</form>
 			<c:if test="${status.index % 2 != 0 }">
 				</div>
 			</c:if>
