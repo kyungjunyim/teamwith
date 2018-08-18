@@ -8,9 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/teamwith15/css/bootstrap.min.css">
-<link rel="stylesheet" href="/teamwith15/teambuilding/css/frame.css">
-<link rel="stylesheet" href="/teamwith15/teambuilding/css/myTeam.css">
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/teambuilding/css/frame.css">
+<link rel="stylesheet" href="/resources/teambuilding/css/myTeam.css">
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -53,7 +53,7 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<h5 class="modal-title text_orange"	id="exampleModalLongTitle">
-													<img src="/teamwith15/image/logo/logoText.png" class="title_logo_text">
+													<img src="/resources/image/logo/logoText.png" class="title_logo_text">
 												</h5>
 											</div>
 											<div class="modal-body modal_text">
@@ -107,7 +107,7 @@
 	</div>
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/teamwith15/js/bootstrap.min.js"></script>
-<script src="/teamwith15/teambuilding/js/frame.js"></script>
-<script src="/teamwith15/teambuilding/js/myTeam.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/teambuilding/js/frame.js"></script>
+<script src="/resources/teambuilding/js/myTeam.js"></script>
 </html>

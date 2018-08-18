@@ -6,10 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>팀 상세보기</title>
-<link rel="stylesheet" href="/teamwith15/css/bootstrap.min.css">
-<link rel="stylesheet" href="/teamwith15/teambuilding/css/frame.css">
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/teambuilding/css/frame.css">
 <link rel="stylesheet"
-	href="/teamwith15/teambuilding/css/searchPortfolio.css">
+	href="/resources/teambuilding/css/searchPortfolio.css">
 
 </head>
 <body>
@@ -53,6 +53,6 @@
 	</div>
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="/teamwith15/js/bootstrap.min.js"></script>
-<script src="/teamwith15/teambuilding/js/frame.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/teambuilding/js/frame.js"></script>
 </html>

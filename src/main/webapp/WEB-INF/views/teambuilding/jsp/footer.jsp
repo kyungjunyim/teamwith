@@ -6,7 +6,7 @@
 		<div class="col footer_col_whole">
 			<div class="row footer_row">
 				<div class="col footer_col">
-					<img src="/teamwith15/image/logo/teamLogoText.png" class="footer_logo_text">
+					<img src="/resources/image/logo/teamLogoText.png" class="footer_logo_text">
 				</div>
 				<div class="col footer_col footer_col_text">
 					<span>렉토피아 전문가 과정 16기</span><br/>

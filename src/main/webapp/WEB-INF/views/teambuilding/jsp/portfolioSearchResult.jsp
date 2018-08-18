@@ -24,7 +24,7 @@
 			<div class="col-xs-6 portfolio_search_content_row">
 				<div class="row portfolio_search_content">
 					<div class="col-xs-6 portfolio_search_image_col">
-						<img src="/teamwith15/image/portfolio/${portfolio.portfolioId }.jpg"
+						<img src="/resources/image/portfolio/${portfolio.portfolioId }.jpg"
 							class="portfolio_search_image">
 					</div>
 					<div class="col-xs-6 portfolio_search_content_text">
