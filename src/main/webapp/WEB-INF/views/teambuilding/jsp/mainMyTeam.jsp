@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +25,7 @@
 	<c:if test="${not empty myTeamList }">
 	<div class="row main_row_whole">
 		<c:forEach items="${myTeamList }" begin="0" end="1" var="myTeam" varStatus="status">
-		<form action="teamDetail.do" method="post" id="myTeamForm${myTeam.teamId }">
-			<input type="hidden" name="teamId" value="${myTeam.teamId }">
+		<form action="teamSearch/${fn:substringAfter(myTeam.teamId, 'team-') }" method="get" id="myTeamForm${myTeam.teamId }">
 			<div class="col-xs-6 main_content_row" onclick="$('#myTeamForm${myTeam.teamId }').submit()">
 				<div class="row main_content">
 					<div class="col-xs-6 main_image_col">

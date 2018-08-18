@@ -33,6 +33,7 @@
 			<mapping path="/" />
 			<mapping path="/team/*" />
 			<mapping path="/teamInfo/*" />
+			<mapping path="/teamSearch" />
 			<mapping path="/teamSearch/*" />
 			<mapping path="/application/*" />
 			<mapping path="/login" />
