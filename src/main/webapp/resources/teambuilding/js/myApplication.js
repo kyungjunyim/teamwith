@@ -1,4 +1,4 @@
-$(".btn_apply_cancel").on("click", function(e) {
+/* $(".btn_apply_cancel").on("click", function(e) {
 	var applicationIdStr = $(this).val();
 	$.ajax({
 		type: 'post',
@@ -15,8 +15,8 @@ $(".btn_apply_cancel").on("click", function(e) {
 			}
 		}
 	});
-});
+});*/
 
 function clickTrEvent(trObj) {
-	$("#form" + trObj.id).submit();
+	location = "/teamSearch/" + trObj.id;
 }
