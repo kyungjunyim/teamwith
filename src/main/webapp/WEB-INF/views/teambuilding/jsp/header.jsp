@@ -10,8 +10,8 @@
 		<div class="container-fluid">
 			<form action="home.do" method="post" class="to_home">
 				<div class="navbar-header">
-					<img src="/teamwith15/image/logo/logoBox.png" class="title_logo_box"> <img
-						src="/teamwith15/image/logo/logoText.png" class="title_logo_text">
+					<img src="/resources/image/logo/logoBox.png" class="title_logo_box"> <img
+						src="/resources/image/logo/logoText.png" class="title_logo_text">
 				</div>
 			</form>
 			<ul class="nav nav_menu_list">
@@ -39,7 +39,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">
-						<img src="/teamwith15/image/logo/logoText.png" class="title_logo_text">
+						<img src="/resources/image/logo/logoText.png" class="title_logo_text">
 					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
