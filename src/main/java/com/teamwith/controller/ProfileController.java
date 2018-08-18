@@ -1,8 +1,6 @@
 package com.teamwith.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.teamwith.service.MemberService;
 import com.teamwith.service.ProfileService;
-import com.teamwith.vo.MemberProjectCategoryVO;
 import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.MemberTendencyVO;
 import com.teamwith.vo.MemberVO;
@@ -53,39 +50,39 @@ public class ProfileController {
 		return jspPath + "profileEdit";
 	}
 
-	@RequestMapping(value = "/edit/{memberId}", method = RequestMethod.POST)
-	public String profileEdit(MemberVO updateMemberInfo, String[] regionId, Model model) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String profileEdit(MemberVO updateMemberInfo, 
+			String[] regionId, MemberSkillVO skill, Model model) {
 		try {
-			System.out.println(regionId);
+			if (regionId == null) {
+				System.out.println("region null");
+			} else {
+				System.out.println(regionId.length);
+				System.out.println(updateMemberInfo.getMemberId());
+				System.out.println(skill);
+			}
+
 			/* memberInfo */
-			profileService.updateMemberInfo(updateMemberInfo, null);
-/*
-			// project category 
-			MemberProjectCategoryVO pcVO = new MemberProjectCategoryVO(memberId, categories);
-			memberService.updateMemberProjectCategory(pcVO);
-
-			// skill 
-			Map<String, String> skillMap = new HashMap<String, String>();
-			if (skills != null) {
-				for (String sk : skills) {
-					System.out.println(sk);
-					skillMap.put(sk, "1");
-				}
-			}
-			memberService.updateMemberSkill(new MemberSkillVO(memberId, skillMap));
-
-			// tendency 
-			Map<String, String> tdMap = new HashMap<String, String>();
-			for (int i = 1; i <= 5; i++) {
-				tdMap.put("tendency-", tendencies[i - 1]);
-			}
-			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
-			profileService.updateMemberTendency(memberTendency);
-*/
+			//profileService.updateMemberInfo(updateMemberInfo, null);
+			/*
+			 * // project category MemberProjectCategoryVO pcVO = new
+			 * MemberProjectCategoryVO(memberId, categories);
+			 * memberService.updateMemberProjectCategory(pcVO);
+			 * 
+			 * // skill Map<String, String> skillMap = new HashMap<String, String>(); if
+			 * (skills != null) { for (String sk : skills) { System.out.println(sk);
+			 * skillMap.put(sk, "1"); } } memberService.updateMemberSkill(new
+			 * MemberSkillVO(memberId, skillMap));
+			 * 
+			 * // tendency Map<String, String> tdMap = new HashMap<String, String>(); for
+			 * (int i = 1; i <= 5; i++) { tdMap.put("tendency-", tendencies[i - 1]); }
+			 * MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
+			 * profileService.updateMemberTendency(memberTendency);
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/" + jspPath + "memberId";
+		return "redirect:/" + updateMemberInfo.getMemberId();
 
 	}
 
