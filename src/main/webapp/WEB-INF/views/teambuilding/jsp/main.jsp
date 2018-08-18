@@ -51,4 +51,10 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/teambuilding/js/frame.js"></script>
+<script>
+	var loginResult = "${loginResult }";
+	if(loginResult == 'false') {
+		alert("로그인 실패!");
+	}
+</script>
 </html>
