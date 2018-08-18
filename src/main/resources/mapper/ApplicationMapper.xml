@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.ApplicationDAO">
+	<resultMap id="application" type="ApplicationDTO">
+		<id property="applicationId" column="application_id" jdbcType="VARCHAR"/>
+		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
+		<id property="applicationDate" column="application_date" jdbcType="DATE"/>
+		<id property="applicationStatus" column="application_status" jdbcType="INTEGER"/>
+		<id property="applicationFreewriting" column="application_freewriting" jdbcType="VARCHAR"/>
+		<id property="teamId" column="team_id" jdbcType="VARCHAR"/>
+		<id property="roleId" column="role_id" jdbcType="VARCHAR"/>
+	</resultMap>
+	<!-- 지원 내역 추가하기 -->
+	<insert id="addApplication" parameterType="ApplicationDTO" >
+		insert into application_tb (application_id,member_id,application_freewriting,team_id,role_id,application_date,application_status) values (#{applicationId},#{memberId},#{applicationFreewriting},#{teamId},#{roleId},sysdate,1)
+	</insert>
+	<!-- 지원 내역 삭제하기 (아마 미사용) -->
+	<delete id="removeApplicationByApplicationId" parameterType="string">
+		delete from application_tb where application_id=#{applicationId}
+	</delete>
+	<!-- 지원 상태 수정하기 -->
+	<update id="updateApplicationStatusByApplicationId" parameterType="ApplicationDTO">
+		update application_tb set application_status=#{applicationStatus} where application_id=#{applicationId}
+	</update>
+	<!-- application_tb의 모든 속성 수정 -->
+	<update id="updateApplicationAll" parameterType="ApplicationDTO">
+		update application_tb set application_id=#{applicationId}, member_id=#{memberId}, application_date=#{appilcationDate}, application_status=#{appilcationStatus}, application_freewriting=#{applicationFreewriting}, team_id=#{teamId}, role_id=#{roleId} where application_id=#{applicationId}
+	</update>
+	<!-- application_id로 하나의 레코드 찾기 -->
+	<select id="searchApplicationByApplicationId" parameterType="string" resultMap="application">
+		select * from application_tb where application_id=#{applicationId}
+	</select>
+	<!-- 특정 회원의 지원 내역 찾기 -->
+	<select id="searchApplicationByMemberId" parameterType="string" resultMap="application">
+		select * from application_tb where member_id=#{memberId}
+	</select>
+	<!-- 특정 팀에 지원한 지원내역 찾기 -->
+	<select id="searchApplicationByTeamId" parameterType="string" resultMap="application">
+		select * from application_tb where team_id=#{teamId}
+	</select>
+	<!-- 모든 레코드 불러오기 -->
+	<select id="searchApplicationAll" resultMap="application">
+		select * from application_tb
+	</select>
+	<!-- application_id 모두 가져오기 -->
+	<select id="getApplicationId" resultType="string">
+		select application_id from application_tb
+	</select>
+</mapper>

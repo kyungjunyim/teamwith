@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.TeamSimpleDAO">
+	<resultMap type="TeamSimpleVO" id="result">
+		<id property="teamId" column="team_id" />
+		<id property="teamPic" column="team_pic" />
+		<id property="teamProjectName" column="team_project_name" />
+		<id property="projectCategoryId" column="project_category_id" />
+		<id property="teamName" column="team_name" />
+		<id property="teamEndDate" column="team_end_date" />
+		<id property="teamUpdateDate" column="team_update_date" />
+		<id property="memberId" column="member_id" />
+		<id property="memberName" column="member_name" />
+	</resultMap>
+	<!-- 최근 등록 팀 조회 -->
+	<select id="searchRecentTeamSimple" resultMap="result">
+		SELECT team_id, team_pic, team_project_name, project_category_id, team_name, team_end_date, team_update_date, member_id, member_name
+		FROM (
+		SELECT ROWNUM as rnum, team_id, team_pic, team_project_name, project_category_id, team_name, team_end_date, team_update_date, member_id, member_name 
+		FROM team_simple_view
+		ORDER BY team_update_date DESC )
+		WHERE rnum <![CDATA[>=]]> #{page} AND rnum <![CDATA[<]]> #{page} + #{perPageNum} 
+	</select>
+	<!-- 나의 팀 조회 -->
+	<select id="searchMyTeamSimple" parameterType="string" resultMap="result">
+		select * from team_simple_view where member_id=#{memberId} order by team_update_date desc
+	</select>
+	<!-- 모든 팀 간략 정보 불러오기 -->
+	<select id="searchTeamSimpleAll" resultMap="result">
+		select * from team_simple_view
+	</select>
+	
+	<select id="searchTeamSimpleAllByMemberId" parameterType="map" resultMap="result">
+		SELECT team_id, team_pic, team_project_name, project_category_id, team_name, team_end_date, team_update_date, member_id, member_name
+		FROM (
+		SELECT ROWNUM as rnum, team_id, team_pic, team_project_name, project_category_id, team_name, team_end_date, team_update_date, member_id, member_name
+		FROM team_simple_view
+		WHERE member_id = #{memberId}
+		ORDER BY team_update_date DESC )
+		WHERE rnum <![CDATA[>=]]> #{page} AND rnum <![CDATA[<]]> #{page} + #{perPageNum}
+	</select>
+	
+	<select id="searchTeamSimpleAllByTeamId" parameterType="Criteria"  resultMap="result">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM team_simple_view
+		WHERE
+		]]>
+		team_id IN 
+		<foreach item="teamId" collection="criteria.teamIdList" index="index" open="(" separator="," close=")">
+		#{teamId}
+		</foreach>
+		<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+	
+	<select id="searchTeamSimple" resultMap="result">
+		SELECT *
+		FROM team_simple_view
+		WHERE team_id = #{teamId}
+	</select>
+</mapper>
