@@ -28,8 +28,8 @@ public class TeamController {
 	@RequestMapping(value="/remove/{teamId}",method=RequestMethod.GET)
 	public String removeTeam(HttpSession session,@PathVariable("teamId") String teamId ) {
 		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
-		//너가 팀장이니? 를 검사해야한다. 파라미터로 팀장 아이디를 넘겨주면 좋겠다.
-		teamId="team_id-"+teamId;
+		//�꼫媛� ���옣�씠�땲? 瑜� 寃��궗�빐�빞�븳�떎. �뙆�씪誘명꽣濡� ���옣 �븘�씠�뵒瑜� �꽆寃⑥＜硫� 醫뗪쿋�떎.
+		teamId="team-"+teamId;
 		try {
 			teamService.removeTeam(teamId);
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class TeamController {
 	
 	@RequestMapping(value="/close/{teamId}",method=RequestMethod.GET)
 	public String closeTeam(@PathVariable("teamId") String teamId,RedirectAttributes rttr) {
-		String key="team_id-"+teamId;
+		String key="team-"+teamId;
 		try {
 			teamService.changeTeamStatus(1, key);
 		} catch (Exception e) {

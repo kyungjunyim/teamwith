@@ -19,7 +19,7 @@
 				</label>
 			</div>
 			<hr class="team_regist_hr">
-			<form id="registForm" action="./teamRegister.do" method="post" class="team_regist_whole" enctype="multipart/form-data">
+			<form id="registForm" action="register" method="post" class="team_regist_whole">
 				<c:if test="${empty teamInfo }">
 					<input type="hidden" name="job" value="addTeam">
 				</c:if>
@@ -212,7 +212,7 @@
 			<div class="col-xs-6 team_regist_form_col team_regist_form_text">FAQ
 				Question</div>
 			<div class="col-xs-6 team_regist_form_col  team_regist_form_input">
-				<input name="faqQuestion" type="text"
+				<input name="faqQuestions" type="text"
 					class="form-control team_regist_form_inputbox">
 			</div>
 		</div>
@@ -220,7 +220,7 @@
 			<div class="col-xs-6 team_regist_form_col team_regist_form_text">FAQ
 				Answer</div>
 			<div class="col-xs-6 team_regist_form_col  team_regist_form_input">
-				<input name="faqAnswer" type="text"
+				<input name="faqAnswers" type="text"
 					class="form-control team_regist_form_inputbox">
 				<button type="button" class="btn btn-md team_regist_btn_color"
 					id="btn_remove_faq" onclick="remove_faq(this)">삭제하기</button>
@@ -241,7 +241,7 @@
 			<div class="col-xs-6 team_regist_form_col team_regist_form_text">간단
 				면접 질문</div>
 			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
-				<input name="interviewQuestionContent" type="text"
+				<input name="interviewQuestionContents" type="text"
 					class="form-control team_regist_form_inputbox">
 				<button type="button" class="btn btn-md team_regist_btn_color"
 					id="btn_remove_interview" onclick="remove_interview(this)">삭제하기</button>
