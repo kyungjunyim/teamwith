@@ -3,6 +3,8 @@ package com.teamwith.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -21,12 +23,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.teamwith.dto.InterviewQuestionDTO;
+import com.teamwith.service.ApplicationService;
 import com.teamwith.service.MemberService;
 import com.teamwith.service.TeamService;
 import com.teamwith.util.Criteria;
+import com.teamwith.vo.FaqVO;
 import com.teamwith.vo.MemberSearchVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberSkillVO;
+import com.teamwith.vo.RecruitVO;
+import com.teamwith.vo.TeamDetailVO;
 import com.teamwith.vo.TeamRateVO;
 import com.teamwith.vo.TeamSimpleVO;
 
@@ -38,6 +45,8 @@ public class TeamSearchController {
 	private TeamService teamService;
 	@Inject
 	private MemberService memberService;
+	@Inject
+	private ApplicationService applicationService;
 	@Inject
 	private MemberSimpleVO memberSimpleVO;
 
@@ -57,8 +66,49 @@ public class TeamSearchController {
 	}
 	
 	@RequestMapping(value="{teamId}", method=RequestMethod.GET)
-	public void teamSearch(@PathVariable("teamId") String teamId, HttpSession session, Model model) throws Exception {
-		System.out.println("?");
+	public String teamSearch(@PathVariable("teamId") String teamId, HttpSession session, Model model) throws Exception {
+		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		teamId = "team-" + teamId;
+		
+		boolean canApply = true;
+		TeamDetailVO teamInfo = teamService.getTeamInfo(teamId);
+		model.addAttribute("teamInfo", teamInfo);
+		
+		List<RecruitVO> recruitInfo = teamService.getRecruitInfo(teamId);
+		model.addAttribute("recruitInfo", recruitInfo);
+		
+		List<InterviewQuestionDTO> interviewInfo = applicationService.getInterviewQuestion(teamId);
+		model.addAttribute("interviewInfo", interviewInfo);
+
+		List<MemberSearchVO> teamMembers = applicationService.getTeamMember(teamId);
+		model.addAttribute("teamMembers", teamMembers);
+		
+		for (MemberSearchVO teamMember : teamMembers) {
+			if (teamMember.getMemberId().equals(memberSimpleVO.getMemberId())) {
+				canApply = false;
+			}
+		}
+		
+		model.addAttribute("canApply", canApply);
+		
+		List<FaqVO> faqInfo = teamService.getFaq(teamId);
+		model.addAttribute("faqInfo", faqInfo);
+		
+		String teamEndDate = teamInfo.getTeamEndDate();
+		int endYear = Integer.parseInt(teamEndDate.substring(0, 4));
+		int endMonth = Integer.parseInt(teamEndDate.substring(5, 7));
+		int endDate = Integer.parseInt(teamEndDate.substring(8, 10));
+		GregorianCalendar endDay = new GregorianCalendar();
+		endDay.set(endYear, endMonth, endDate);
+		GregorianCalendar today = new GregorianCalendar();
+		Date oneMonthAgo = today.getTime();
+		oneMonthAgo.setMonth(oneMonthAgo.getMonth() + 1);
+		today.setTime(oneMonthAgo);
+		long dDay = (today.getTimeInMillis() / (24 * 60 * 60 * 1000))
+				- (endDay.getTimeInMillis() / (24 * 60 * 60 * 1000));
+		model.addAttribute("dDay", dDay);
+		
+		return "teambuilding/jsp/teamDetail";
 	}
 
 	private List<TeamSimpleVO> setRecentTeam() throws Exception {
