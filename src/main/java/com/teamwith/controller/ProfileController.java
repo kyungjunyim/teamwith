@@ -85,7 +85,7 @@ public class ProfileController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/" + jspPath + "memberId";
+		return "redirect:/" + jspPath + "pologMain";
 
 	}
 
