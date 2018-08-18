@@ -12,7 +12,8 @@ import com.teamwith.service.TeamService;
 import com.teamwith.vo.TeamDetailVO;
 
 @Controller
-@RequestMapping(value="/teamInfo",method= {RequestMethod.GET,RequestMethod.POST})
+@RequestMapping(value="/teamInfo")
+
 public class TeamInfoController {
 	@Inject
 	private TeamService teamService;

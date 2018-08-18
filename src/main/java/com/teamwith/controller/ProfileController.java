@@ -12,7 +12,7 @@ public class ProfileController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/.", method = RequestMethod.GET)
 	public String home(Model model) {
 		
 		return "home";
