@@ -190,14 +190,12 @@ public class TeamSearchController {
 		}
 
 		List<String> skillList = new ArrayList<String>();
-		Map<String, String> skillMap = memberSkillVO.getSkill();
-		Iterator<String> iterator = skillMap.keySet().iterator();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-			skillList.add(key);
+		String[] skillMap = memberSkillVO.getSkill();
+		
+		for(String skill : skillMap) {
+			skillList.add(skill);
 		}
-
+		
 		int skillSize = skillList.size();
 
 		Criteria skillCri = new Criteria();
