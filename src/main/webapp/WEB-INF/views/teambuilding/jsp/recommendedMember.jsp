@@ -21,13 +21,13 @@
 		<form action="polog.do" method="post" id="teamMember1">
 			<input type="hidden" name="memberId" value="hwang">				
 		<div id="teamMember" class="row team_detail_row_detail team_detail_row_text team_detail_hover_opacity team_detail_content_interval team_detail_leader_effect" onclick="$('#teamMember1').submit()">
-			<img src="/teamwith15/image/member/hwang.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">조란 기획자 </label><label class="text_orange team_detail_img_small_text">일치율: 89%</label>
+			<img src="/resources/image/member/hwang.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">조란 기획자 </label><label class="text_orange team_detail_img_small_text">일치율: 89%</label>
 		</div>
 		</form>
 		<form action="/teamwith/polog/jsp/polog.do" method="post" id="teamMember2">
 			<input type="hidden" name="memberId" value="kim">
 		<div class="row team_detail_row_detail team_detail_row_text team_detail_hover_opacity team_detail_content_interval team_detail_leader_effect" onclick="$('#teamMember2').submit()">
-			<img src="/teamwith15/image/member/kim.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">임경준 디자이너 </label><label class="text_orange team_detail_img_small_text">일치율: 13%</label>
+			<img src="/resources/image/member/kim.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">임경준 디자이너 </label><label class="text_orange team_detail_img_small_text">일치율: 13%</label>
 		</div>
 		</form>
 	</div>

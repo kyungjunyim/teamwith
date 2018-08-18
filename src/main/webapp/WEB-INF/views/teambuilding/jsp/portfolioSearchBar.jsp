@@ -19,7 +19,7 @@
 </script>
 </head>
 <body>
-	<form action="/teamwith15/searchPortfolio.do" method="post" id="portfolioSearch">
+	<form action="/searchPortfolio.do" method="post" id="portfolioSearch">
 	<input type="hidden" name="page" value="1">
 	<input type="hidden" name="perPageNum" value="4">
 		<div class="row portfolio_search_layout ">

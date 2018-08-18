@@ -26,6 +26,7 @@ import com.teamwith.vo.MemberVO;
 public class ProfileController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
+
 	String jspPath = "polog/jsp/";
 
 	@Inject
@@ -85,6 +86,7 @@ public class ProfileController {
 			e.printStackTrace();
 		}
 		return "redirect:/" + jspPath + "pologMain";
+
 	}
 
 }
