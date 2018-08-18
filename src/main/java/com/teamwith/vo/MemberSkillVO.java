@@ -12,60 +12,51 @@ import com.teamwith.dto.MemberSkillDTO;
 @Component
 public class MemberSkillVO {
 	private String memberId;
-	private Map<String, String> skill;
+	private String[] skill;
 
 	public List<MemberSkillDTO> toDTO() {
 		List<MemberSkillDTO> result = new ArrayList<MemberSkillDTO>();
-		for (String key : skill.keySet()) {
-			MemberSkillDTO dto = new MemberSkillDTO(memberId, key, Integer.parseInt(skill.get(key)));
+		for (String key : skill) {
+			MemberSkillDTO dto = new MemberSkillDTO(memberId, key);
 			result.add(dto);
 		}
 		return result;
 	}
 
 	public MemberSkillVO() {
-		super();
-		skill = new HashMap<String, String>();
+
 	}
 
 	public MemberSkillVO(List<MemberSkillDTO> dto) {
-		this();
 		if (dto != null && !dto.isEmpty()) {
 			memberId = dto.get(0).getMemberId();
-			for (MemberSkillDTO s : dto) {
-				addSkill(s.getSkillId(), s.getSkillLevel() + "");
+			skill = new String[dto.size()];
+			for (int i = 0; i < dto.size(); i++) {
+				skill[i] = dto.get(i).getSkillId();
 			}
 		}
 	}
 
-	public MemberSkillVO(String memberId, Map<String, String> skill) {
+	public MemberSkillVO(String memberId, String[] skill) {
 		super();
 		this.memberId = memberId;
 		this.skill = skill;
 	}
 
-	public String getMemberId() {
+	public final String getMemberId() {
 		return memberId;
 	}
 
-	public Map<String, String> getSkill() {
+	public final String[] getSkill() {
 		return skill;
 	}
 
-	public void setMemberId(String memberId) {
+	public final void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
-	public void setSkill(Map<String, String> skill) {
+	public final void setSkill(String[] skill) {
 		this.skill = skill;
-	}
-
-	public void addSkill(String skillId, String skillLevel) {
-		this.skill.put(skillId, skillLevel);
-	}
-
-	public void removeSkill(String skillId) {
-		this.skill.remove(skillId);
 	}
 
 	@Override
