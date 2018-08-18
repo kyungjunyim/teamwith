@@ -1,0 +1,134 @@
+@charset "UTF-8";
+.team_regist_modal_font{
+	font-size:18px;
+}
+.team_regist_modal_title{
+	color: #ff4111;
+	text-align: center;
+}
+.team_regist_modal_element{
+	margin-left:20px;
+}
+.team_regist_modal_btn_position{
+	margin-left: 170px; 
+	margin-bottom: 20px; 
+	margin-top: 30px;
+}
+.team_regist_big_modal_btn_position{
+	margin-left: 320px; 
+	margin-bottom: 20px; 
+	margin-top: 30px;	
+}
+.team_regist_big_modal_interval{
+	margin-top:15px;
+}
+.team_regist_hr {
+	width: 780px;
+	margin: 20px auto;
+}
+
+.team_regist_form_layout {
+	width: 860px;
+	margin: 0 10px 10px 0;
+	background-color: #ffffff;
+	border-radius: 7px;
+}
+
+.team_regist_whole {
+	width: 860px;
+	padding: 0;
+	margin: 0;
+}
+
+.team_regist_row {
+	width: 840px;
+	padding: 0;
+	margin: 10px;
+}
+
+.team_regist_form_title {
+	width: 860px;
+	margin: 15px 15px 0 15px;
+	padding: 0;
+}
+
+.team_regist_text_title {
+	width: 830px;
+	text-align: center;
+	font-size: 25pt;
+}
+
+.team_regist_text_blue {
+	color: #002b5a;
+}
+
+.team_regist_form_col {
+	font-size: 25px;
+	padding: 0;
+	margin: 0;
+}
+
+.team_regist_form_text {
+	width: 400px;
+	text-align: center;
+	margin: 0 -70px 0 0;
+}
+
+.team_regist_form_input {
+	width: 400px;
+}
+
+.team_regist_row_btns {
+	padding: 0 260px;
+}
+
+.team_regist_btn_submit {
+	margin: 0 10px;
+	width: 140px;
+	padding: 0px 10px;
+	font-size: 23px;
+	color: #fff;
+	background-color: #ff4111;
+	opacity: 0.7;
+}
+
+.team_regist_btn_submit:hover {
+	color: #fff;
+	background-color: #ff4111;
+	border-color: #fff;
+	opacity: 1;
+}
+
+.team_regist_btn_cancel {
+	margin: 0 10px;
+	width: 140px;
+	padding: 0px 10px;
+	font-size: 23px;
+}
+
+.team_regist_form_inputbox_mendatory {
+	background-color: #fff4ef;
+}
+
+.team_regist_form_inputbox_mendatory:focus {
+	color: #495057;
+	background-color: #fff4ef;
+	border-color: #ff7f44;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(255, 127, 68, 0.25);
+}
+
+.team_regist_btn_color {
+	width: 160px;
+	padding: 0px 10px;
+	font-size: 23px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+
+.team_regist_btn_color:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}

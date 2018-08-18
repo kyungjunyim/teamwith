@@ -1,23 +1,5 @@
 package com.teamwith.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import com.teamwith15.dao.MemberDAO;
-import com.teamwith15.util.CodeGenerator;
-import com.teamwith15.util.MailUtil;
-import com.teamwith15.vo.MemberVO;
-import com.teamwith15.vo.MyApplicationVO;
-
 public class AccountService {
 	private static AccountService accountService;
 /*
