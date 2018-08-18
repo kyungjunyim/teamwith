@@ -25,8 +25,7 @@
 	<c:if test="${not empty myTeamList }">
 	<div class="row main_row_whole">
 		<c:forEach items="${myTeamList }" begin="0" end="1" var="myTeam" varStatus="status">
-		<form action="teamSearch/${fn:substringAfter(myTeam.teamId, 'team-') }" method="get" id="myTeamForm${myTeam.teamId }">
-			<div class="col-xs-6 main_content_row" onclick="$('#myTeamForm${myTeam.teamId }').submit()">
+			<div class="col-xs-6 main_content_row" onclick="location = 'teamSearch/${fn:substringAfter(myTeam.teamId, 'team-') }'">
 				<div class="row main_content">
 					<div class="col-xs-6 main_image_col">
 						<img src="${myTeam.teamPic }" class="main_image">
@@ -44,7 +43,6 @@
 					</div>
 				</div>
 			</div>			
-		</form>
 		</c:forEach>
 	</div>
 	</c:if>
