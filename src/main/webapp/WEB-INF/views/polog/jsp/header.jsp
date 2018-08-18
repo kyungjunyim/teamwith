@@ -14,7 +14,7 @@
 	}
 </script>
 <body>
-	<form action="profileEdit.do" method="post" id="memberId_form">
+	<form action="profileEdit" method="post" id="memberId_form">
 		<input type="hidden" name="memberId" id="memberId">
 	</form>
 

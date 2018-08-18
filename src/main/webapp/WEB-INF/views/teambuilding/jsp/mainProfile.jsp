@@ -12,8 +12,7 @@
 	</div>
 	<div class="row profile_info">
 		<div class="profile_text_name">${sessionScope.memberSimpleVO.memberName }</div>
-		<form action="home.do" method="post">
-			<input type="hidden" name="job" value="logout">
+		<form action="logout" method="get">
 			<button type="submit" class="btn_logout">로그아웃</button>
 		</form>
 	</div>
