@@ -26,6 +26,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+	<beans:bean id="teamServiceInterceptor" class="com.teamwith.interceptor.TeamServiceInterceptor" />
+	
 	<interceptors>
 		<interceptor>
 			<mapping path="/" />
@@ -37,7 +39,7 @@
 			<mapping path="/member" />
 			<mapping path="/portfolio" />
 			<mapping path="/account" />
-			<beans:ref bean="TeamServiceInterceptor" />
+			<beans:ref bean="teamServiceInterceptor" />
 		</interceptor>
 	</interceptors>
 
