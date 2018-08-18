@@ -1,6 +1,5 @@
 Manifest-Version: 1.0
-Built-By: JUN
-Build-Jdk: 1.8.0_172
-
+Built-By: Ran
+Build-Jdk: 1.8.0_171
 Created-By: Maven Integration for Eclipse
 

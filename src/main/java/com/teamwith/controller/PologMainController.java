@@ -40,13 +40,13 @@ public class PologMainController {
 		}
 		try {
 			MemberVO mem = profileService.getMemberInfo(memberId);
-			/* 비공개 회원이면 */
+			/* 鍮꾧났媛? ?쉶?썝?씠硫? */
 			if (mem == null) {
-				/* 비공개지만 본인이 요청하면 정보 보여줌 */
+				/* 鍮꾧났媛쒖?留? 蹂몄씤?씠 ?슂泥??븯硫? ?젙蹂? 蹂댁뿬以? */
 				if (memberId.equals(sessionMemId)) {
 					mem = profileService.getMyInfo(memberId);
 				} else {
-					return "private";
+					return "polog/jsp/privatePolog";
 				}
 			}
 

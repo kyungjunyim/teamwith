@@ -69,7 +69,7 @@
 
 <body>
 
-	<form action="profile/edit/${sessionScope.memberSimpleVO.memberId }" method="post" id="profile_form">
+	<form action="" method="post" id="profile_form">
 		<input type="hidden" name="job" value="update"> <input
 			type='hidden' name="memberId"
 			value="${sessionScope.memberSimpleVO.memberId }">
