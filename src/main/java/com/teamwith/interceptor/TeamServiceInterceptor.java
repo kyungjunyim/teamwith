@@ -7,40 +7,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.teamwith.service.ApplicationService;
+import com.teamwith.service.PologService;
 import com.teamwith.service.TeamService;
 import com.teamwith.util.Criteria;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MyApplicationVO;
 import com.teamwith.vo.PortfolioSimpleVO;
 import com.teamwith.vo.TeamSimpleVO;
-import com.teamwith15.service.PologService;
 
 public class TeamServiceInterceptor extends HandlerInterceptorAdapter {
 	@Inject
 	private PologService pologService;
-	
-	private static final Logger logger = LoggerFactory.getLogger(TeamServiceInterceptor.class);
+	@Inject
+	private ApplicationService applicationService;
+	@Inject
+	private TeamService teamService;
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		HttpSession session = request.getSession();
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+		super.postHandle(request, response, handler, modelAndView);
 
-		PologService pologService = PologService.getInstance();
-		ApplicationService applicationService = ApplicationService.getInstance();
-		TeamService teamService = TeamService.getInstance();
-		pologService.openSession();
+		HttpSession session = request.getSession();
 
 		// 최근 포트폴리오 등록
 		Criteria portfolioCri = new Criteria();
 		portfolioCri.addCriteria("condition", "recent");
 		List<PortfolioSimpleVO> recentPortfolioList = pologService.getRecentPortfolio(portfolioCri);
 		request.setAttribute("recentPortfolioList", recentPortfolioList);
-		pologService.closeSession();
 
 		// 세션 정보 조회
 		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
