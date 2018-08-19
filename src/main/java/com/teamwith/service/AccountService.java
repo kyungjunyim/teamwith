@@ -29,7 +29,6 @@ public class AccountService {
 	private AccountService() {
 	}
 
-
 	public int updatePassword(String memberId, String memberPassword, String newPassword) throws Exception {
 		if (memberId == null || memberPassword == null || newPassword == null) {
 			return -1;
@@ -79,7 +78,7 @@ public class AccountService {
 	}
 
 	public void removeMember(String memberId) throws Exception {
-		memberService.removeMemberPraise(memberId);
+		memberService.removeMemberAllPraise(memberId);
 		memberService.removeMemberProjectCategory(memberId);
 		memberService.removeMemberSkill(memberId);
 		profileService.removeMemberCareer(memberId);

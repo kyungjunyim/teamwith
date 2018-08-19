@@ -28,7 +28,6 @@
 		WHERE target_member_id=#{targetMemberId}
 		AND
 		actor_member_id = #{actorMemberId}
-		AND praise_id = #{praiseId}
 	</delete>
 
 	<delete id="removeMemberAllPraise" parameterType="String">
