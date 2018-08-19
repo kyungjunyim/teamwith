@@ -6,16 +6,16 @@
 
 @font-face {
 	font-family: bmjua;
-	src: url(../../fonts/BMJUA.eot) format('embedded-opentype'),
-		url(../../fonts/BMJUA.woff) format('woff'), url(../../fonts/BMJUA.ttf)
+	src: url(/resources/fonts/BMJUA.eot) format('embedded-opentype'),
+		url(/resources/fonts/BMJUA.woff) format('woff'), url(../../fonts/BMJUA.ttf)
 		format('truetype');
 }
 
 @font-face {
 	font-family: yanoljaBold;
-	src: url(../../fonts/yanoljaBold.eot) format('embedded-opentype'),
-		url(../../fonts/yanoljaBold.woff) format('woff'),
-		url(../../fonts/yanoljaBold.ttf) format('truetype');
+	src: url(/resources/fonts/yanoljaBold.eot) format('embedded-opentype'),
+		url(/resources/fonts/yanoljaBold.woff) format('woff'),
+		url(/resources/fonts/yanoljaBold.ttf) format('truetype');
 	font-weight: bold;
 }
 
