@@ -23,7 +23,7 @@
 			method="get" id="memberId_form"></form>
 		<div>
 
-			<div class="fixed-action-btn horizontal click-to-toggle">
+			<div class="fixed-action-btn horizontal click-to-toggle menu_btn">
 				<a class="btn-floating btn-large waves-effect waves-default pulse">
 					<i class="material-icons">menu</i>
 				</a>

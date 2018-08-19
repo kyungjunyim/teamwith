@@ -127,7 +127,7 @@ public class ProfileService {
 		map.put("condition", "member_id");
 		map.put("value", memberId);
 		List<MemberDTO> dto = memberDAO.searchMemberWithCondition(map);
-		if (dto == null) {
+		if (dto == null || dto.isEmpty()) {
 			return null;
 		}
 		MemberVO vo = dto.get(0).toVO();

@@ -26,8 +26,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<beans:bean id="teamServiceInterceptor" class="com.teamwith.interceptor.TeamServiceInterceptor" />
-	
+	<beans:bean id="teamServiceInterceptor"
+		class="com.teamwith.interceptor.TeamServiceInterceptor" />
+
 	<interceptors>
 		<interceptor>
 			<mapping path="/" />
@@ -42,6 +43,19 @@
 			<mapping path="/portfolio" />
 			<mapping path="/account" />
 			<beans:ref bean="teamServiceInterceptor" />
+		</interceptor>
+	</interceptors>
+	
+	
+	<beans:bean id="pologServiceInterceptor"
+		class="com.teamwith.interceptor.PologServiceInterceptor" />
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/polog/*" />
+			<mapping path="/polog/*/*" />
+			<mapping path="/profile/*" />
+			<beans:ref bean="pologServiceInterceptor" />
 		</interceptor>
 	</interceptors>
 

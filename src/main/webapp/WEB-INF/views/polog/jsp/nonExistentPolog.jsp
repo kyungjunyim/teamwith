@@ -49,7 +49,7 @@
 		<!-- Banner -->
 		<section id="banner" class="major">
 			<div class="inner">
-				<header class="major" > 요청하신 회원의 폴로그는 비공개입니다. </header>
+				<header class="major"> 존재하지 않는 회원의 폴로그입니다. </header>
 
 			</div>
 		</section>
