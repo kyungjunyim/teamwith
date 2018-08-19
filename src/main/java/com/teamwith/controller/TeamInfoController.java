@@ -38,6 +38,24 @@ public class TeamInfoController {
 	public String registerTeam(HttpSession session, TeamDetailVO teamInfo, String[] faqQuestions, String[] faqAnswers,
 			String[] interviewQuestionContents, String[] skill1, String[] skill2, String[] skill3,
 			String[] recruitPreferencecs, String[] recruitExplains, String[] recruitPeopleNum, String[] roles) {
+		for(String a: interviewQuestionContents) {
+			System.out.println(a);
+		}for(String a: skill1) {
+			System.out.println(a);
+		}for(String a: skill2) {
+			System.out.println(a);
+		}for(String a: skill3) {
+			System.out.println(a);
+		}for(String a: recruitPreferencecs) {
+			System.out.println(a);
+		}for(String a: recruitExplains) {
+			System.out.println(a);
+		}for(String a: recruitPeopleNum) {
+			System.out.println(a);
+		}for(String a: roles) {
+			System.out.println(a);
+		}
+		
 		System.out.println(interviewQuestionContents);
 		System.out.println(skill1);
 		System.out.println(skill2);

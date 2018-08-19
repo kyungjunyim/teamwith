@@ -266,12 +266,12 @@
 					분야</div>
 				<div class="col-xs-6 team_regist_form_col">
 					<button type="button" class="btn btn-md team_regist_btn_color"
-						data-toggle="modal" data-target="#categoryModal">모집 분야 선택</button>
+						data-toggle="modal" data-target="#recruitCategoryModal1">모집 분야 선택</button>
 				</div>
 			</div>
 		</div>
 		<!-- 모집 분야 선택 모달 -->
-		<div class="modal team_regist_modal_font" id="categoryModal">
+		<div class="recruitCategoryModal modal team_regist_modal_font" id="recruitCategoryModal1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header team_regist_modal_title">모집 분야 선택</div>
@@ -283,7 +283,7 @@
 								<div class="row">
 							</c:if>
 							<div class="col team_regist_modal_element">
-								<input class="form-check-input" type="radio" name="roles"
+								<input class="form-check-input" type="radio" name="role1"
 									value="${role.key }">${role.value }
 							</div>
 							<c:if test="${(i.index mod 2) eq 1}">
@@ -314,12 +314,12 @@
 				역량</div>
 			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
 				<button type="button" class="btn btn-md team_regist_btn_color"
-					data-toggle="modal" data-target="#skillModal">필요 역량 선택</button>
+					data-toggle="modal" data-target="#skillModal1">필요 역량 선택</button>
 			</div>
 		</div>
 	</div>
 	<!-- 필요 역량 선택 모달 -->
-	<div class="modal fade bd-example-modal-sm" id="skillModal"
+	<div class="modal fade bd-example-modal-sm dd" id="skillModal1"
 		tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 		aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg"
@@ -337,7 +337,7 @@
 						</c:if>
 						<div class="col" style="margin-left: 20px;">
 							<input type="checkbox" class="form-check-input modal_check_box"
-								name="skill" id="${skills.key }" value="${skills.value }">${skills.value }
+								name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
 						</div>
 						<c:if test="${status.index % 3 == 2 }">
 				</div>
@@ -366,7 +366,7 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -395,7 +395,7 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -424,7 +424,7 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -490,40 +490,62 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 	$('document').ready(function(e) {
+
 		$("#registBtn").click(function(e) {
-			$('#registForm').submit();
+
+			//$('#registForm').submit();
 		});
-		console.log(document.getElementById('recruit').innerHTML);
 
 	});
+	var recruitNum = 0;
 
 	function add_item() {
 		if ($("#addRole").children().length == 2) {
 			alert("생성할 수 없습니다.");
 		} else {
+			recruitNum = recruitNum + 1;
 			var div = document.createElement('div');
-			div.setAttribute("id","div"+$("#addRole").children().length)
+			div.setAttribute("name","recruitDIV");
+			div.setAttribute("class", "skill"+ $("#addRole").children().length);
 			div.innerHTML = '<hr class="team_regist_hr">'
-					+ document.getElementById('recruit').innerHTML
-					+ '<div class="modal team_regist_modal_font" id="categoryModal'
-					+ $("#addRole").children().length
-					+ '">'
-					+ document.getElementById('categoryModal').innerHTML
+					+'<div class="row team_regist_row">	<div class="col-xs-6 team_regist_form_col team_regist_form_text">모집 분야</div>'
+					+'<div class="col-xs-6 team_regist_form_col"> <button type="button" class="btn btn-md team_regist_btn_color" data-toggle="modal" data-target="#recruitCategoryModal'
+					+($("#addRole").children().length + 2)
+					+'">모집 분야 선택</button></div></div>'
+					+ '<div name="recruitCategoryModal" class=" modal team_regist_modal_font" id="recruitCategoryModal'
+					+ ($("#addRole").children().length + 2)
+					+ '">'	
+					+ document.getElementById('recruitCategoryModal1').innerHTML
 					+ '</div>'
-					+ document.getElementById('a').innerHTML
-					+ '<div class="modal fade bd-example-modal-sm" id="skillModal'
-					+ $("#addRole").children().length
+					+ '<div class="row team_regist_row" id="recruitPeopleNumDiv"><div class="col-xs-6 team_regist_form_col team_regist_form_text">모집 인원</div>'
+				    + '<div class="col-xs-6 team_regist_form_col team_regist_form_input"> <input name="recruitPeopleNum" type="number" class="form-control team_regist_form_inputbox">'
+				    + '</div></div><div class="row team_regist_row"><div class="col-xs-6 team_regist_form_col team_regist_form_text">필요 역량</div>'
+				    + '<div class="col-xs-6 team_regist_form_col team_regist_form_input"> <button type="button" class="btn btn-md team_regist_btn_color" data-toggle="modal" data-target="#skillModal'
+				    + ($("#addRole").children().length + 2)
+				    + '">필요 역량 선택</button></div></div>'
+					+ '<div name="selectSkill" class="modal fade bd-example-modal-sm" id="skillModal'
+					+ ($("#addRole").children().length + 2)
 					+ '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">'
-					+ document.getElementById('skillModal').innerHTML
+					+ document.getElementById('skillModal1').innerHTML
 					+ '</div>' + document.getElementById('b').innerHTML;
 			document.getElementById('addRole').appendChild(div);
+			if($("#addRole").children().length == 1){
+				$('#addRole > div > div[name=selectSkill] input[type=checkbox]').attr("name","skill2");
+				$('#addRole > div > div[name=recruitCategoryModal] input[type=radio]').attr("name","role2");
+			}
+			else if($("#addRole").children().length == 2){
+				$('#addRole > div:nth-child(2) >div[name=selectSkill] input[type=checkbox]').attr("name","skill3");
+				$('#addRole > div:nth-child(2) >div[name=recruitCategoryModal] input[type=radio]').attr("name","role3");
+			}
 		}
 	}
 
 	function remove_item(obj) {
-		if (obj.parentNode.parentNode.parentNode.id == 'role') {
+		if (obj.parentNode.parentNode.parentNode.parentNode.id == 'role') {
 			alert("삭제할 수 없습니다.");
 		} else {
+			console.log($('#addRole > div > div[name=selectSkill] input[type=checkbox]'));
+			$('#addRole > div > div[name=selectSkill] input[type=checkbox]').attr("name","skill2");
 			obj.parentNode.parentNode.parentNode.remove();
 		}
 	}

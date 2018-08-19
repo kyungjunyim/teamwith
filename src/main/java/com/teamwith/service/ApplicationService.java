@@ -51,12 +51,13 @@ public class ApplicationService {
 		}
 		return result;
 	}
-
+	//내 상태가 합류된 팀 아이디.. 
 	public List<String> getJoinedTeamId(String memberId) {
 		List<String> result = new ArrayList<String>();
 		try {
 			List<ApplicationDTO> applications = applicationDAO.searchApplicationByMemberId(memberId);
 			for (ApplicationDTO application : applications) {
+				if(application.getApplicationStatus()==1)
 				result.add(application.getTeamId());
 			}
 		} catch (Exception e) {
