@@ -14,9 +14,11 @@ public class MemberSkillVO {
 
 	public List<MemberSkillDTO> toDTO() {
 		List<MemberSkillDTO> result = new ArrayList<MemberSkillDTO>();
-		for (String key : skill) {
-			MemberSkillDTO dto = new MemberSkillDTO(memberId, key);
-			result.add(dto);
+		if (skill != null && skill.length > 0) {
+			for (String key : skill) {
+				MemberSkillDTO dto = new MemberSkillDTO(memberId, key);
+				result.add(dto);
+			}
 		}
 		return result;
 	}

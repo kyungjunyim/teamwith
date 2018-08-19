@@ -59,13 +59,16 @@
 		member_pic=null, member_phone=0,
 		member_intro=null,
 		role_id=null
-		WHERE member_id=#{memberId}
+		WHERE
+		member_id=#{memberId}
 	</update>
 
 	<update id="updateMember" parameterType="MemberDTO">
 		UPDATE member_tb SET
-		member_pic=
-		#{memberPic},
+		<if test="memberPic!=null">
+			member_pic=
+			#{memberPic},
+		</if>
 		member_phone=#{memberPhone},
 		member_public=#{memberPublic},
 		member_intro=#{memberIntro},
@@ -83,7 +86,7 @@
 		AND member_password =
 		ENCRYPTION_AES.ENC_AES(#{memberPassword})
 	</update>
-	
+
 	<update id="updateTempPassword" parameterType="map">
 		UPDATE member_tb
 		SET
@@ -108,7 +111,8 @@
 		resultMap="memberList">
 		SELECT * FROM member_tb
 		WHERE member_id = #{memberId}
-		AND member_password = ENCRYPTION_AES.ENC_AES(#{memberPassword})
+		AND
+		member_password = ENCRYPTION_AES.ENC_AES(#{memberPassword})
 	</select>
 
 	<select id="searchMemberInfo" parameterType="String"

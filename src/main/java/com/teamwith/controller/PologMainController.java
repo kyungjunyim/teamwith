@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.teamwith.service.MemberService;
 import com.teamwith.service.ProfileService;
 import com.teamwith.vo.MemberPraiseCntVO;
+import com.teamwith.vo.MemberPraiseVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.MemberTendencyVO;
@@ -40,9 +41,7 @@ public class PologMainController {
 		}
 		try {
 			MemberVO mem = profileService.getMemberInfo(memberId);
-			/* 鍮꾧났媛? ?쉶?썝?씠硫? */
 			if (mem == null) {
-				/* 鍮꾧났媛쒖?留? 蹂몄씤?씠 ?슂泥??븯硫? ?젙蹂? 蹂댁뿬以? */
 				if (memberId.equals(sessionMemId)) {
 					mem = profileService.getMyInfo(memberId);
 				} else {
@@ -51,6 +50,9 @@ public class PologMainController {
 			}
 
 			List<MemberPraiseCntVO> result = memberService.getMemberPraiseCnt(memberId);
+
+			List<MemberPraiseVO> myPraiseList = memberService.getMemberPriase(msVO.getMemberId(), memberId);
+			logger.info(myPraiseList.toString());
 			List<String> projectCategory = memberService.getMemberProjectCategory(memberId);
 			MemberSkillVO skill = memberService.getMemberSkill(memberId);
 			MemberTendencyVO tendency = profileService.getMemberTendency(memberId);
@@ -58,6 +60,7 @@ public class PologMainController {
 			model.addAttribute("memberVO", mem);
 			model.addAttribute("memberProjectCategoryList", projectCategory);
 			model.addAttribute("praiseCntList", result);
+			model.addAttribute("praiseList", myPraiseList);
 			model.addAttribute("skillVO", skill);
 			model.addAttribute("tendencyVO", tendency);
 

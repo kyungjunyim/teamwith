@@ -1,18 +1,24 @@
 package com.teamwith.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.teamwith.service.MemberService;
 import com.teamwith.service.ProfileService;
@@ -23,6 +29,7 @@ import com.teamwith.vo.MemberVO;
 import com.teamwith.vo.TendencyVO;
 
 @RequestMapping(value = "/profile")
+@MultipartConfig(maxFileSize = 1024 * 1024 * 10)
 @Controller
 public class ProfileController {
 
@@ -55,15 +62,25 @@ public class ProfileController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String profileEdit(MemberVO updateMemberInfo, String[] regionId, String[] skill, String[] categoryId,
-			Model model, TendencyVO tendency) {
-		
-		String memberId = updateMemberInfo.getMemberId();
-		logger.info(updateMemberInfo.getRoleId());
-		updateMemberInfo.setRegionId1(regionId[0]);
-		updateMemberInfo.setRegionId1(regionId[1]);
-		try {
+	public String profileEdit(MemberVO updateMemberInfo, MultipartFile file, String[] regionId, String[] skill,
+			String[] categoryId, Model model, TendencyVO tendency, HttpSession session) {
 
+		String memberId = updateMemberInfo.getMemberId();
+		if (regionId != null) {
+			updateMemberInfo.setRegionId1(regionId[0]);
+			if (regionId.length == 2) {
+				updateMemberInfo.setRegionId2(regionId[1]);
+			}
+		}
+
+		try {
+			if (file != null && !file.getOriginalFilename().trim().equals("")) {
+				String rootPath = session.getServletContext().getRealPath("/");
+				String attachPath = "resources\\image\\member\\" + memberId;
+				String filename = file.getOriginalFilename();
+				String newFilename = uploadFile(rootPath, attachPath, filename, file.getBytes());
+				updateMemberInfo.setMemberPic(newFilename);
+			}
 			/* memberInfo */
 			profileService.updateMemberInfo(updateMemberInfo, null);
 
@@ -78,6 +95,7 @@ public class ProfileController {
 			tdMap.put("tendency-3", tendency.getTendency3());
 			tdMap.put("tendency-4", tendency.getTendency4());
 			tdMap.put("tendency-5", tendency.getTendency5());
+
 			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
 			profileService.updateMemberTendency(memberTendency);
 
@@ -86,6 +104,26 @@ public class ProfileController {
 		}
 		return "redirect:/" + memberId;
 
+	}
+
+	private String uploadFile(String uploadPath, String attachPath, String originalName, byte[] fileData)
+			throws Exception {
+		String newFilename = attachPath + getNewFilename(originalName);
+
+		File dir = new File(uploadPath);
+		if (!dir.exists()) {
+			dir.mkdirs(); // 존재하지 않는 모든 폴더 생성
+		}
+		File target = new File(uploadPath, newFilename);
+		FileCopyUtils.copy(fileData, target);
+		return "\\" + newFilename;
+	}
+
+	private String getNewFilename(String filename) {
+		if (filename.contains(".")) {
+			return filename.substring(filename.indexOf('.'));
+		}
+		return null;
 	}
 
 }

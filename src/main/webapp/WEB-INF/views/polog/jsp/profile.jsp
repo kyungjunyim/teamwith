@@ -186,11 +186,12 @@
 					<form id="praise_form" action="praise.do" method="post">
 						<input type='hidden' name="targetMemberId"
 							value="${memberVO.memberId }"> <input type='hidden'
-							name="actorMemberId" value="${sessionScope.memberSimpleVO.memberId }">
+							name="actorMemberId"
+							value="${sessionScope.memberSimpleVO.memberId }">
 						<c:forEach items="${applicationScope.praiseList }" var="pr">
-							<div class="col" style="text-align: left; color:black;">
+							<div class="col" style="text-align: left; color: black;">
 								<input type="checkbox" class="form-check-input" name="praise"
-									id="${ pr.key}" value="${ pr.key}" >${ pr.value}
+									id="${ pr.key}" value="${ pr.key}">${ pr.value}
 							</div>
 						</c:forEach>
 					</form>
@@ -242,6 +243,11 @@
 		$('#praise_btn').on('click', function() {
 			$("#praise_form").submit();
 		});
+		
+		<c:forEach var="p" items="${praiseList}">
+		$('input:checkbox[id=${p.praiseId}]')[0].checked = true;
+		</c:forEach>
 	});
+
 </script>
 </html>
