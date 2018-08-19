@@ -15,7 +15,6 @@
 </script>
 <body>
 	<form action="/profile/edit/${sessionScope.memberSimpleVO.memberId}" method="get" id="memberId_form">
-		<input type="hidden" name="memberId" id="memberId" value="${sessionScope.memberSimpleVO.memberId}">
 	</form>
 
 	<a href="/" class="logo"><img
