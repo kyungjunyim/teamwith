@@ -34,6 +34,7 @@ public class PortfolioVO {
 		portfolioDTO.setPortfolioRole(portfolioRole);
 		portfolioDTO.setPortfolioWork(portfolioWork);
 		portfolioDTO.setPortfolioSkill(portfolioSkill);
+		portfolioDTO.setPortfolioTeamName(portfolioTeamName);
 		portfolioDTO.setPortfolioUpdateDate(Date.valueOf(portfolioUpdateDate));
 		portfolioDTO.setPortfolioBest(Integer.parseInt(portfolioBest));
 		portfolioDTO.setPortfolioPic(portfolioPic);

@@ -12,6 +12,7 @@ public class PortfolioContentVO {
 	private String layoutId;
 	private String portfolioContentName;
 	private String portfolioContentValue;
+	private String portfolioContentIntro;
 	public PortfolioContentDTO toDTO() {
 		PortfolioContentDTO portfolioContentDTO = new PortfolioContentDTO();
 		portfolioContentDTO.setPortfolioContentId(portfolioContentId);
@@ -20,13 +21,14 @@ public class PortfolioContentVO {
 		portfolioContentDTO.setLayoutId(layoutId);
 		portfolioContentDTO.setPortfolioContentName(portfolioContentName);
 		portfolioContentDTO.setPortfolioContentValue(portfolioContentValue);
+		portfolioContentDTO.setPortfolioContentIntro(portfolioContentIntro);
 		return portfolioContentDTO;
 	}
 	public PortfolioContentVO() {
 		super();
 	}
 	public PortfolioContentVO(String portfolioContentId, String portfolioId, String portfolioContentOrder,
-			String layoutId, String portfolioContentName, String portfolioContentValue) {
+			String layoutId, String portfolioContentName, String portfolioContentValue,String portfolioContentIntro) {
 		super();
 		this.portfolioContentId = portfolioContentId;
 		this.portfolioId = portfolioId;
@@ -34,6 +36,8 @@ public class PortfolioContentVO {
 		this.layoutId = layoutId;
 		this.portfolioContentName = portfolioContentName;
 		this.portfolioContentValue = portfolioContentValue;
+		this.portfolioContentIntro=portfolioContentIntro;
+		
 	}
 	public String getPortfolioContentId() {
 		return portfolioContentId;
@@ -43,6 +47,13 @@ public class PortfolioContentVO {
 	}
 	public String getPortfolioId() {
 		return portfolioId;
+	}
+	
+	public String getPortfolioContentIntro() {
+		return portfolioContentIntro;
+	}
+	public void setPortfolioContentIntro(String portfolioContentIntro) {
+		this.portfolioContentIntro = portfolioContentIntro;
 	}
 	public void setPortfolioId(String portfolioId) {
 		this.portfolioId = portfolioId;
@@ -76,6 +87,7 @@ public class PortfolioContentVO {
 		return "PortfolioContentVO [portfolioContentId=" + portfolioContentId + ", portfolioId=" + portfolioId
 				+ ", portfolioContentOrder=" + portfolioContentOrder + ", layoutId=" + layoutId
 				+ ", portfolioContentName=" + portfolioContentName + ", portfolioContentValue=" + portfolioContentValue
-				+ "]";
+				+ ", portfolioContentIntro=" + portfolioContentIntro + "]";
 	}
+
 }

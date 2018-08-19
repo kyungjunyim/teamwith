@@ -12,10 +12,11 @@ public class PortfolioContentDTO {
 	private String layoutId;
 	private String portfolioContentName;
 	private String portfolioContentValue;
+	private String portfolioContentIntro;
 
 	public PortfolioContentVO toVO() {
 		PortfolioContentVO vo = new PortfolioContentVO(portfolioContentId, portfolioId, 
-				portfolioContentOrder+"", layoutId, portfolioContentName, portfolioContentValue);
+				portfolioContentOrder+"", layoutId, portfolioContentName, portfolioContentValue,portfolioContentIntro);
 		return vo;
 	}
 
@@ -24,7 +25,7 @@ public class PortfolioContentDTO {
 	}
 
 	public PortfolioContentDTO(String portfolioContentId, String portfolioId, int portfolioContentOrder,
-			String layoutId, String portfolioContentName, String portfolioContentValue) {
+			String layoutId, String portfolioContentName, String portfolioContentValue,String portfolioContentIntro) {
 		super();
 		this.portfolioContentId = portfolioContentId;
 		this.portfolioId = portfolioId;
@@ -32,6 +33,7 @@ public class PortfolioContentDTO {
 		this.layoutId = layoutId;
 		this.portfolioContentName = portfolioContentName;
 		this.portfolioContentValue = portfolioContentValue;
+		this.portfolioContentIntro =portfolioContentIntro;
 	}
 
 	public String getPortfolioContentId() {
@@ -52,6 +54,14 @@ public class PortfolioContentDTO {
 
 	public String getPortfolioContentName() {
 		return portfolioContentName;
+	}
+	
+	public String getPortfolioContentIntro() {
+		return portfolioContentIntro;
+	}
+
+	public void setPortfolioContentIntro(String portfolioContentIntro) {
+		this.portfolioContentIntro = portfolioContentIntro;
 	}
 
 	public String getPortfolioContentValue() {
@@ -82,18 +92,21 @@ public class PortfolioContentDTO {
 		this.portfolioContentValue = portfolioContentValue;
 	}
 
+	@Override
 	public String toString() {
 		return "PortfolioContentDTO [portfolioContentId=" + portfolioContentId + ", portfolioId=" + portfolioId
 				+ ", portfolioContentOrder=" + portfolioContentOrder + ", layoutId=" + layoutId
 				+ ", portfolioContentName=" + portfolioContentName + ", portfolioContentValue=" + portfolioContentValue
-				+ "]";
+				+ ", portfolioContentIntro=" + portfolioContentIntro + "]";
 	}
 
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((layoutId == null) ? 0 : layoutId.hashCode());
 		result = prime * result + ((portfolioContentId == null) ? 0 : portfolioContentId.hashCode());
+		result = prime * result + ((portfolioContentIntro == null) ? 0 : portfolioContentIntro.hashCode());
 		result = prime * result + ((portfolioContentName == null) ? 0 : portfolioContentName.hashCode());
 		result = prime * result + portfolioContentOrder;
 		result = prime * result + ((portfolioContentValue == null) ? 0 : portfolioContentValue.hashCode());
@@ -101,6 +114,7 @@ public class PortfolioContentDTO {
 		return result;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -118,6 +132,11 @@ public class PortfolioContentDTO {
 			if (other.portfolioContentId != null)
 				return false;
 		} else if (!portfolioContentId.equals(other.portfolioContentId))
+			return false;
+		if (portfolioContentIntro == null) {
+			if (other.portfolioContentIntro != null)
+				return false;
+		} else if (!portfolioContentIntro.equals(other.portfolioContentIntro))
 			return false;
 		if (portfolioContentName == null) {
 			if (other.portfolioContentName != null)
@@ -138,5 +157,5 @@ public class PortfolioContentDTO {
 			return false;
 		return true;
 	}
-	
+
 }

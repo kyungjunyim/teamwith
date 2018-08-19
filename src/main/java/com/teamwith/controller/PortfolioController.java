@@ -1,6 +1,7 @@
 package com.teamwith.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import javax.servlet.http.Part;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamwith.service.PologService;
-import com.teamwith.util.FileLoaderListener;
 import com.teamwith.vo.PortfolioContentVO;
 import com.teamwith.vo.PortfolioVO;
 @Controller
@@ -58,7 +57,11 @@ public class PortfolioController {
 		}
 		model.addAttribute("portfolio",portfolio);
 		if(contentList!=null&&!contentList.isEmpty()){
+			System.out.println("@@@@@@@@@@@@@@포폴콘텐츠 널아님");
 			model.addAttribute("portfolioContent",contentList);
+		}
+		else {
+			System.out.println("@@@@@@@@@@@@@@포폴콘텐츠 널임");
 		}
 		return "/polog/jsp/detailPortfolio";
 	}
@@ -69,32 +72,12 @@ public class PortfolioController {
 	
 	@RequestMapping(value="/register",method=RequestMethod.POST)
 	public String registerPortfolio(MultipartFile [] portfolioFile,String []portfolioURL,String []contentOrder,String [] contentIntro,
-			String [] portfolioContentName,@ModelAttribute PortfolioVO portfolioVO,Model model,HttpSession session) {
-		
+			String [] portfolioContentName,String [] layoutId,
+			@ModelAttribute PortfolioVO portfolioVO,Model model,HttpSession session) {
+		System.out.println(portfolioFile[0].getContentType());
 		session.setAttribute("memberId","kim"); //테스트용
-		if(portfolioFile[1]==null) {
-			System.out.println("널");
-		}
-		else {
-			System.out.println("널 아님");
-		}
-		System.out.println("contentOrders");
-		for(int i=0;i<contentOrder.length;i++) {
-			System.out.println(contentOrder[i]);
-		}
-		for(int i=0;i<portfolioURL.length;i++) {
-			System.out.println(portfolioURL[i]);
-			if(portfolioURL[i]==null||portfolioURL[i].isEmpty()) {
-				System.out.println("날이넹");
-			}else {
-				System.out.println("널아니넹");
-			}
-		}
-		System.out.println(portfolioFile[1]);
-		for(int i=0;i<portfolioFile.length;i++) {
-			System.out.println(portfolioFile[i].getSize());
-		}
-		
+		String rootPath = session.getServletContext().getRealPath("/");//service가 이 경로를 받을것
+		String portfolioId=null;
 		try {
 			String memberId=(String)session.getAttribute("memberId");
 			System.out.println(memberId);
@@ -109,57 +92,69 @@ public class PortfolioController {
 				portfolioVO.setPortfolioBest("1");
 			}
 			portfolioVO.setMemberId((String)session.getAttribute("memberId"));
-			System.out.println(portfolioVO);
+			portfolioVO.setPortfolioUpdateDate("2018-08-19");
+			System.out.println("위에"+portfolioVO);
 			
 			
 			int fileIndex=1;
 			int urlIndex=0;
+			Map<Object,MultipartFile> param=new HashMap<Object,MultipartFile>();
+			if(portfolioFile[0]!=null) {
+				param.put(portfolioVO, portfolioFile[0]);
+			}
+			else {
+				param.put(portfolioVO, null);
+			}
 			//MultipartFile [] portfolioFile,String []portfolioURL,String []contentOrder,String [] contentIntro,
 			//String [] portfolioContentName
-			for(int i=0;i<contentOrder.length;i++) {
-				if(portfolioContentName[i].equals("image")) {
-					
-				}else if(portfolioContentName[i].equals("ppt")) {
-					
-				}else {
-					
+			if(contentOrder!=null) {
+				for(int i=0;i<contentOrder.length;i++) {
+					PortfolioContentVO portfolioContent=null;
+					System.out.println("-------"+portfolioContentName[i]+"----------");
+					if(portfolioContentName!=null&&portfolioContentName[i].equals("image")) {
+						if(portfolioFile[fileIndex]!=null) {
+							
+					        portfolioContent=new PortfolioContentVO("","",Integer.toString(i+1),layoutId[i],portfolioContentName[i],"",contentIntro[i]);
+					        param.put(portfolioContent,portfolioFile[fileIndex]);
+						}
+						else {
+							portfolioContent=new PortfolioContentVO("","",Integer.toString(i+1),layoutId[i],portfolioContentName[i],"",contentIntro[i]);
+					        param.put(portfolioContent,null);
+						}
+						fileIndex++;
+					}else if(portfolioContentName!=null&&portfolioContentName[i].equals("ppt")) {
+						if(portfolioFile[fileIndex]!=null) {
+							portfolioContent=new PortfolioContentVO("","",Integer.toString(i+1),layoutId[i],portfolioContentName[i],"",contentIntro[i]);
+					        param.put(portfolioContent,portfolioFile[fileIndex]);
+						}
+						else {
+							portfolioContent=new PortfolioContentVO("","",Integer.toString(i+1),layoutId[i],portfolioContentName[i],"",contentIntro[i]);
+					        param.put(portfolioContent,null);
+						}
+						fileIndex++;
+					}else if(portfolioContentName!=null&&portfolioContentName[i].equals("media")){
+						portfolioContent=new PortfolioContentVO("","",Integer.toString(i+1),layoutId[i],portfolioContentName[i],
+								portfolioURL[urlIndex],contentIntro[i]);
+				        param.put(portfolioContent,null);
+				        urlIndex++;
+					}
 				}
 			}
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			//포폴 content
-//			String [] names=request.getParameterValues("portfolioContentName");
-//			String [] values=request.getParameterValues("portfolioContentValue");
-//			String [] intros=request.getParameterValues("portfolioContentIntro");
-//			String [] layout=request.getParameterValues("portfolioContentLayoutId");
-//			Collection<Part> files=request.getParts();
-//			/*for(Part p:files)
-//				System.out.println("''"+p.getSubmittedFileName());
-//			
-//			return;*/
-//		
-//			for(int i=0;i<names.length;i++){
-//				PortfolioContentVO cv=new PortfolioContentVO("","",Integer.toString(i+1),layout[i],names[i],values[i]);
-//				PortfolioContentVO cv2=new PortfolioContentVO("","",Integer.toString(i+1),layout[i],"text",intros[i]);
-//			}
-//			
-//			PortfolioVO pv=new PortfolioVO("", title, intro, startDate, endDate, teamName, peopleNumber, role, work, skills,"2018-08-15", best, file.getName(), category, memberId);
-//			System.out.println(pv);
-			Map<Object,Part> param=new HashMap<Object,Part>();
-//			param.put(portfolioVO,file);
-			pologService.registerPortfolioAndContent(param);
+			portfolioId=pologService.registerPortfolioAndContent(param,rootPath);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "/polog/jsp/detailPortfolio";
+		if(portfolioId==null) {
+			model.addAttribute("error","Failed register...");
+			return "/polog/jsp/errorPage";
+		}
+		else {
+			return "redirect:/portfolio/"+portfolioId;
+		}
+		
 	}
 	@RequestMapping(value="/edit/{portfolioId}",method=RequestMethod.GET)
 	public String editPortfolioPage(@PathVariable("portfolioId") String portfolioId,Model model) {
