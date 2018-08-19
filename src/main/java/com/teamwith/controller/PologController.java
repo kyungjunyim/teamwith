@@ -27,11 +27,11 @@ public class PologController {
 	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.GET)
 	public String pologEditView(@PathVariable(value = "memId") String memberId, Model model) {
 
-		return "";
+		return jspPath+"pologEdit";
 	}
 	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.POST)
 	public String pologEdit(@PathVariable(value = "memId") String memberId, Model model) {
 
-		return "";
+		return jspPath+"pologMain";
 	}
 }

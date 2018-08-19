@@ -33,23 +33,12 @@ public class PologMainController {
 	MemberService memberService;
 
 	@RequestMapping(value = "/polog/{memberId}", method = RequestMethod.GET)
-	public String home(@PathVariable(value = "memberId") String memberId, Model model, HttpSession session) {
-		String sessionMemId = null;
+	public String pologMain(@PathVariable(value = "memberId") String memberId, Model model, HttpSession session) {
 		MemberSimpleVO msVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		try {
 			if (msVO != null) {
-				sessionMemId = msVO.getMemberId();
 				List<MemberPraiseVO> myPraiseList = memberService.getMemberPriase(msVO.getMemberId(), memberId);
 				model.addAttribute("myPraiseList", myPraiseList);
-			}
-
-			MemberVO mem = profileService.getMemberInfo(memberId);
-			if (mem == null) {
-				if (memberId.equals(sessionMemId)) {
-					mem = profileService.getMyInfo(memberId);
-				} else {
-					return "polog/jsp/privatePolog";
-				}
 			}
 
 			List<MemberPraiseCntVO> result = memberService.getMemberPraiseCnt(memberId);
@@ -58,7 +47,6 @@ public class PologMainController {
 			MemberSkillVO skill = memberService.getMemberSkill(memberId);
 			MemberTendencyVO tendency = profileService.getMemberTendency(memberId);
 
-			model.addAttribute("memberVO", mem);
 			model.addAttribute("memberProjectCategoryList", projectCategory);
 			model.addAttribute("praiseCntList", result);
 
@@ -71,4 +59,12 @@ public class PologMainController {
 		return "polog/jsp/pologMain";
 	}
 
+	@RequestMapping(value = "/privatePolog", method = RequestMethod.GET)
+	public String privatePolog() {
+		return "polog/jsp/privatePolog";
+	}
+	@RequestMapping(value = "/nonExistentPolog", method = RequestMethod.GET)
+	public String nonExistentPolog() {
+		return "polog/jsp/nonExistentPolog";
+	}
 }

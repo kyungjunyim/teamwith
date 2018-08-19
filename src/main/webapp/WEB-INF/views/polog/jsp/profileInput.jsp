@@ -87,8 +87,7 @@
 						</tr>
 						<tr>
 							<td>이름</td>
-							<td id="member_name">${memberVO.memberName }
-								${sessionScope.memberSimpleVO.memberId } ${memberVO.memberId }</td>
+							<td id="member_name">${memberVO.memberName }</td>
 						</tr>
 						<tr>
 							<td>이메일</td>
