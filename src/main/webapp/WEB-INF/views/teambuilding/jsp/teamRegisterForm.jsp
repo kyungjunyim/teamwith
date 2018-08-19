@@ -502,6 +502,7 @@
 			alert("생성할 수 없습니다.");
 		} else {
 			var div = document.createElement('div');
+			div.setAttribute("id","div"+$("#addRole").children().length)
 			div.innerHTML = '<hr class="team_regist_hr">'
 					+ document.getElementById('recruit').innerHTML
 					+ '<div class="modal team_regist_modal_font" id="categoryModal'

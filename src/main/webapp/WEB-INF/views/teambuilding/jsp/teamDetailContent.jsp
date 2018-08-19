@@ -78,7 +78,7 @@
 						</div>
 						<!-- 지원자 보기 버튼 -->
 						<div>
-							<form action="/teaminfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }" method="post">
+							<form action="/teamInfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }" method="post">
 								<input type="hidden" name="teamId" value="${teamInfo.teamId }">
 								<input type="hidden" name="job" value="myApplicant">
 								<button type="submit"
