@@ -52,7 +52,6 @@ public class PologMainController {
 			List<MemberPraiseCntVO> result = memberService.getMemberPraiseCnt(memberId);
 
 			List<MemberPraiseVO> myPraiseList = memberService.getMemberPriase(msVO.getMemberId(), memberId);
-			logger.info(myPraiseList.toString());
 			List<String> projectCategory = memberService.getMemberProjectCategory(memberId);
 			MemberSkillVO skill = memberService.getMemberSkill(memberId);
 			MemberTendencyVO tendency = profileService.getMemberTendency(memberId);
@@ -60,7 +59,7 @@ public class PologMainController {
 			model.addAttribute("memberVO", mem);
 			model.addAttribute("memberProjectCategoryList", projectCategory);
 			model.addAttribute("praiseCntList", result);
-			model.addAttribute("praiseList", myPraiseList);
+			model.addAttribute("myPraiseList", myPraiseList);
 			model.addAttribute("skillVO", skill);
 			model.addAttribute("tendencyVO", tendency);
 
