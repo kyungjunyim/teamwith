@@ -18,6 +18,7 @@ public class TendencyVO {
 		this.tendency3 = tendency3;
 		this.tendency4 = tendency4;
 		this.tendency5 = tendency5;
+		//
 	}
 
 	public final String getTendency1() {
