@@ -34,7 +34,7 @@
 			<h3 style="text-align: center;">Contact</h3>
 			<div class="card medium">
 				<div class="card-image waves-effect waves-block waves-light">
-					<img class="activator" src="/teamwith15/image/contact.gif">
+					<img class="activator" src="/resources/image/contact.gif">
 				</div>
 				<div class="card-content">
 				<!-- 버튼 -->
@@ -89,4 +89,4 @@
 			</div>
 		</div>
 	</div>
-<script src="../js/contact.js"></script>
+<script src="/resources/polog/js/contact.js"></script>
