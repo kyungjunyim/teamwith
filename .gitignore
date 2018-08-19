@@ -1,6 +1,6 @@
 # Compiled class file
 *.class
-*.properties
+pom.properties
 MANIFEST.MF
 
 # Log file
