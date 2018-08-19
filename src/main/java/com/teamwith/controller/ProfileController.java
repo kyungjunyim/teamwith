@@ -59,6 +59,9 @@ public class ProfileController {
 			Model model, TendencyVO tendency) {
 		
 		String memberId = updateMemberInfo.getMemberId();
+		logger.info(updateMemberInfo.getRoleId());
+		updateMemberInfo.setRegionId1(regionId[0]);
+		updateMemberInfo.setRegionId1(regionId[1]);
 		try {
 
 			/* memberInfo */

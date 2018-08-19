@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../css/contact.css">
+<link rel="stylesheet" type="text/css" href="/resources/polog/css/contact.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <title>Insert title here</title>
