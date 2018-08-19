@@ -125,7 +125,7 @@
 			</div>
 			<!-- 팀에 대한 정보 끝 -->
 
-			<!-- 지원하기, 모집완료 버튼 -->
+			<!-- 지원하기, 모집완료 버튼! -->
 			<div class="row team_detail_row team_detail_interval">
 				<c:if	test="${sessionScope.memberSimpleVO.memberId ne requestScope.teamInfo.memberId }">
 					<c:if test="${canApply == true }">
