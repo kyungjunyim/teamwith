@@ -148,32 +148,18 @@
 				<tr>
 					<th><i class="material-icons">mood</i> &nbsp;&nbsp;Praise</th>
 				</tr>
-				<tr>
-					<td id="member_praise1">${applicationScope.praiseList[praiseCntList[0].praiseId]}</td>
-					<td id="praise1_cnt">${praiseCntList[0].praiseCnt }회</td>
-				</tr>
-				<tr>
-					<td id="member_praise2">${applicationScope.praiseList[praiseCntList[1].praiseId]}</td>
-					<td id="praise2_cnt">${praiseCntList[1].praiseCnt }회</td>
-				</tr>
-				<tr>
-					<td id="member_praise3">${applicationScope.praiseList[praiseCntList[2].praiseId]}</td>
-					<td id="praise3_cnt">${praiseCntList[2].praiseCnt }회</td>
-				</tr>
-				<tr>
-					<td id="member_praise4">${applicationScope.praiseList[praiseCntList[3].praiseId]}</td>
-					<td id="praise4_cnt">${praiseCntList[3].praiseCnt }회</td>
-				</tr>
-				<tr>
-					<td id="member_praise5">${applicationScope.praiseList[praiseCntList[4].praiseId]}</td>
-					<td id="praise5_cnt">${praiseCntList[4].praiseCnt }회</td>
-				</tr>
+				<c:forEach items="${praiseCntList}" var="pc" varStatus="i">
+					<tr>
+						<td id="member_praise${i.count }">${applicationScope.praiseList[pc.praiseId]}</td>
+						<td><span id="praise${i.count }_cnt">${pc.praiseCnt }</span>회</td>
+					</tr>
+				</c:forEach>
 				<tr>
 					<td></td>
 					<td><button class="btn btn-md btn_color"
-							onclick="	location.href='/praise/check';">칭찬하기</button> <input
-						type="hidden" data-toggle="modal" data-target="#praiseModal"
-						id="p_btn"></td>
+							onclick="toPraise('${sessionScope.memberSimpleVO.memberId}','${memberVO.memberId}')">칭찬하기</button>
+						<input type="hidden" data-toggle="modal"
+						data-target="#praiseModal" id="p_btn"></td>
 				</tr>
 			</table>
 		</div>
@@ -185,10 +171,9 @@
 			<div class="modal-body">
 				<div class="row" style="margin: 10px auto;">
 
-					<form id="praise_form" action="praise.do" method="post">
-						<input type='hidden' name="targetMemberId"
-							value="${memberVO.memberId }"> <input type='hidden'
-							name="actorMemberId"
+					<form id="praise_form" action="/praise/update" method="post">
+						<input type='hidden' name="target" value="${memberVO.memberId }">
+						<input type='hidden' name="actor"
 							value="${sessionScope.memberSimpleVO.memberId }">
 						<c:forEach items="${applicationScope.praiseList }" var="pr">
 							<div class="col" style="text-align: left; color: black;">
@@ -235,37 +220,79 @@
 	</div>
 </body>
 <script>
+	var toPraise = function(actor, target) {
+
+		if (actor == target) {
+			alert("본인은 칭찬할 수 없습니다.");
+		} else {
+
+			$.ajax({
+				method : 'get',
+				url : '/praise/check?actor=' + actor + '&target=' + target,
+				headers : {
+					"Content-type" : "application/json",
+				},
+				success : function(data) {
+					if (data.result == 'true') {
+						$('#p_btn').trigger('click');
+					} else {
+						alert("같은 팀원만 칭찬할 수 있습니다.");
+					}
+				}
+
+			});
+		}
+	}
+	var setPrCnt = function() {
+
+	}
+
 	$(document).ready(function() {
-		
+
 		<c:forEach items="${myPraiseList}" var="p">
 		$('input:checkbox[id=${p.praiseId}]')[0].checked = true;
 		</c:forEach>
-		
-		/*var isAbleToPraise = function(actor,target){
-			location.href="/prasie/check";
-			return true;
-		}
-		var toPraise = function(${sessionScope.memberSimpleVO.memberId},${memberVO.memberId}){
-			if(isAbletoPraise()){
-				$('#p_btn').trigger('click');
-			}
-			else{
-				alert("같은 팀원만 칭찬할 수 있습니다.");
-			}
-		}
-		*/
-		
+
 		var elements = document.getElementsByClassName("profile_box");
 		var i;
 		for (i = 0; i < elements.length; i++) {
 
 			elements[i].style.flex = "50%";
 		}
+
 		$('#praise_btn').on('click', function() {
-			$("#praise_form").submit();
+			var pr = new Array();
+			for (var i = 0; i < 5; i++) {
+				if (document.getElementsByName('praise')[i].checked) {
+					console.log(document.getElementsByName('praise')[i].value);
+					pr.push(document.getElementsByName('praise')[i].value);
+
+				}
+			}
+			console.log(pr);
+
+			$.ajax({
+				method : 'post',
+				url : '/praise/update',
+				traditional : true,
+				data : {
+					'actor' : '${sessionScope.memberSimpleVO.memberId }',
+					'target' : '${memberVO.memberId }',
+					'praise' : pr
+				},
+
+				success : function(data) {
+					var i = 1; 
+					$(data).each(function(){
+						$('#praise' + i + '_cnt')[0].innerHTML=this.praiseCnt;
+						console.log($('#praise' + i + '_cnt'));
+						i++;
+				});
+					}
+
+			});
 		});
-		
-		
+
 	});
 </script>
 </html>

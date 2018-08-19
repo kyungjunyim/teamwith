@@ -218,6 +218,7 @@ public class MemberService {
 		if (praise == null || praise.isEmpty()) {
 			return -1;
 		}
+		
 		int result = memberPraiseDAO.removeMemberPraise(praise.get(0).toDTO());
 		for (MemberPraiseVO m : praise) {
 			result = memberPraiseDAO.addMemberPraise(m.toDTO());
@@ -228,8 +229,12 @@ public class MemberService {
 
 		return result;
 	}
+	
+	public void removeMemberPraise(String actor, String target) throws Exception {
+		memberPraiseDAO.removeMemberPraise(new MemberPraiseDTO(actor, target, null));
+	}
 
-	public int removeMemberPraise(String memberId) throws Exception {
+	public int removeMemberAllPraise(String memberId) throws Exception {
 		if (memberId == null) {
 			return -1;
 		}
