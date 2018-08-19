@@ -280,7 +280,7 @@
 								<div class="row">
 							</c:if>
 							<div class="col team_regist_modal_element">
-								<input class="form-check-input" type="radio" name="roleId"
+								<input class="form-check-input" type="radio" name="roles"
 									value="${role.key }">${role.value }
 							</div>
 							<c:if test="${(i.index mod 2) eq 1}">
