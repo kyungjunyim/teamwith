@@ -193,6 +193,12 @@ font-size:80%;margin-left:11%;margin-top:2%
 	bottom:5%;
 	right:12%;
 }
+.pic_box{
+width:80%;
+ height:73%;
+margin:0 auto;
+background-color: #ffddc9;
+}
 </style>
 </head>
 <body>
@@ -201,7 +207,7 @@ font-size:80%;margin-left:11%;margin-top:2%
    
         <li>
         	<div class="left_box" >
-        		<img src="${portfolio.portfolioPic }" width="500px" height="500px"/>
+        		<img src="${portfolio.portfolioPic}" width="500px" height="500px"/>
         		<div style="font-size:230%;margin-top:30px">${portfolio.portfolioTitle }</div>
         		 
         	</div>
@@ -240,13 +246,14 @@ font-size:80%;margin-left:11%;margin-top:2%
         <!-- 3번부터 동적으로 생성해야 하는 부분 (시용자가 추가했을 경우) -->
         <c:forEach items="${requestScope.portfolioContent }" var="content" varStatus="i">
         	<c:if test="${content.portfolioContentOrder!=portfolioContent[i.index-1].portfolioContentOrder }">
+        		<c:set var="contentTemp" value="${content}" scope="request"/>
 	        	<c:choose>
-	        		<c:when test="${content.layoutId=='l1'}">
+	        		<c:when test="${content.layoutId=='layout-1'}">
 	        			<li>
 				        	<jsp:include page="portfolioContentLayout1.jsp"/>
 				        </li>
 	        		</c:when>
-	        		<c:when test="${content.layoutId=='l2'}">
+	        		<c:when test="${content.layoutId=='layout-2'}">
 	        			<li>
 	        				<jsp:include page="portfolioContentLayout2.jsp"/>
 	        			</li>

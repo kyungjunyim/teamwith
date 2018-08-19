@@ -2,12 +2,15 @@ package com.teamwith.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 @Component
 public class UploadFileUtils {
@@ -28,6 +31,17 @@ public class UploadFileUtils {
 		
 		return saveName;
 	}
+	public static String uploadFile2(String uploadPath, String fileName, byte [] fileData) throws Exception {
+		String newFileName=getNewFilename(fileName);
+		File dir=new File(uploadPath);
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		System.out.println(uploadPath+fileName);
+		File target=new File(uploadPath,newFileName);
+		FileCopyUtils.copy(fileData, target);
+		return newFileName;
+	}
 	
 	private static boolean isImage(String contentType) {
 		if(contentType.equals("image")) {
@@ -35,7 +49,14 @@ public class UploadFileUtils {
 		}
 		return false;
 	}
+	private static String getNewFilename(String filename) {
+//	      if (filename.contains(".")) {
+//	         String ext = filename.substring(filename.indexOf('.'));
+	         return UUID.randomUUID().toString() +filename;
 
+//	      }
+//	      return null;
+	   }
 	private static void makeThumbnail(String saveName, Part file) throws Exception {
 		BufferedImage sourceImg = ImageIO.read(new File(saveName));
 		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT,150);

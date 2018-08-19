@@ -117,7 +117,9 @@ $(function(){
 				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==2){
 			str='<input type="text" class="form-control registerPortfolioInput"  name="portfolioURL" style="display:inline;margin-top:30%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
-				+'<input type="hidden" name="portfolioContentName" value="media"/>'
+				+'<input type="hidden" name="portfolioContentName" value="media"/><br>'
+				+'<동영상 등록하는 방법><br>1.Youtube 동영상 화면 우클릭<br>2.소스코드 복사 클릭<br>'
+				+'3. src="https://www.youtube.com/embed/nelSiMnilRw?ecver=1<br>"..." 안에 내용을 복사하여 입력해 주세요'
 				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==3){
 			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" name="portfolioFile"/>'
@@ -128,8 +130,10 @@ $(function(){
 				+'<input type="hidden" name="portfolioContentName" value="image"/>'
 				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==5){
-			str='<input type="text" class="form-control registerPortfolioInput" name="portfolioURL" style="display:inline;margin-top:40%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>';
-			+'<input type="hidden" name="portfolioContentName" value="media"/>'
+			str='<input type="text" class="form-control registerPortfolioInput" name="portfolioURL" style="display:inline;margin-top:40%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
+			+'<input type="hidden" name="portfolioContentName" value="media"/><br>'
+			+'<동영상 등록하는 방법><br>1.Youtube 동영상 화면 우클릭<br>2.소스코드 복사 클릭<br>'
+			+'3. src="https://www.youtube.com/embed/nelSiMnilRw?ecver=1<br>"..." 안에 내용을 복사하여 입력해 주세요'
 			+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==6){
 			str='<input type="file" style="margin-top: 50%" name="portfolioFile">'
@@ -185,6 +189,7 @@ $(function(){
     $( document ).on( 'click', '#deleteBtn', function () {
     	oldNum = selNum;
         selNum = selNum - 1;
+        order=order-1;
 	  $(this).parent().remove();
 	 
 	  $proList = $(".product_lis, li");
@@ -485,10 +490,12 @@ input:checked + .slider:before {
 <jsp:include page="portfolioContentLayout1.jsp"/>
 <input type="file" name="portfolioFile" value="split">
 <button type="button" class="btn" id="deleteBtn" >삭제</button>
+<input type="hidden" name="layoutId" value="layout-1"/>
 </div>
 <div id="layout2" style="display:none">
 <jsp:include page="portfolioContentLayout2.jsp"/>
 <button type="button" class="btn" id="deleteBtn">삭제</button>
+<input type="hidden" name="layoutId" value="layout-2"/>
 </div>
 </body>
 </html>

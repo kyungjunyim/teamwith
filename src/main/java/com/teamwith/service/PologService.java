@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.teamwith.dao.PologDAO;
 import com.teamwith.dao.PortfolioContentDAO;
@@ -90,31 +91,36 @@ public class PologService {
 		return portfolioSimpleList;
 	}
 	/**포폴컨텐츠랑 포폴 한방에 등록*/
-	public boolean registerPortfolioAndContent(Map<Object,Part> portfolioAndContent) {
+	public String registerPortfolioAndContent(Map<Object,MultipartFile> portfolioAndContent,String rootPath) {
 		if(portfolioAndContent==null) {
-			return false;
+			return null;
 		}
-		boolean check = true;
+		String result=null;
+		PortfolioVO portfolio=null;
+		PortfolioContentVO pc=null;
 		Iterator<Object> it=portfolioAndContent.keySet().iterator();
 		try {
 			while(it.hasNext()) {
 				Object obj=it.next();
+				System.out.println(obj);
 				if(obj instanceof PortfolioVO) {
-					this.registerPortfolio((PortfolioVO)obj,portfolioAndContent.get(obj) );
+					portfolio=this.registerPortfolio((PortfolioVO)obj,portfolioAndContent.get(obj),rootPath );
+					result=portfolio.getPortfolioId();
 				}else if(obj instanceof PortfolioContentVO){
-					this.registerPortfolioContent((PortfolioContentVO)obj,portfolioAndContent.get(obj) );
+					pc=(PortfolioContentVO)obj;
+					pc.setPortfolioId(portfolio.getPortfolioId());
+					this.registerPortfolioContent(pc,portfolioAndContent.get(obj),rootPath );
 				}
 			}
 		}
 		 catch (Exception e) {
 			e.printStackTrace();
-			check=false;
 		} 
 		
-		return check;
+		return result;
 	}
 	/**포폴컨텐츠 하나씩 등록*/
-	public int registerPortfolioContent(PortfolioContentVO portfolioContent, Part file) {
+	public int registerPortfolioContent(PortfolioContentVO portfolioContent,MultipartFile file,String rootPath) {
 		if (portfolioContent == null) {
 			return 0;
 		}
@@ -123,13 +129,16 @@ public class PologService {
 		try {
 			List<String> portfolioContentId = portfolioContentDAO.getId();
 			portfolioContent.setPortfolioContentId(this.generateId(portfolioContentId, "portfolio_content"));
-			int r = portfolioContentDAO.addPortfolioContent(portfolioContent.toDTO());
-			if (r != 0) {
-				if (file != null) {
-					UploadFileUtils.uploadFile("C:\\teamwith\\image\\portfolio\\" + portfolioContent.getPortfolioId(),
-							portfolioContent.getPortfolioContentId(), file);
-				}
+			if (file != null) {
+				String attachPath = "resources\\image\\portfolio\\";
+		        String filename = file.getOriginalFilename();
+				String type=file.getContentType().split("/")[1];
+				String newFileName=UploadFileUtils.uploadFile2(rootPath+attachPath+portfolioContent.getPortfolioId(),
+						portfolioContent.getPortfolioContentId()+"."+type,file.getBytes());
+				portfolioContent.setPortfolioContentValue("\\"+attachPath+portfolioContent.getPortfolioId()+"\\"+newFileName);
+				
 			}
+			res = portfolioContentDAO.addPortfolioContent(portfolioContent.toDTO());
 
 		} catch (Exception e) {
 			check = false;
@@ -141,7 +150,7 @@ public class PologService {
 		return res;
 	}
 	/**포폴컨텐츠 한방에 등록*/
-	public boolean registerPortfolioContents(Map<PortfolioContentVO,Part> portfolioContents) {
+	public boolean registerPortfolioContents(Map<PortfolioContentVO,MultipartFile> portfolioContents,String rootPath) {
 		if(portfolioContents==null) {
 			return false;
 		}
@@ -151,7 +160,7 @@ public class PologService {
 			Iterator<PortfolioContentVO> it=portfolioContents.keySet().iterator();
 			while(it.hasNext()) {
 				PortfolioContentVO pc=it.next();
-				int r=this.registerPortfolioContent(pc,portfolioContents.get(pc));
+				int r=this.registerPortfolioContent(pc,portfolioContents.get(pc),rootPath);
 				if(r!=0) {
 					res++;
 				}
@@ -171,29 +180,43 @@ public class PologService {
 		}
 	}
 
-	public int registerPortfolio(PortfolioVO portfolio,Part file) {
+	public PortfolioVO registerPortfolio(PortfolioVO portfolio,MultipartFile file,String rootPath) {
 		if (portfolio == null) {
-			return 0;
+			System.out.println("레지스터 포폴 널");
+			return null;
 		}
 		int res = 0;
 		boolean check = true;
-		try {
+		try {System.out.println("레지스터 GetId call..");
 			List<String> portfolioId = portfolioDAO.getId();
-			portfolio.setPortfolioId(this.generateId(portfolioId, "portfolio"));
-			res = portfolioDAO.addPortfolio(portfolio.toDTO());
-			if(res!=0) {
+			System.out.println("레지스터 GetId Success");
+			String portfolioId1=this.generateId(portfolioId, "portfolio");
+			System.out.println("레지스터 Success generateId");
+			portfolio.setPortfolioId(portfolioId1);
+			System.out.println("레지스터포폴 아이디:"+portfolio.getPortfolioId());
+			
+//			res = portfolioDAO.addPortfolio(portfolio.toDTO());
+//			if(res!=0) {
 				if(file!=null) {
-					UploadFileUtils.uploadFile("C:\\teamwith\\image\\portfolio\\"+portfolio.getPortfolioId(),portfolio.getPortfolioId(), file);
+					String attachPath = "resources\\image\\portfolio\\";
+			        String filename = file.getOriginalFilename();
+			        String type=file.getContentType().split("/")[1];
+			        System.out.println("uploadPath="+rootPath+attachPath+portfolio.getPortfolioId());
+			        System.out.println("fileName="+portfolio.getPortfolioId()+"."+type);
+					String newFileName=UploadFileUtils.uploadFile2(rootPath+attachPath+portfolio.getPortfolioId(),portfolio.getPortfolioId()+"."+type,
+							file.getBytes());
+					portfolio.setPortfolioPic("\\"+attachPath+portfolio.getPortfolioId()+"\\"+newFileName);
+					res = portfolioDAO.addPortfolio(portfolio.toDTO());
 				}
-			}
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			check = false;
 		} finally {
 			if (!check)
-				return 0;
+				return null;
 		}
-		return res;
+		return portfolio;
 	}
 
 	public int removePortfolio(String portfolioId) {
