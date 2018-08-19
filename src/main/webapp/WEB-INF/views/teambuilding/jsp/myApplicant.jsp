@@ -159,7 +159,7 @@
 					<div class="row my_application_row">
 						<div class="text_blue my_application_empty">
 							<span>지원 내역이 없습니다</span><br /> <br />
-							<button type="button" class="btn btn-md btn_submit">팀
+							<button type="button" class="btn btn-md btn_submit" onclick="location='/member'">회원
 								둘러보기</button>
 						</div>
 					</div>
