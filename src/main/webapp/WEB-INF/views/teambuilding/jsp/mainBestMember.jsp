@@ -22,7 +22,7 @@
 	<c:if test="${not empty bestMemberList }">
 	<div class="row best_member_row_whole">
 		<c:forEach items="${bestMemberList }" var="bestMember" begin="0" end="3">
-			<div class="col-xs-6 main_content_col" onclick="location = '/${bestMember.memberId }'">
+			<div class="col-xs-6 main_content_col" onclick="location = '/polog/${bestMember.memberId }'">
 				<div class="row member_image_row">
 					<img src="${bestMember.memberPic }" class="member_image">
 				</div>
