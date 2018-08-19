@@ -85,7 +85,7 @@ public class ProfileController {
 			tdMap.put("tendency-5", tendency.getTendency5());
 			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
 			profileService.updateMemberTendency(memberTendency);
-			//
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

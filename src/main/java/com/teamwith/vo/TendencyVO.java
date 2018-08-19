@@ -1,5 +1,8 @@
 package com.teamwith.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class TendencyVO {
 	private String tendency1;
 	private String tendency2;
