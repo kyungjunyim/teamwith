@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +78,7 @@
 						</div>
 						<!-- 지원자 보기 버튼 -->
 						<div>
-							<form action="myApplicant.do" method="post">
+							<form action="/teaminfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }" method="post">
 								<input type="hidden" name="teamId" value="${teamInfo.teamId }">
 								<input type="hidden" name="job" value="myApplicant">
 								<button type="submit"
