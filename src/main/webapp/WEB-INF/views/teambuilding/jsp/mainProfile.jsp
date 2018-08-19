@@ -52,7 +52,7 @@
 		</div>
 	</div>
 	<div class="row profile_row profile_row_btn">
-			<button type="submit" class="btn btn-md btn_submit" onclick="location = '/${sessionScope.memberSimpleVO.memberId }'">나의 폴로그</button>
+			<button type="submit" class="btn btn-md btn_submit" onclick="location = '/polog/${sessionScope.memberSimpleVO.memberId }'">나의 폴로그</button>
 	</div>
 </body>
 </html>
