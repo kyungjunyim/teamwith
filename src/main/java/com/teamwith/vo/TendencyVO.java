@@ -1,5 +1,8 @@
 package com.teamwith.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class TendencyVO {
 	private String tendency1;
 	private String tendency2;
@@ -18,7 +21,6 @@ public class TendencyVO {
 		this.tendency3 = tendency3;
 		this.tendency4 = tendency4;
 		this.tendency5 = tendency5;
-		//
 	}
 
 	public final String getTendency1() {
