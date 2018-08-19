@@ -32,7 +32,7 @@ public class PologMainController {
 	@Inject
 	MemberService memberService;
 
-	@RequestMapping(value = "/{memberId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/polog/{memberId}", method = RequestMethod.GET)
 	public String home(@PathVariable(value = "memberId") String memberId, Model model, HttpSession session) {
 		String sessionMemId = null;
 		MemberSimpleVO msVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
