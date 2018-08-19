@@ -170,8 +170,10 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><button class="btn btn-md btn_color" data-toggle="modal"
-							data-target="#praiseModal">칭찬하기</button></td>
+					<td><button class="btn btn-md btn_color"
+							onclick="	location.href='/praise/check';">칭찬하기</button> <input
+						type="hidden" data-toggle="modal" data-target="#praiseModal"
+						id="p_btn"></td>
 				</tr>
 			</table>
 		</div>
@@ -234,6 +236,25 @@
 </body>
 <script>
 	$(document).ready(function() {
+		
+		<c:forEach items="${myPraiseList}" var="p">
+		$('input:checkbox[id=${p.praiseId}]')[0].checked = true;
+		</c:forEach>
+		
+		/*var isAbleToPraise = function(actor,target){
+			location.href="/prasie/check";
+			return true;
+		}
+		var toPraise = function(${sessionScope.memberSimpleVO.memberId},${memberVO.memberId}){
+			if(isAbletoPraise()){
+				$('#p_btn').trigger('click');
+			}
+			else{
+				alert("같은 팀원만 칭찬할 수 있습니다.");
+			}
+		}
+		*/
+		
 		var elements = document.getElementsByClassName("profile_box");
 		var i;
 		for (i = 0; i < elements.length; i++) {
@@ -244,10 +265,7 @@
 			$("#praise_form").submit();
 		});
 		
-		<c:forEach var="p" items="${praiseList}">
-		$('input:checkbox[id=${p.praiseId}]')[0].checked = true;
-		</c:forEach>
+		
 	});
-
 </script>
 </html>
