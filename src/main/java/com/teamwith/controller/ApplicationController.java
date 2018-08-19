@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamwith.service.ApplicationService;
 import com.teamwith.vo.InterviewVO;
@@ -53,6 +54,15 @@ public class ApplicationController {
 		applicationService.changeApplicationStatus(3, applicationId);
 		
 		return "redirect:/application/myApplication";
+	}
+	
+	@RequestMapping(value="/change/{applicationId}", method=RequestMethod.GET)
+	public String change(@PathVariable("applicationId") String applicationId, @RequestParam("status") int status, @RequestParam("teamId") String teamId) {
+		applicationId = "application-" + applicationId;
+		
+		applicationService.changeApplicationStatus(status, applicationId);
+		
+		return "redirect:/teamInfo/applicant/" + teamId;
 	}
 
 }

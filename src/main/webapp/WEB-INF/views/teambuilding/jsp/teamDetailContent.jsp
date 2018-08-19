@@ -78,7 +78,7 @@
 						</div>
 						<!-- 지원자 보기 버튼 -->
 						<div>
-							<button type="submit"
+							<button type="button"
 								class="btn team_detail_btn btn-md team_detail_btn_color btn_apply_member"
 								id="myApplicants"
 								onclick="location='/teamInfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }'">지원자보기</button>
@@ -264,10 +264,4 @@
 	<!-- 내용끝 -->
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-	$(".btn_apply_member").click(function(e) {
-		location.href = "test.jsp";
-	})
-</script>
-
 </html>
