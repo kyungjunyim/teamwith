@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/teamwith15/polog/css/contact.css">
+<link rel="stylesheet" type="text/css" href="/resources/polog/css/contact.css">
 <style>
  @font-face {
   font-family: 'Material Icons';
@@ -34,8 +29,6 @@
 }
 </style>
 <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
-</head>
-<body>
 	<div class="container" style="padding: 20px;">
 		<div id="contact" class="section scrollspy">
 			<h3 style="text-align: center;">Contact</h3>
@@ -96,6 +89,4 @@
 			</div>
 		</div>
 	</div>
-</body>
-<script src="/teamwith15/polog/js/contact.js"></script>
-</html>
+<script src="../js/contact.js"></script>

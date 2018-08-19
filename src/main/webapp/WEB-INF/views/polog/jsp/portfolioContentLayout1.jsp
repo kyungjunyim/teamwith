@@ -37,7 +37,7 @@
 </div>
 <div class="bottom_content">
 		<textarea class="form-control registerPortfolioInput" style="margin:0 auto;margin-top:2.5%;height:73%;width:80%;resize: none"
-		name="portfolioIntro"  placeholder="소개글을 입력하세요"></textarea>
+		name="contentIntro"  placeholder="소개글을 입력하세요"></textarea>
 </div> 
 </c:otherwise>
 </c:choose>

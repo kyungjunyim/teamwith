@@ -1,30 +1,25 @@
 package com.teamwith.service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import javax.inject.Inject;
 
-import com.teamwith15.dao.MemberDAO;
-import com.teamwith15.util.CodeGenerator;
-import com.teamwith15.util.MailUtil;
-import com.teamwith15.vo.MemberVO;
-import com.teamwith15.vo.MyApplicationVO;
+import com.teamwith.vo.MemberVO;
+import com.teamwith.vo.MyApplicationVO;
 
 public class AccountService {
 	private static AccountService accountService;
-/*
 
+	@Inject
 	private MemberService memberService;
+	@Inject
 	private PologService pologService;
+	@Inject
 	private ProfileService profileService;
+	@Inject
 	private ApplicationService applicationService;
 
 	static {
@@ -32,39 +27,8 @@ public class AccountService {
 	}
 
 	private AccountService() {
-		memberService = MemberService.getInstance();
-		pologService = PologService.getInstance();
-		profileService = ProfileService.getInstance();
-		applicationService = ApplicationService.getInstance();
-
-		String file = "com/teamwith15/config/config.xml";
-		InputStream is = null;
-		try {
-			is = Resources.getResourceAsStream(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		factory = new SqlSessionFactoryBuilder().build(is);
 	}
 
-	public static AccountService getInstance() {
-		if (accountService == null) {
-			accountService = new AccountService();
-		}
-		return accountService;
-	}
-
-	public void openSession() {
-		session = factory.openSession();
-	}
-
-	public void commitSession() {
-		session.commit();
-	}
-
-	public void closeSession() {
-		session.close();
-	}
 
 	public int updatePassword(String memberId, String memberPassword, String newPassword) throws Exception {
 		if (memberId == null || memberPassword == null || newPassword == null) {
@@ -125,5 +89,5 @@ public class AccountService {
 		pologService.removePolog(memberId);
 		profileService.removeMember(memberId);
 	}
-*/
+
 }
