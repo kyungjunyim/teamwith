@@ -40,7 +40,7 @@
 .modal-body {
 	padding: 0;
 	padding-left: 10px;
-    width: 200px;
+	width: 200px;
 }
 
 .modal-body .row {
@@ -69,9 +69,9 @@
 
 <body>
 
-	<form action="/profile/edit" method="post" id="profile_form">
-		<input
-			type='hidden' name="memberId"
+	<form action="/profile/edit" method="post" id="profile_form"
+		enctype="multipart/form-data">
+		<input type='hidden' name="memberId"
 			value="${sessionScope.memberSimpleVO.memberId }">
 		<div class="profile" id="profile">
 
@@ -83,11 +83,12 @@
 						<tr>
 
 							<th><i class="material-icons">info</i>
-								&nbsp;&nbsp;Information </th>
+								&nbsp;&nbsp;Information</th>
 						</tr>
 						<tr>
 							<td>이름</td>
-							<td id="member_name">${memberVO.memberName } ${sessionScope.memberSimpleVO.memberId } ${memberVO.memberId }</td>
+							<td id="member_name">${memberVO.memberName }
+								${sessionScope.memberSimpleVO.memberId } ${memberVO.memberId }</td>
 						</tr>
 						<tr>
 							<td>이메일</td>
@@ -103,10 +104,12 @@
 							<td>생년월일</td>
 							<td id="memberBirth">${memberVO.memberBirth }</td>
 						</tr>
-						<!-- 	<tr>
+						<tr>
 							<td>프로필 사진</td>
-							<td><input type="file" name="member_pic" class="form-control" ></td>
-						</tr> -->
+							<td><input id="file" type="file" name="file"
+								class="form-control"> <!-- <button type="button" onclick="$('#file').trigger('click')">파일</button> -->
+							</td>
+						</tr>
 						<tr>
 							<td>프로필 공개 여부</td>
 							<td><button id="public_btn" type="button"
@@ -176,7 +179,8 @@
 					</tr>
 
 					<tr>
-						<td colspan="2"><div class="modal-dialog" style="max-width: none;">
+						<td colspan="2"><div class="modal-dialog"
+								style="max-width: none;">
 								<div class="modal-content">
 									<div class="modal-header"
 										style="color: #ff4111; text-align: center">관심분야 선택</div>
@@ -203,7 +207,7 @@
 								<c:if test="${(i.index mod 3) eq 0 }">
 									<div class="col"></div>
 							</div> </c:if>
-							
+
 							</div>
 							</div>
 							</div></td>
@@ -211,7 +215,7 @@
 					<tr>
 						<td>역할</td>
 						<td><select id="member_role" class="profile_input"
-							name="memberRole">
+							name="roleId">
 								<option value="role-1">개발자</option>
 								<option value="role-2">디자이너</option>
 								<option value="role-3">기획자</option>
@@ -493,8 +497,8 @@
 
 						<td id="tendency_name"><c:out value="${tNames[0] }"></c:out></td>
 						<td><input type="range" min="1" max="10" value="${td.value }"
-							class="slider slider1" id="${td.key}" name="tendency${cnt.count }"
-							oninput="oninput${cnt.count}()"></td>
+							class="slider slider1" id="${td.key}"
+							name="tendency${cnt.count }" oninput="oninput${cnt.count}()"></td>
 						<td id="tendency_name">${tNames[1] }</td>
 
 					</tr>
@@ -514,9 +518,6 @@
 	$(document)
 			.ready(
 					function() {
-						if ($('#member_active').val() == '0') {
-							document.getElementById('active_btn').innerText = '활동 가능';
-						}
 
 						if ($('#member_public').val() == '0') {
 							document.getElementById('public_btn').innerText = '공개';
@@ -564,9 +565,9 @@
 											} else if ($('input:checkbox[name="categoryId"]:checked').length > 5) {
 												alert("관심분야는 최대 5개까지 선택 가능합니다.");
 												$('input:checkbox[name="categoryId"]:checked')[0].checked = false;
-											} else if ($('input:checkbox[name="skillId"]:checked').length > 30) {
+											} else if ($('input:checkbox[name="skill"]:checked').length > 30) {
 												alert("기술은 최대 30개까지 선택 가능합니다.");
-												$('input:checkbox[name="skillId"]:checked')[0].checked = false;
+												$('input:checkbox[name="skill"]:checked')[0].checked = false;
 											}
 										});
 
