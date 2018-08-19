@@ -78,13 +78,10 @@
 						</div>
 						<!-- 지원자 보기 버튼 -->
 						<div>
-							<form action="/teamInfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }" method="post">
-								<input type="hidden" name="teamId" value="${teamInfo.teamId }">
-								<input type="hidden" name="job" value="myApplicant">
-								<button type="submit"
-									class="btn team_detail_btn btn-md team_detail_btn_color btn_apply_member"
-									id="myApplicants">지원자보기</button>
-							</form>
+							<button type="submit"
+								class="btn team_detail_btn btn-md team_detail_btn_color btn_apply_member"
+								id="myApplicants"
+								onclick="location='/teamInfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }'">지원자보기</button>
 						</div>
 						<!-- 지원자 보기 버튼 끝 -->
 					</div>
@@ -127,7 +124,8 @@
 
 			<!-- 지원하기, 모집완료 버튼! -->
 			<div class="row team_detail_row team_detail_interval">
-				<c:if	test="${sessionScope.memberSimpleVO.memberId ne requestScope.teamInfo.memberId }">
+				<c:if
+					test="${sessionScope.memberSimpleVO.memberId ne requestScope.teamInfo.memberId }">
 					<c:if test="${canApply == true }">
 						<button type="button"
 							class="btn team_detail_btn btn-md team_detail_btn_submit team_detail_btn_center"
@@ -137,12 +135,13 @@
 				<c:if
 					test="${sessionScope.memberSimpleVO.memberId eq requestScope.teamInfo.memberId }">
 					<c:if test="${teamInfo.teamStatus eq 0 }">
-					<button id="closeBtn" type="button"
-						class="btn team_detail_btn btn-md team_detail_btn_submit team_detail_btn_center">모집
-						완료</button>
-					<form action="closeTeam.do" method="post" id="closeForm">
-						<input type="hidden" name="teamId" value="${requestScope.teamInfo.teamId }">
-					</form>
+						<button id="closeBtn" type="button"
+							class="btn team_detail_btn btn-md team_detail_btn_submit team_detail_btn_center">모집
+							완료</button>
+						<form action="closeTeam.do" method="post" id="closeForm">
+							<input type="hidden" name="teamId"
+								value="${requestScope.teamInfo.teamId }">
+						</form>
 					</c:if>
 				</c:if>
 
