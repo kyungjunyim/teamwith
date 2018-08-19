@@ -99,9 +99,9 @@ $(function(){
 }
 @font-face {
 	font-family: nanumSquareRound;
-	src: url(/teamwith15/fonts/NanumSquareRoundEB.eot) format('embedded-opentype'),
-		url(/teamwith15/fonts/NanumSquareRoundEB.woff) format('woff'),
-		url(/teamwith15/fonts/NanumSquareRoundEB.ttf) format('truetype');
+	src: url(/resources/fonts/NanumSquareRoundEB.eot) format('embedded-opentype'),
+		url(/resources/fonts/NanumSquareRoundEB.woff) format('woff'),
+		url(/resources/fonts/NanumSquareRoundEB.ttf) format('truetype');
 	font-weight: bold;
 }
 
