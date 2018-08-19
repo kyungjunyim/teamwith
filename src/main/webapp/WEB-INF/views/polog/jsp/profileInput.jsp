@@ -12,7 +12,7 @@
 	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
 	rel="stylesheet">
 
-<link href="/resourcespolog/css/profileEdit.css" rel="stylesheet">
+<link href="/resources/polog/css/profileEdit.css" rel="stylesheet">
 
 </head>
 <style>
@@ -69,8 +69,8 @@
 
 <body>
 
-	<form action="" method="post" id="profile_form">
-		<input type="hidden" name="job" value="update"> <input
+	<form action="/profile/edit" method="post" id="profile_form">
+		<input
 			type='hidden' name="memberId"
 			value="${sessionScope.memberSimpleVO.memberId }">
 		<div class="profile" id="profile">
@@ -83,11 +83,11 @@
 						<tr>
 
 							<th><i class="material-icons">info</i>
-								&nbsp;&nbsp;Information</th>
+								&nbsp;&nbsp;Information </th>
 						</tr>
 						<tr>
 							<td>이름</td>
-							<td id="member_name">${memberVO.memberName }</td>
+							<td id="member_name">${memberVO.memberName } ${sessionScope.memberSimpleVO.memberId } ${memberVO.memberId }</td>
 						</tr>
 						<tr>
 							<td>이메일</td>
@@ -95,13 +95,13 @@
 						</tr>
 						<tr>
 							<td>전화번호</td>
-							<td><input type="text" id="member_phone" name="member_phone"
+							<td><input type="text" id="member_phone" name="memberPhone"
 								class="profile_input" style="text-align: right;"
 								value="${memberVO.memberPhone }"></td>
 						</tr>
 						<tr>
 							<td>생년월일</td>
-							<td id="member_birth">${memberVO.memberBirth }</td>
+							<td id="memberBirth">${memberVO.memberBirth }</td>
 						</tr>
 						<!-- 	<tr>
 							<td>프로필 사진</td>
@@ -111,7 +111,7 @@
 							<td>프로필 공개 여부</td>
 							<td><button id="public_btn" type="button"
 									class="btn btn-md profile_add_btn">공개</button> <input
-								type="hidden" name="member_public" id="member_public"
+								type="hidden" name="memberPublic" id="member_public"
 								value="${memberVO.memberPublic }"></td>
 						</tr>
 						<tr>
@@ -163,7 +163,7 @@
 					</tr>
 					<tr>
 						<td><textarea id="member_intro" class="profile_input"
-								name="member_intro">${memberVO.memberIntro}</textarea></td>
+								name="memberIntro">${memberVO.memberIntro}</textarea></td>
 					</tr>
 				</table>
 			</div>
@@ -211,7 +211,7 @@
 					<tr>
 						<td>역할</td>
 						<td><select id="member_role" class="profile_input"
-							name="member_role">
+							name="memberRole">
 								<option value="role-1">개발자</option>
 								<option value="role-2">디자이너</option>
 								<option value="role-3">기획자</option>

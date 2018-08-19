@@ -54,10 +54,11 @@ public class ProfileController {
 		return jspPath + "profileEdit";
 	}
 
-	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.POST)
-	public String profileEdit(@PathVariable(value = "memId") String memberId, MemberVO updateMemberInfo,
-			String[] regionId, String[] skill, String[] categoryId, Model model, TendencyVO tendency) {
-
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String profileEdit(MemberVO updateMemberInfo, String[] regionId, String[] skill, String[] categoryId,
+			Model model, TendencyVO tendency) {
+		
+		String memberId = updateMemberInfo.getMemberId();
 		try {
 
 			/* memberInfo */
@@ -76,12 +77,11 @@ public class ProfileController {
 			tdMap.put("tendency-5", tendency.getTendency5());
 			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
 			profileService.updateMemberTendency(memberTendency);
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/" + updateMemberInfo.getMemberId();
+		return "redirect:/" + memberId;
 
 	}
 

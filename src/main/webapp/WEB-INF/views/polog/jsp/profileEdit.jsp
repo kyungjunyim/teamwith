@@ -27,8 +27,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollex/0.2.1/jquery.scrollex.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
-<script src="/teamwith15/polog/js/main.js"></script>
-<script src="/teamwith15/polog/js/contact.js"></script>
+<script src="/resources/polog/js/main.js"></script>
+<script src="/resources/polog/js/contact.js"></script>
 
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css" />
 
