@@ -1,11 +1,14 @@
 //Writer : HWANG KYU JIN
 package com.teamwith.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.mail.Multipart;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -17,12 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.TeamService;
 import com.teamwith.vo.ApplicantVO;
+import com.teamwith.vo.FaqVO;
 import com.teamwith.vo.InterviewVO;
+import com.teamwith.vo.RecruitVO;
+import com.teamwith.vo.RequireSkillVO;
 import com.teamwith.vo.TeamDetailVO;
 import com.teamwith.vo.TeamSimpleVO;
 
 @Controller
 @RequestMapping(value = "/teamInfo")
+@MultipartConfig(maxFileSize=1024*1024*10)
 public class TeamInfoController {
 	@Inject
 	private TeamService teamService;
@@ -35,38 +42,90 @@ public class TeamInfoController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerTeam(HttpSession session, TeamDetailVO teamInfo, String[] faqQuestions, String[] faqAnswers,
-			String[] interviewQuestionContents, String[] skill1, String[] skill2, String[] skill3,
-			String[] recruitPreferencecs, String[] recruitExplains, String[] recruitPeopleNum, String[] roles) {
-		for(String a: interviewQuestionContents) {
-			System.out.println(a);
-		}for(String a: skill1) {
-			System.out.println(a);
-		}for(String a: skill2) {
-			System.out.println(a);
-		}for(String a: skill3) {
-			System.out.println(a);
-		}for(String a: recruitPreferencecs) {
-			System.out.println(a);
-		}for(String a: recruitExplains) {
-			System.out.println(a);
-		}for(String a: recruitPeopleNum) {
-			System.out.println(a);
-		}for(String a: roles) {
-			System.out.println(a);
-		}
+	public String registerTeam(HttpSession session, TeamDetailVO teamInfo, String role1, String role2, String role3,
+			String[] faqQuestions, String[] faqAnswers, String[] interviewQuestionContents, String[] skill1,
+			String[] skill2, String[] skill3, String[] recruitPreferences, String[] recruitExplains,
+			String[] recruitPeopleNum, Multipart teamPicFile) {
 		
-		System.out.println(interviewQuestionContents);
-		System.out.println(skill1);
-		System.out.println(skill2);
-		System.out.println(skill3);
-		System.out.println(recruitPreferencecs);
-		System.out.println(recruitExplains);
-		System.out.println(recruitPeopleNum);
-		System.out.println(roles);
+		String teamId=null;
+		try {
+			teamId = teamService.registerTeam(teamInfo,null);
 
-		// teamService.registerTeam(teamInfo, file);
-		return null;
+			List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
+			for (String interview : interviewQuestionContents) {
+				InterviewVO interviewQuestion = new InterviewVO();
+				interviewQuestion.setInterviewQuestionContent(interview);
+				interviewQuestion.setTeamId(teamId);
+				interviewList.add(interviewQuestion);
+			}
+			applicationService.registerInteviewQuestion(interviewList);
+
+			List<FaqVO> faqList = new ArrayList<FaqVO>();
+			for (int i = 0; i < faqQuestions.length; i++) {
+				FaqVO faq = new FaqVO();
+				faq.setFaqQuestion(faqQuestions[i]);
+				faq.setFaqAnswer(faqAnswers[i]);
+				faq.setTeamId(teamId);
+				faqList.add(faq);
+			}
+			teamService.registerFaq(faqList);
+
+			List<RecruitVO> recruitList = new ArrayList<RecruitVO>();
+			for (int i = 0; i < recruitPeopleNum.length; i++) {
+				RecruitVO recruit = new RecruitVO();
+				recruit.setRecruitPreference(recruitPreferences[i]);
+				recruit.setRecruitExplain(recruitExplains[i]);
+				recruit.setRecruitPeopleNum(recruitPeopleNum[i]);
+				recruit.setTeamId(teamId);
+				String role = null;
+				switch (i) {
+				case 0:
+					role = role1;
+					break;
+				case 1:
+					role = role2;
+					break;
+				case 2:
+					role = role3;
+					break;
+				default:
+					break;
+				}
+				if (role != null) {
+					recruit.setRoleId(role);
+				}
+				recruitList.add(recruit);
+			}
+			List<String> recruitIds=teamService.registerRecruit(recruitList);
+
+			for(int i=0;i<recruitIds.size();i++) {
+				RequireSkillVO requireSkill=new RequireSkillVO();
+				requireSkill.setRecruitId(recruitIds.get(i));
+				List<String> skillList=new ArrayList<String>();
+				String[] skills=null;
+				switch(i) {
+					case 0:
+						skills=skill1;
+						break;
+					case 1:
+						skills=skill2;
+						break;
+					case 2:
+						skills=skill3;
+						break;
+					default:
+						break;
+				}
+				for(String skill: skills) {
+					skillList.add(skill);
+				}
+				requireSkill.setSkillIds(skillList);
+				teamService.registerRequireSkill(requireSkill);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/teamSearch/"+teamId.substring(5);
 	}
 
 	@RequestMapping(value = "/applicant/{teamId}", method = RequestMethod.GET)

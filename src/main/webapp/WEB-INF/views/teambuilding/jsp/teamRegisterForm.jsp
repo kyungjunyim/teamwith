@@ -20,7 +20,7 @@
 			</div>
 			<hr class="team_regist_hr">
 			<form id="registForm" action="register" method="post"
-				class="team_regist_whole">
+				class="team_regist_whole" enctype="multipart/form-data">
 				<c:if test="${empty teamInfo }">
 					<input type="hidden" name="job" value="addTeam">
 				</c:if>
@@ -80,7 +80,7 @@
 					<div class="col-xs-6 team_regist_form_col team_regist_form_text">팀
 						소개 사진</div>
 					<div class="col-xs-6 team_regist_form_col team_regist_form_input">
-						<input name="teamPic" type="file"
+						<input name="teamPicFile" type="file"
 							class="form-control team_regist_form_inputbox">
 					</div>
 				</div>
@@ -454,7 +454,7 @@
 			<div class="col-xs-6 team_regist_form_col team_regist_form_text">우대
 				조건</div>
 			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
-				<input name="recruitPreference" type="text"
+				<input name="recruitPreferences" type="text"
 					class="form-control team_regist_form_inputbox">
 			</div>
 		</div>
@@ -462,7 +462,7 @@
 			<div class="col-xs-6 team_regist_form_col team_regist_form_text">모집
 				상세 설명</div>
 			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
-				<textarea name="recruitExplain"
+				<textarea name="recruitExplains"
 					class="form-control team_regist_form_inputbox" style="resize: none"></textarea>
 				<button type="button" class="btn btn-md team_regist_btn_color"
 					id="btn_remove_role" onclick="remove_item(this)">삭제하기</button>
@@ -490,12 +490,9 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 	$('document').ready(function(e) {
-
 		$("#registBtn").click(function(e) {
-
-			//$('#registForm').submit();
+			$('#registForm').submit();
 		});
-
 	});
 	var recruitNum = 0;
 
@@ -546,6 +543,7 @@
 		} else {
 			console.log($('#addRole > div > div[name=selectSkill] input[type=checkbox]'));
 			$('#addRole > div > div[name=selectSkill] input[type=checkbox]').attr("name","skill2");
+			$('#addRole > div > div[name=recruitCategoryModal] input[type=radio]').attr("name","role2");
 			obj.parentNode.parentNode.parentNode.remove();
 		}
 	}
