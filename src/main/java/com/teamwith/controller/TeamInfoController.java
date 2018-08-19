@@ -1,27 +1,30 @@
 //Writer : HWANG KYU JIN
 package com.teamwith.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.mail.Multipart;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.TeamService;
 import com.teamwith.vo.ApplicantVO;
 import com.teamwith.vo.FaqVO;
 import com.teamwith.vo.InterviewVO;
+import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.RecruitVO;
 import com.teamwith.vo.RequireSkillVO;
 import com.teamwith.vo.TeamDetailVO;
@@ -45,12 +48,24 @@ public class TeamInfoController {
 	public String registerTeam(HttpSession session, TeamDetailVO teamInfo, String role1, String role2, String role3,
 			String[] faqQuestions, String[] faqAnswers, String[] interviewQuestionContents, String[] skill1,
 			String[] skill2, String[] skill3, String[] recruitPreferences, String[] recruitExplains,
-			String[] recruitPeopleNum, Multipart teamPicFile) {
-		
+			String[] recruitPeopleNum, MultipartFile teamPicFile) {
 		String teamId=null;
+		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
+		String memberId=login.getMemberId();
 		try {
-			teamId = teamService.registerTeam(teamInfo,null);
-
+			teamInfo.setMemberId(memberId);
+			
+			if (teamPicFile != null && !teamPicFile.getOriginalFilename().trim().equals("")) {
+				String rootPath = session.getServletContext().getRealPath("/");
+				String attachPath = "resources\\image\\member\\" + memberId;
+				String filename = teamPicFile.getOriginalFilename();
+				String newFilename = uploadFile(rootPath, attachPath, filename, teamPicFile.getBytes());
+				teamInfo.setTeamPic(newFilename);
+			}
+			
+			String path=session.getServletContext().getRealPath("/")+"resources\\image\\team\\";
+			teamId = teamService.registerTeam(teamInfo,teamPicFile.getBytes(),path);
+			
 			List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
 			for (String interview : interviewQuestionContents) {
 				InterviewVO interviewQuestion = new InterviewVO();
@@ -153,5 +168,25 @@ public class TeamInfoController {
 		model.addAttribute("interviewMap", interviewMap);
 
 		return "teambuilding/jsp/myApplicant";
+	}
+	
+	private String uploadFile(String uploadPath, String attachPath, String originalName, byte[] fileData)
+			throws Exception {
+		String newFilename = attachPath + getNewFilename(originalName);
+
+		File dir = new File(uploadPath);
+		if (!dir.exists()) {
+			dir.mkdirs(); // 존재하지 않는 모든 폴더 생성
+		}
+		File target = new File(uploadPath, newFilename);
+		FileCopyUtils.copy(fileData, target);
+		return "\\" + newFilename;
+	}
+
+	private String getNewFilename(String filename) {
+		if (filename.contains(".")) {
+			return filename.substring(filename.indexOf('.'));
+		}
+		return null;
 	}
 }

@@ -244,7 +244,7 @@ public class TeamService {
 		return result;
 	}
 
-	public String registerTeam(TeamDetailVO teamInfo, Part file) throws Exception {
+	public String registerTeam(TeamDetailVO teamInfo, byte[] file,String path) throws Exception {
 		List<String> teamId = teamDAO.getId();
 		String generatedId = generateId(teamId, "team");
 
@@ -261,8 +261,8 @@ public class TeamService {
 		team.setTeamContestName(teamInfo.getTeamContestName());
 		team.setTeamContestLink(teamInfo.getTeamContestLink());
 		team.setMemberId(teamInfo.getMemberId());
-
-		String teamPicPath = UploadFileUtils.uploadFile("c:/teamwith/image/team", generatedId, file);
+		
+		String teamPicPath = UploadFileUtils.uploadFile2(path, generatedId, file);
 		team.setTeamPic(teamPicPath);
 
 		teamDAO.addTeam(team);
