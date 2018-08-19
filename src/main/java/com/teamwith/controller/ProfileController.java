@@ -20,6 +20,7 @@ import com.teamwith.vo.MemberProjectCategoryVO;
 import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.MemberTendencyVO;
 import com.teamwith.vo.MemberVO;
+import com.teamwith.vo.TendencyVO;
 
 @RequestMapping(value = "/profile")
 @Controller
@@ -34,8 +35,8 @@ public class ProfileController {
 	@Inject
 	MemberService memberService;
 
-	@RequestMapping(value = "/edit/{memberId}", method = RequestMethod.GET)
-	public String profileEditView(@PathVariable(value = "memberId") String memberId, Model model) {
+	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.GET)
+	public String profileEditView(@PathVariable(value = "memId") String memberId, Model model) {
 		try {
 			MemberVO mem = profileService.getMyInfo(memberId);
 
@@ -53,39 +54,43 @@ public class ProfileController {
 		return jspPath + "profileEdit";
 	}
 
-	@RequestMapping(value = "/edit/{memberId}", method = RequestMethod.POST)
-	public String profileEdit(MemberVO updateMemberInfo, String[] regionId, Model model) {
+	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.POST)
+	public String profileEdit(@PathVariable(value = "memId") String memberId, MemberVO updateMemberInfo,
+			String[] regionId, String[] skill, String[] categoryId, Model model, TendencyVO tendency) {
+
 		try {
-			System.out.println(regionId);
+			if (regionId == null) {
+				System.out.println("region null");
+			} else {
+				System.out.println(regionId.length);
+				System.out.println(updateMemberInfo.getMemberId());
+				System.out.println(skill.length);
+				System.out.println(categoryId.length);
+				System.out.println(tendency);
+			}
+
 			/* memberInfo */
 			profileService.updateMemberInfo(updateMemberInfo, null);
-/*
-			// project category 
-			MemberProjectCategoryVO pcVO = new MemberProjectCategoryVO(memberId, categories);
+
+			MemberProjectCategoryVO pcVO = new MemberProjectCategoryVO(memberId, categoryId);
 			memberService.updateMemberProjectCategory(pcVO);
 
-			// skill 
-			Map<String, String> skillMap = new HashMap<String, String>();
-			if (skills != null) {
-				for (String sk : skills) {
-					System.out.println(sk);
-					skillMap.put(sk, "1");
-				}
-			}
-			memberService.updateMemberSkill(new MemberSkillVO(memberId, skillMap));
+			memberService.updateMemberSkill(new MemberSkillVO(memberId, skill));
 
-			// tendency 
 			Map<String, String> tdMap = new HashMap<String, String>();
-			for (int i = 1; i <= 5; i++) {
-				tdMap.put("tendency-", tendencies[i - 1]);
-			}
+			tdMap.put("tendency-1", tendency.getTendency1());
+			tdMap.put("tendency-2", tendency.getTendency2());
+			tdMap.put("tendency-3", tendency.getTendency3());
+			tdMap.put("tendency-4", tendency.getTendency4());
+			tdMap.put("tendency-5", tendency.getTendency5());
 			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
 			profileService.updateMemberTendency(memberTendency);
-*/
+			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/" + jspPath + "memberId";
+		return "redirect:/" + updateMemberInfo.getMemberId();
 
 	}
 

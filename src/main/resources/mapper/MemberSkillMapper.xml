@@ -6,22 +6,13 @@
 	<resultMap type="MemberSkillDTO" id="memberSkillList">
 		<id property="skillId" column="skill_id" />
 		<id property="memberId" column="member_id" />
-		<id property="skillLevel" column="skill_level" />
 	</resultMap>
 
 	<insert id="addMemberSkill" parameterType="MemberSkillDTO">
 		INSERT INTO
 		member_skill_tb
-		VALUES(#{memberId},#{skillId},#{skillLevel})
+		VALUES(#{memberId},#{skillId},1)
 	</insert>
-
-	<update id="updateSkillLevel" parameterType="MemberSkillDTO">
-		UPDATE
-		member_skill_tb
-		SET skill_level = #{skillLevel}
-		WHERE member_id = #{memberId}
-		AND skill_id = #{skillId}
-	</update>
 
 	<delete id="reomveMemberSkill" parameterType="MemberSkillDTO">
 		DELETE FROM

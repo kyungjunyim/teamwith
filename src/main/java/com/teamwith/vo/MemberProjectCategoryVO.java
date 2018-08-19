@@ -10,11 +10,10 @@ import com.teamwith.dto.MemberProjectCategoryDTO;
 @Component
 public class MemberProjectCategoryVO {
 	private String memberId;
-	private List<String> projectCategoryId;
+	private String[] projectCategoryId;
 
 	public MemberProjectCategoryVO() {
 		super();
-		projectCategoryId = new ArrayList<String>();
 	}
 
 	public MemberProjectCategoryVO(List<MemberProjectCategoryDTO> dto) {
@@ -22,8 +21,9 @@ public class MemberProjectCategoryVO {
 		if (dto != null && !dto.isEmpty()) {
 
 			this.memberId = dto.get(0).getMemberId();
-			for (MemberProjectCategoryDTO p : dto) {
-				addProjectCategoryId(p.getProjectCategoryId());
+			projectCategoryId = new String[dto.size()];
+			for (int i = 0; i < projectCategoryId.length; i++) {
+				projectCategoryId[i] = dto.get(i).getProjectCategoryId();
 			}
 		}
 	}
@@ -31,12 +31,7 @@ public class MemberProjectCategoryVO {
 	public MemberProjectCategoryVO(String memberId, String[] projectCategoryId) {
 		super();
 		this.memberId = memberId;
-		this.projectCategoryId = new ArrayList<String>();
-		if (projectCategoryId != null) {
-			for (String ct : projectCategoryId) {
-				this.projectCategoryId.add(ct);
-			}
-		}
+		this.projectCategoryId = projectCategoryId;
 	}
 
 	public List<MemberProjectCategoryDTO> toDTO() {
@@ -50,28 +45,20 @@ public class MemberProjectCategoryVO {
 
 	}
 
-	public String getMemberId() {
+	public final String getMemberId() {
 		return memberId;
 	}
 
-	public List<String> getProjectCategoryId() {
+	public final String[] getProjectCategoryId() {
 		return projectCategoryId;
 	}
 
-	public void setMemberId(String memberId) {
+	public final void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
-	public void setProjectCategoryId(List<String> projectCategoryId) {
+	public final void setProjectCategoryId(String[] projectCategoryId) {
 		this.projectCategoryId = projectCategoryId;
-	}
-
-	public void addProjectCategoryId(String projectCategoryId) {
-		this.projectCategoryId.add(projectCategoryId);
-	}
-
-	public void removeProjectCategoryId(String projectCategoryId) {
-		this.projectCategoryId.remove(projectCategoryId);
 	}
 
 	@Override

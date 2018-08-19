@@ -69,7 +69,7 @@
 
 <body>
 
-	<form action="profile/edit/${sessionScope.memberSimpleVO.memberId }" method="post" id="profile_form">
+	<form action="" method="post" id="profile_form">
 		<input type="hidden" name="job" value="update"> <input
 			type='hidden' name="memberId"
 			value="${sessionScope.memberSimpleVO.memberId }">
@@ -493,7 +493,7 @@
 
 						<td id="tendency_name"><c:out value="${tNames[0] }"></c:out></td>
 						<td><input type="range" min="1" max="10" value="${td.value }"
-							class="slider slider1" id="${td.key}" name="${td.key}"
+							class="slider slider1" id="${td.key}" name="tendency${cnt.count }"
 							oninput="oninput${cnt.count}()"></td>
 						<td id="tendency_name">${tNames[1] }</td>
 
@@ -552,7 +552,7 @@
 						</c:forEach>
 
 						<c:forEach var="c" items="${skillVO.skill}">
-						$('input:checkbox[id=${c.key}]')[0].checked = true;
+						$('input:checkbox[id=${c}]')[0].checked = true;
 						</c:forEach>
 
 						$('#profile_form')

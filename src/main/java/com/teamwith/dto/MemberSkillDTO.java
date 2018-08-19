@@ -6,15 +6,13 @@ import org.springframework.stereotype.Component;
 public class MemberSkillDTO {
 	private String memberId;
 	private String skillId;
-	private int skillLevel;
 	public MemberSkillDTO() {
 		super();
 	}
-	public MemberSkillDTO(String memberId, String skillId, int skillLevel) {
+	public MemberSkillDTO(String memberId, String skillId) {
 		super();
 		this.memberId = memberId;
 		this.skillId = skillId;
-		this.skillLevel = skillLevel;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -22,21 +20,16 @@ public class MemberSkillDTO {
 	public String getSkillId() {
 		return skillId;
 	}
-	public int getSkillLevel() {
-		return skillLevel;
-	}
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 	public void setSkillId(String skillId) {
 		this.skillId = skillId;
 	}
-	public void setSkillLevel(int skillLevel) {
-		this.skillLevel = skillLevel;
-	}
 
 	public String toString() {
-		return "MemberSkillDTO [memberId=" + memberId + ", skillId=" + skillId + ", skillLevel=" + skillLevel + "]";
+		return "MemberSkillDTO [memberId=" + memberId + ", skillId=" + skillId +"]";
 	}
 	@Override
 	public int hashCode() {
@@ -44,7 +37,6 @@ public class MemberSkillDTO {
 		int result = 1;
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
 		result = prime * result + ((skillId == null) ? 0 : skillId.hashCode());
-		result = prime * result + skillLevel;
 		return result;
 	}
 	@Override
@@ -65,8 +57,6 @@ public class MemberSkillDTO {
 			if (other.skillId != null)
 				return false;
 		} else if (!skillId.equals(other.skillId))
-			return false;
-		if (skillLevel != other.skillLevel)
 			return false;
 		return true;
 	}

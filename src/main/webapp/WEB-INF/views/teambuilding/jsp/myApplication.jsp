@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,15 +35,12 @@
 						</tr>
 						<c:if test="${not empty myApplicationList }">
 							<c:forEach items="${myApplicationList }" var="myApplication">
-								<form action="teamDetail.do" method="post" id="form${myApplication.teamId }">
-									<input type="hidden" name="teamId" value="${myApplication.teamId }">
-								</form>
 								<tr>
-									<td id="${myApplication.teamId }" onclick="javascript:clickTrEvent(this)"><img src="${myApplication.teamPic }"
+									<td id="${fn:substringAfter(myApplication.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)"><img src="${myApplication.teamPic }"
 										class="rounded-circle team_image"></td>
-									<td id="${myApplication.teamId }" onclick="javascript:clickTrEvent(this)">${myApplication.teamName }</td>
-									<td id="${myApplication.teamId }" onclick="javascript:clickTrEvent(this)">${applicationScope.roleList[myApplication.roleId] }</td>
-									<td id="${myApplication.teamId }" onclick="javascript:clickTrEvent(this)">${fn:substring(myApplication.applicationDate, 0, 10) }</td>
+									<td id="${fn:substringAfter(myApplication.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${myApplication.teamName }</td>
+									<td id="${fn:substringAfter(myApplication.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${applicationScope.roleList[myApplication.roleId] }</td>
+									<td id="${fn:substringAfter(myApplication.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${fn:substring(myApplication.applicationDate, 0, 10) }</td>
 									<td>
 										<button type="button" class="btn btn_color btn_color_small"	data-toggle="modal"	data-target="#myModal${myApplication.applicationId }">보기</button>
 									</td>
@@ -118,7 +114,7 @@
 												정말로 취소하시겠습니까?<br />
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-md btn_color_small btn_apply_cancel" value="${myApplication.applicationId }" data-dismiss="modal">확인</button>
+												<button type="button" class="btn btn-md btn_color_small btn_apply_cancel" onclick="location = '/application/cancel/${fn:substringAfter(myApplication.applicationId, 'application-') }'" data-dismiss="modal">확인</button>
 												<button type="button" class="btn btn-md btn_color_small" data-dismiss="modal">취소</button>
 											</div>
 										</div>
@@ -132,8 +128,7 @@
 					<div class="row my_application_row">
 						<div class="text_blue my_application_empty">
 							<span>지원 내역이 없습니다</span><br /> <br />
-							<button type="button" class="btn btn-md btn_submit">팀
-								둘러보기</button>
+							<button type="button" class="btn btn-md btn_submit" onclick="location = '/teamSearch'">팀 둘러보기</button>
 						</div>
 					</div>
 				</c:if>
