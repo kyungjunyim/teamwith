@@ -1,6 +1,7 @@
 package com.teamwith.vo;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
@@ -24,9 +25,10 @@ public class ApplicationVO {
 		if (memberId != null) {
 			applicationDTO.setMemberId(memberId);
 		}
-		if (applicationDate != null) {
-			applicationDTO.setApplicationDate(Date.valueOf(applicationDate));
-		}
+		
+		LocalDate localDate = LocalDate.now();
+		applicationDTO.setApplicationDate(Date.valueOf(localDate));
+		
 		if (applicationStatus != null) {
 			applicationDTO.setApplicationStatus(Integer.parseInt(applicationStatus));
 		}
