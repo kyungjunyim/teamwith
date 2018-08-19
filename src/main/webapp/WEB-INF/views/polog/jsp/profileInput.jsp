@@ -12,7 +12,7 @@
 	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
 	rel="stylesheet">
 
-<link href="/teamwith15/polog/css/profileEdit.css" rel="stylesheet">
+<link href="/resourcespolog/css/profileEdit.css" rel="stylesheet">
 
 </head>
 <style>

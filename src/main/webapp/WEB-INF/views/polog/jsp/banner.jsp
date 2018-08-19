@@ -14,7 +14,7 @@ opacity: 0.7;
 <body>
 <div class="inner">
 				<header class="major">
-					<a href="polog.do?memberId=${memberVO.memberId }" style="text-decoration:none;"><h3>${memberVO.memberName }의 폴로그입니다.</h3></a>
+					<a href="/${memberVO.memberId }" style="text-decoration:none;"><h3>${memberVO.memberName }의 폴로그입니다.</h3></a>
 				</header>
 				<div class="content">
 

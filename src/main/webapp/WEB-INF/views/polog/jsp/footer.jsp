@@ -28,7 +28,7 @@
 <body>
 
 	<div class="footer_col">
-		<img src="/teamwith15/image/logo/teamLogoText.png"
+		<img src="/resources/image/logo/teamLogoText.png"
 			class="footer_logo_text">
 		<div class="footer_text">
 			<span>렉토피아 전문가 과정 16기</span><br /> <span>황규진, 김종승, 임경준, 조란</span>
