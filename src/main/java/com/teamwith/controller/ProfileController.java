@@ -102,7 +102,7 @@ public class ProfileController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/" + memberId;
+		return "redirect:/polog/" + memberId;
 
 	}
 
