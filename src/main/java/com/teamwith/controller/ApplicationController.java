@@ -42,26 +42,27 @@ public class ApplicationController {
 			interviewMap.put(myApplication.getApplicationId(), interviewVOList);
 		}
 		model.addAttribute("interviewMap", interviewMap);
-		
+
 		return "teambuilding/jsp/myApplication";
-		
+
 	}
-	
-	@RequestMapping(value="/cancel/{applicationId}", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/cancel/{applicationId}", method = RequestMethod.GET)
 	public String cancel(@PathVariable("applicationId") String applicationId) {
 		applicationId = "application-" + applicationId;
-		
+
 		applicationService.changeApplicationStatus(3, applicationId);
-		
+
 		return "redirect:/application/myApplication";
 	}
-	
-	@RequestMapping(value="/change/{applicationId}", method=RequestMethod.GET)
-	public String change(@PathVariable("applicationId") String applicationId, @RequestParam("status") int status, @RequestParam("teamId") String teamId) {
+
+	@RequestMapping(value = "/change/{applicationId}", method = RequestMethod.GET)
+	public String change(@PathVariable("applicationId") String applicationId, @RequestParam("status") int status,
+			@RequestParam("teamId") String teamId) {
 		applicationId = "application-" + applicationId;
-		
+
 		applicationService.changeApplicationStatus(status, applicationId);
-		
+
 		return "redirect:/teamInfo/applicant/" + teamId;
 	}
 
