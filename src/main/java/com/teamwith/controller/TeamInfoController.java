@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
