@@ -12,7 +12,7 @@
 	</div>
 	<div class="row profile_info">
 		<div class="profile_text_name">${sessionScope.memberSimpleVO.memberName }</div>
-		<form action="logout" method="get">
+		<form action="/logout" method="get">
 			<button type="submit" class="btn_logout">로그아웃</button>
 		</form>
 	</div>
@@ -34,11 +34,7 @@
 			<button type="button" class="btn btn-md btn_profile">0</button>
 		</div>
 		<div class="col-xs-4 profile_col">
-			<form action="myApplication.do" method="post">
-				<input type="hidden" name="job" value="myApplication">
-				<input type="hidden" name="memberId" value="${sessionScope.memberSimpleVO.memberId }">
-				<button type="submit" id="my_application" class="btn btn-md btn_profile">${myApplicationCnt }</button>
-			</form>
+				<button type="submit" id="my_application" class="btn btn-md btn_profile" onclick="location = '/application/myApplication'">${myApplicationCnt }</button>
 		</div>
 		<div class="col-xs-4 profile_col">
 			<form action="myTeam.do" method="post">
