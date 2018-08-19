@@ -113,7 +113,6 @@ public class ApplicationService {
 				keys = interviewQuestionDAO.getInterviewQuestionId();
 				String id = generateId(keys, "interview_question");
 				question.setInterviewQuestionId(id);
-				System.out.println(id);
 				question.setTeamId(interview.getTeamId());
 				question.setInterviewQuestionContent(interview.getInterviewQuestionContent());
 				result = interviewQuestionDAO.addInterviewQuestion(question);
