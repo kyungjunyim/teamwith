@@ -5,7 +5,7 @@
 <head>
 </head>
 <body>
-	<form action="login" method="post">
+	<form action="/login" method="post">
 		<input type="hidden" name="job" value="login"> 
 		<div class="row login_row">
 			<div class="col-xs-6 login_col_input">

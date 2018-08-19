@@ -126,7 +126,11 @@
 												${applicant.memberName }님을 팀에 합류하시겠습니까?<br />
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-md btn_color_small btn_apply_join" value="${applicant.applicationId }" data-dismiss="modal">확인</button>
+												<form action="/application/change/${fn:substringAfter(applicant.applicationId, 'application-') }" method="get">
+													<input type="hidden" name="status" value="1">
+													<input type="hidden" name="teamId" value="${fn:substringAfter(applicant.teamId, 'team-') }">
+													<button type="submit" class="btn btn-md btn_color_small btn_apply_join" >확인</button>
+												</form>
 												<button type="button" class="btn btn-md btn_color_small" data-dismiss="modal">취소</button>
 											</div>
 										</div>
@@ -145,7 +149,11 @@
 												${applicant.memberName }님을 탈락시키겠습니까?<br />
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-md btn_color_small btn_apply_drop" value="${applicant.applicationId }" data-dismiss="modal">확인</button>
+												<form action="/application/change/${fn:substringAfter(applicant.applicationId, 'application-') }" method="get">
+													<input type="hidden" name="status" value="2">
+													<input type="hidden" name="teamId" value="${fn:substringAfter(applicant.teamId, 'team-') }">
+													<button type="submit" class="btn btn-md btn_color_small btn_apply_drop">확인</button>
+												</form>
 												<button type="button" class="btn btn-md btn_color_small" data-dismiss="modal">취소</button>
 											</div>
 										</div>
