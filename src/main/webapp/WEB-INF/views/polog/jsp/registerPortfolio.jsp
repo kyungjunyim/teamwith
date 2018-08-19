@@ -7,9 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/pologView/js/bootstrap.js"></script>
+<script src="/resources/js/bootstrap.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="/teamwith15/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 
 <title>Insert title here</title>
 <script>
@@ -112,25 +112,31 @@ $(function(){
 		
 		var str='';
 		if(index==1){
-			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" name="portfolioContentValue"/>'
-				+'<input type="hidden" name="portfolioContentName" value="image"/>';
+			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" name="portfolioFile"/>'
+				+'<input type="hidden" name="portfolioContentName" value="image"/>'
+				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==2){
-			str='<input type="text" class="form-control registerPortfolioInput"  name="portfolioContentValue" style="display:inline;margin-top:30%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
-				+'<input type="hidden" name="portfolioContentName" value="media"/>';
+			str='<input type="text" class="form-control registerPortfolioInput"  name="portfolioURL" style="display:inline;margin-top:30%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
+				+'<input type="hidden" name="portfolioContentName" value="media"/>'
+				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==3){
-			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" name="portfolioContentValue"/>'
-				+'<input type="hidden" name="portfolioContentName" value="ppt"/>';
+			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" name="portfolioFile"/>'
+				+'<input type="hidden" name="portfolioContentName" value="ppt"/>'
+				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==4){
-			str='<input type="file" style="margin-top: 50%" name="portfolioContentValue"/>'
-				+'<input type="hidden" name="portfolioContentName" value="image"/>';
+			str='<input type="file" style="margin-top: 50%" name="portfolioFile"/>'
+				+'<input type="hidden" name="portfolioContentName" value="image"/>'
+				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==5){
-			str='<input type="text" class="form-control registerPortfolioInput" name="portfolioContentValue" style="display:inline;margin-top:40%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>';
-			+'<input type="hidden" name="portfolioContentName" value="media"/>';
+			str='<input type="text" class="form-control registerPortfolioInput" name="portfolioURL" style="display:inline;margin-top:40%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>';
+			+'<input type="hidden" name="portfolioContentName" value="media"/>'
+			+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==6){
-			str='<input type="file" style="margin-top: 50%" name="portfolioContentValue">'
-				+'<input type="hidden" name="portfolioContentName" value="ppt"/>';
+			str='<input type="file" style="margin-top: 50%" name="portfolioFile">'
+				+'<input type="hidden" name="portfolioContentName" value="ppt"/>'
+				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}
-		
+		order=order+1;
 		if(index>-1&&index<4){
 			
 			var $layout=$('<li></li>');
@@ -403,31 +409,44 @@ input:checked + .slider:before {
 </head>
 <body style="height:100%">
 <div class="product_con">
-<form action="/teamwith15/portfolioRegister.do" method="post" enctype="multipart/form-data">
+<form action="/portfolio/register" method="post" enctype="multipart/form-data">
     <ul class="product_list">
    
         <li>
         	<div class="left_box" >
         		<div class="pic_box">
-        			<input type="file" style="margin-top:50%"name="portfolioPic" value="대표 사진을 등록해 주세요">
+        			<input type="file" style="margin-top:50%"name="portfolioFile" >
         		</div>
-        		<div style="margin-top:30px;font-size:180%">Title<br>  <input type="text"  class="form-control " style="width:80%;margin:0 auto" name="portfolioTitle" placeholder="제목을 입력하세요"></div>
+        		<div style="margin-top:30px;font-size:180%">Title<br>
+        			<input type="text"  class="form-control " style="width:80%;margin:0 auto" name="portfolioTitle" placeholder="제목을 입력하세요">
+        		</div>
         	</div>
         	<div class="content_box">
-	        	<div class="first_content">Category<div class="first_content_child"> <input type="text" class="form-control registerPortfolioInput" name="projectCategory" placeholder="카테고리를 모달창"></div></div>
-	        	
-	        	<div class="first_content" >Intro<div class="first_content_child">
-	        	<textarea class="form-control registerPortfolioInput" name="portfolioIntro" rows="7" style="resize:none" placeholder="소개글을 입력하세요"></textarea></div></div>
-	        	
-	        	<div class="first_content" >Skills<div class="first_content_child">
-	        	 <input type="text" class="form-control registerPortfolioInput " name="portfolioSkills"  placeholder="사용 기술을 입력하세요" ><br>
-	        	</div></div>
-	        	<div class="first_content" >
-					<div style="display:inline-block;">Best</div><div style="display:inline-block;"><label class="switch" style="padding-top:20px">  <input type="checkbox">  <span class="slider round"></span></label></div>	        	
+	        	<div class="first_content">Category
+	        		<div class="first_content_child">
+	        			<input type="text" class="form-control registerPortfolioInput" name="projectCategoryId" placeholder="카테고리를 모달창">
+	        		</div>
 	        	</div>
-        	
+	        	
+	        	<div class="first_content" >Intro
+	        		<div class="first_content_child">
+	        			<textarea class="form-control registerPortfolioInput" name="portfolioIntro" rows="7" style="resize:none" placeholder="소개글을 입력하세요"></textarea>
+	        		</div>
+	        	</div>
+	        	
+	        	<div class="first_content" >Skills
+	        		<div class="first_content_child">
+	        	 		<input type="text" class="form-control registerPortfolioInput " name="portfolioSkill"  placeholder="사용 기술을 입력하세요" ><br>
+	        		</div>
+	        	</div>
+	        	<div class="first_content" >
+					<div style="display:inline-block;">Best</div>
+						<label class="switch" style="padding-top:20px">
+							<input type="checkbox" name="portfolioBest">
+							<span class="slider round"></span>
+						</label>
+	        	</div>
         	</div>
-     
         </li>
      
         <li>
@@ -437,14 +456,14 @@ input:checked + .slider:before {
 	        	<div class="row second_content"><div class="col">Team name</div>
 	        	<div class="col-8">  <input type="text" class="form-control registerPortfolioInput" name="portfolioTeamName" placeholder="팀명을 입력하세요"></div></div>
 	        	<div class="row second_content"><div class="col">People Number</div>
-	        	<div class="col-8"> <input type="number" class="form-control registerPortfolioInput" name="portfolioPeopleNumber" placeholder="참여인원을 입력하세요"></div></div>
+	        	<div class="col-8"> <input type="number" class="form-control registerPortfolioInput" name="portfolioPeopleNum" placeholder="참여인원을 입력하세요"></div></div>
 	        	<div class="row second_content"><div class="col-4">Development period</div>
 	        	<div class="col-3" style="width:500px"><input type="date" class="form-control registerPortfolioInput"  name="portfolioStartDate" >
 	        	</div><div class="col-3"><input type="date" class="form-control registerPortfolioInput" name="portfolioEndDate" ></div></div>
 	        	<div class="row second_content"><div class="col">My Role</div>
 	        	<div class="col-8"><input type="text" class="form-control registerPortfolioInput" name="portfolioRole" placeholder="역할을 입력하세요"></div></div>
 	        	<div class="row second_content"><div class="col">My Work</div>
-	        	<div class="col-8"><textarea class="form-control registerPortfolioInput"name="portfolioWork" rows="5" cols="50" placeholder="소개글을 입력하세요"></textarea></div></div>
+	        	<div class="col-8"><textarea class="form-control registerPortfolioInput"name="portfolioWork" rows="5" cols="50portfolioStartDate" placeholder="소개글을 입력하세요"></textarea></div></div>
 	        </div>
 	        
         </li>
@@ -464,6 +483,7 @@ input:checked + .slider:before {
 	</form>
 <div id="layout1" style="display:none">
 <jsp:include page="portfolioContentLayout1.jsp"/>
+<input type="file" name="portfolioFile" value="split">
 <button type="button" class="btn" id="deleteBtn" >삭제</button>
 </div>
 <div id="layout2" style="display:none">

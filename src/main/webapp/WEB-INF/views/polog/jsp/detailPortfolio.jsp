@@ -9,7 +9,7 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/contact.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="/teamwith15/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <title>Insert title here</title>
 <script>
 $(function(){
@@ -188,6 +188,11 @@ font-size:80%;margin-left:11%;margin-top:2%
 	bottom:5%;
 	right:5%;
 }
+.portfolioRemoveBtn{
+	position:fixed;
+	bottom:5%;
+	right:12%;
+}
 </style>
 </head>
 <body>
@@ -253,9 +258,16 @@ font-size:80%;margin-left:11%;margin-top:2%
     </ul>
     <i class="btn_prev material-icons">arrow_left</i>
     <i class="btn_next material-icons">arrow_right</i>	
-	<form action="polog.do?memberId=${portfolio.memberId }">
+	<form action="/${portfolio.memberId }">
 		<button type="submit" class="btn portfolioExitBtn">돌아가기</button>
 	</form>
+	<!-- controller에 지우고 여긴 memberSimpleVO 바꾸기 테스트용임-->
+	<c:if test="${portfolio.memberId eq sessionScope.memberSimpleVO.memeberId }">
+	<form action="/portfolio/remove/${portfolio.portfolioId}" method="post">
+		<input type="hidden" name="memberId" value="${portfolio.memberId }">
+		<button type="submit" class="btn portfolioRemoveBtn">삭제하기</button>
+	</form>
+	</c:if>
     
 </div>
 </body>

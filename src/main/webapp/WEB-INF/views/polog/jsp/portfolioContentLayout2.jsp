@@ -39,7 +39,7 @@
 </div>
 <div class="content_box" style="margin-top:5%;height:73vh;font-size:200%;margin-left:2%;width:35%" >
 	 <textarea class="form-control registerPortfolioInput" style="margin-top:0;height:90.5%;width:80%;resize: none"
-		name="portfolioIntro"  placeholder="소개글을 입력하세요"></textarea>
+		name="contentIntro"  placeholder="소개글을 입력하세요"></textarea>
 </div>
 </c:otherwise>
 </c:choose>

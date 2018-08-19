@@ -8,7 +8,7 @@
 <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/teamwith15/polog/css/contact.css">
+<link rel="stylesheet" type="text/css" href="/resources/polog/css/contact.css">
 <style>
  @font-face {
   font-family: 'Material Icons';
