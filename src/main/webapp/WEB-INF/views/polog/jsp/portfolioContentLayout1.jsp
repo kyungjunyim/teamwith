@@ -4,10 +4,10 @@
 <!-- 조회 경우 -->
 <c:choose>
 <c:when test="${!empty requestScope.contentTemp }">
-<c:forEach begin="0" end="1" step="1" varStatus="ii">
+<%-- <c:forEach begin="0" end="1" step="1" varStatus="ii">
 <c:if test="${ii.index==1&&contentTemp.portfolioContentOrder==portfolioContent[i.index+1].portfolioContentOrder}">
 	<c:set var="content" value="${portfolioContent[i.index+1] }"/>
-</c:if>
+</c:if> --%>
 <div class="center_content" id="centercon" >
 	<div id="l1picbox" class="pic_box" style="width:80%;height:100%">
 	<c:choose>
@@ -17,7 +17,7 @@
 		<c:when test="${contentTemp.portfolioContentName=='media' }">
 			<iframe width="100%" height="100%" src="${contentTemp.portfolioContentValue }" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 		</c:when>
-		<c:when test="${content.portfolioContentName=='ppt' }">
+		<c:when test="${contentTemp.portfolioContentName=='ppt' }">
 			<iframe width="100%" height="100%" src="${contentTemp.portfolioContentValue }#page=1&zoom=50"></iframe>
 		</c:when>
 	</c:choose>
@@ -28,7 +28,7 @@
 		${contentTemp.portfolioContentIntro }
 	
 </div>
-</c:forEach>
+<%-- </c:forEach> --%>
 </c:when>
 <c:otherwise>
 <!-- 등록일경우 -->

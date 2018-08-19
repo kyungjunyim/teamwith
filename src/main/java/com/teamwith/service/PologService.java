@@ -102,7 +102,7 @@ public class PologService {
 		try {
 			while(it.hasNext()) {
 				Object obj=it.next();
-				System.out.println(obj);
+				System.out.println(""+obj);
 				if(obj instanceof PortfolioVO) {
 					portfolio=this.registerPortfolio((PortfolioVO)obj,portfolioAndContent.get(obj),rootPath );
 					result=portfolio.getPortfolioId();
@@ -126,16 +126,26 @@ public class PologService {
 		}
 		int res = 0;
 		boolean check = true;
+		String pdfName=null;
 		try {
 			List<String> portfolioContentId = portfolioContentDAO.getId();
 			portfolioContent.setPortfolioContentId(this.generateId(portfolioContentId, "portfolio_content"));
 			if (file != null) {
 				String attachPath = "resources\\image\\portfolio\\";
 		        String filename = file.getOriginalFilename();
-				String type=file.getContentType().split("/")[1];
-				String newFileName=UploadFileUtils.uploadFile2(rootPath+attachPath+portfolioContent.getPortfolioId(),
+				String type=null;
+				if(file.getName().equals("portfolioFile")) {
+		        	type="ppt";
+		        }else {
+		        	type=file.getContentType().split("/")[1];
+		        }
+				String savedFileName=UploadFileUtils.uploadFile2(rootPath+attachPath+portfolioContent.getPortfolioId(),
 						portfolioContent.getPortfolioContentId()+"."+type,file.getBytes());
-				portfolioContent.setPortfolioContentValue("\\"+attachPath+portfolioContent.getPortfolioId()+"\\"+newFileName);
+				if(file.getName().equals("portfolioFile")) {
+					
+					pdfName=UploadFileUtils.uploadPDF(rootPath+attachPath+portfolioContent.getPortfolioId()+"\\",portfolioContent.getPortfolioContentId()+".ppt");//포폴콘텐츠아이디로하면뎀
+				}
+				portfolioContent.setPortfolioContentValue("\\"+attachPath+portfolioContent.getPortfolioId()+"\\"+pdfName);
 				
 			}
 			res = portfolioContentDAO.addPortfolioContent(portfolioContent.toDTO());
@@ -182,35 +192,27 @@ public class PologService {
 
 	public PortfolioVO registerPortfolio(PortfolioVO portfolio,MultipartFile file,String rootPath) {
 		if (portfolio == null) {
-			System.out.println("레지스터 포폴 널");
+			System.out.println("레지스터 포폴 널t");
 			return null;
 		}
 		int res = 0;
 		boolean check = true;
-		try {System.out.println("레지스터 GetId call..");
 			List<String> portfolioId = portfolioDAO.getId();
-			System.out.println("레지스터 GetId Success");
 			String portfolioId1=this.generateId(portfolioId, "portfolio");
-			System.out.println("레지스터 Success generateId");
 			portfolio.setPortfolioId(portfolioId1);
-			System.out.println("레지스터포폴 아이디:"+portfolio.getPortfolioId());
-			
-//			res = portfolioDAO.addPortfolio(portfolio.toDTO());
-//			if(res!=0) {
-				if(file!=null) {
-					String attachPath = "resources\\image\\portfolio\\";
-			        String filename = file.getOriginalFilename();
-			        String type=file.getContentType().split("/")[1];
-			        System.out.println("uploadPath="+rootPath+attachPath+portfolio.getPortfolioId());
-			        System.out.println("fileName="+portfolio.getPortfolioId()+"."+type);
-					String newFileName=UploadFileUtils.uploadFile2(rootPath+attachPath+portfolio.getPortfolioId(),portfolio.getPortfolioId()+"."+type,
-							file.getBytes());
-					portfolio.setPortfolioPic("\\"+attachPath+portfolio.getPortfolioId()+"\\"+newFileName);
-					res = portfolioDAO.addPortfolio(portfolio.toDTO());
-				}
-//			}
+		try {
+			if(file!=null) {
+				String attachPath = "resources\\image\\portfolio\\";
+		        String filename = file.getOriginalFilename();
+		        String type=null;
+				String newFileName=UploadFileUtils.uploadFile2(rootPath+attachPath+portfolio.getPortfolioId(),portfolio.getPortfolioId()+"."+type,
+						file.getBytes());
+				portfolio.setPortfolioPic("\\"+attachPath+portfolio.getPortfolioId()+"\\"+newFileName);
+				res = portfolioDAO.addPortfolio(portfolio.toDTO());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("포폴등록이널이넹?");
 			check = false;
 		} finally {
 			if (!check)

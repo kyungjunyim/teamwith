@@ -56,13 +56,7 @@ public class PortfolioController {
 			return "/polog/jsp/detailPortfolio";
 		}
 		model.addAttribute("portfolio",portfolio);
-		if(contentList!=null&&!contentList.isEmpty()){
-			System.out.println("@@@@@@@@@@@@@@포폴콘텐츠 널아님");
-			model.addAttribute("portfolioContent",contentList);
-		}
-		else {
-			System.out.println("@@@@@@@@@@@@@@포폴콘텐츠 널임");
-		}
+		model.addAttribute("portfolioContent",contentList);
 		return "/polog/jsp/detailPortfolio";
 	}
 	@RequestMapping(value="/register",method=RequestMethod.GET)
@@ -75,17 +69,14 @@ public class PortfolioController {
 			String [] portfolioContentName,String [] layoutId,
 			@ModelAttribute PortfolioVO portfolioVO,Model model,HttpSession session) {
 		System.out.println(portfolioFile[0].getContentType());
-		session.setAttribute("memberId","kim"); //테스트용
 		String rootPath = session.getServletContext().getRealPath("/");//service가 이 경로를 받을것
 		String portfolioId=null;
 		try {
 			String memberId=(String)session.getAttribute("memberId");
-			System.out.println(memberId);
-			if(memberId==null){
+			if(memberId==null||memberId.isEmpty()){
 				model.addAttribute("error","not login status");
-				return "/polog/jsp/detailPortfolio";
+				return "/polog/jsp/errorPage";
 			}
-			
 			if(portfolioVO.getPortfolioBest()==null){
 				portfolioVO.setPortfolioBest("0");
 			}else{
