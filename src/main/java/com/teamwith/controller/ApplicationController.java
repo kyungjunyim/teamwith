@@ -76,14 +76,11 @@ public class ApplicationController {
 		
 		ApplicationVO applicationVO = new ApplicationVO();
 		applicationVO.setMemberId(memberSimpleVO.getMemberId());
-		System.out.println(memberSimpleVO.getMemberId());
 		applicationVO.setApplicationStatus("0");
 		applicationVO.setApplicationFreewriting(applicationFreewriting);
 		applicationVO.setTeamId(teamId);
-		System.out.println(teamId);
 		applicationVO.setRoleId(roleId);
 		String applicationId = applicationService.applyTeam(applicationVO);
-		System.out.println(applicationId);
 		
 		List<InterviewVO> interviewAnswerList = new ArrayList<InterviewVO>();
 		for(int i = 0; i < interviewAnswer.length; i++) {

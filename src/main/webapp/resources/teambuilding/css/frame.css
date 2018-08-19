@@ -307,18 +307,21 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: center;
+	cursor: pointer;
 }
 
 .main_portfolio_text_title {
 	height: 30px;
 	font-size: 17px;
 	color: #ff4111;
+	cursor: pointer;
 }
 
 .main_portfolio_label {
 	margin: 0;
 	width: 85px;
 	text-align: center;
+	cursor: pointer;
 } 
 
 .btn_more {
