@@ -33,6 +33,7 @@ import com.teamwith.vo.MemberSearchVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.RecruitVO;
+import com.teamwith.vo.RequireSkillVO;
 import com.teamwith.vo.TeamDetailVO;
 import com.teamwith.vo.TeamRateVO;
 import com.teamwith.vo.TeamSimpleVO;
@@ -61,39 +62,49 @@ public class TeamSearchController {
 			List<TeamRateVO> resultList = recommendTeam();
 			model.addAttribute("recommendedTeamList", resultList);
 		}
-		
+
 		return "teambuilding/jsp/teamSearch";
 	}
-	
-	@RequestMapping(value="{teamId}", method=RequestMethod.GET)
+
+	@RequestMapping(value = "{teamId}", method = RequestMethod.GET)
 	public String teamSearch(@PathVariable("teamId") String teamId, HttpSession session, Model model) throws Exception {
 		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		teamId = "team-" + teamId;
-		
+
 		boolean canApply = true;
 		TeamDetailVO teamInfo = teamService.getTeamInfo(teamId);
 		model.addAttribute("teamInfo", teamInfo);
-		
+
 		List<RecruitVO> recruitInfo = teamService.getRecruitInfo(teamId);
 		model.addAttribute("recruitInfo", recruitInfo);
-		
+
 		List<InterviewQuestionDTO> interviewInfo = applicationService.getInterviewQuestion(teamId);
 		model.addAttribute("interviewInfo", interviewInfo);
 
 		List<MemberSearchVO> teamMembers = applicationService.getTeamMember(teamId);
 		model.addAttribute("teamMembers", teamMembers);
-		
-		for (MemberSearchVO teamMember : teamMembers) {
-			if (teamMember.getMemberId().equals(memberSimpleVO.getMemberId())) {
-				canApply = false;
+
+		List<RequireSkillVO> requireSkills = new ArrayList<RequireSkillVO>();
+		if (recruitInfo != null) {
+			for(RecruitVO recruit : recruitInfo) {
+				requireSkills.addAll(teamService.getRequireSkills(recruit.getRecruitId()));
 			}
 		}
-		
+		model.addAttribute("requireSkills", requireSkills);
+
+		if (teamMembers != null) {
+			for (MemberSearchVO teamMember : teamMembers) {
+				if (teamMember.getMemberId().equals(memberSimpleVO.getMemberId())) {
+					canApply = false;
+				}
+			}
+		}
+
 		model.addAttribute("canApply", canApply);
-		
+
 		List<FaqVO> faqInfo = teamService.getFaq(teamId);
 		model.addAttribute("faqInfo", faqInfo);
-		
+
 		String teamEndDate = teamInfo.getTeamEndDate();
 		int endYear = Integer.parseInt(teamEndDate.substring(0, 4));
 		int endMonth = Integer.parseInt(teamEndDate.substring(5, 7));
@@ -107,7 +118,7 @@ public class TeamSearchController {
 		long dDay = (today.getTimeInMillis() / (24 * 60 * 60 * 1000))
 				- (endDay.getTimeInMillis() / (24 * 60 * 60 * 1000));
 		model.addAttribute("dDay", dDay);
-		
+
 		return "teambuilding/jsp/teamDetail";
 	}
 
@@ -191,11 +202,11 @@ public class TeamSearchController {
 
 		List<String> skillList = new ArrayList<String>();
 		String[] skillMap = memberSkillVO.getSkill();
-		
-		for(String skill : skillMap) {
+
+		for (String skill : skillMap) {
 			skillList.add(skill);
 		}
-		
+
 		int skillSize = skillList.size();
 
 		Criteria skillCri = new Criteria();

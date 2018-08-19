@@ -1,5 +1,7 @@
 package com.teamwith.controller;
 
+import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamwith.service.ApplicationService;
+import com.teamwith.vo.ApplicationVO;
 import com.teamwith.vo.InterviewVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MyApplicationVO;
@@ -64,6 +67,37 @@ public class ApplicationController {
 		applicationService.changeApplicationStatus(status, applicationId);
 
 		return "redirect:/teamInfo/applicant/" + teamId;
+	}
+	
+	@RequestMapping(value="/apply/{teamId}", method=RequestMethod.POST)
+	public String apply(@PathVariable("teamId") String teamId, HttpSession session, String[] interviewAnswer, String[] interviewQuestionId, String applicationFreewriting, String roleId) {
+		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		teamId = "team-" + teamId;
+		
+		ApplicationVO applicationVO = new ApplicationVO();
+		applicationVO.setMemberId(memberSimpleVO.getMemberId());
+		System.out.println(memberSimpleVO.getMemberId());
+		applicationVO.setApplicationStatus("0");
+		applicationVO.setApplicationFreewriting(applicationFreewriting);
+		applicationVO.setTeamId(teamId);
+		System.out.println(teamId);
+		applicationVO.setRoleId(roleId);
+		String applicationId = applicationService.applyTeam(applicationVO);
+		System.out.println(applicationId);
+		
+		List<InterviewVO> interviewAnswerList = new ArrayList<InterviewVO>();
+		for(int i = 0; i < interviewAnswer.length; i++) {
+			InterviewVO interviewVO = new InterviewVO();
+			interviewVO.setTeamId(teamId);
+			interviewVO.setInterviewAnswerContent(interviewAnswer[i]);
+			interviewVO.setApplicationId(applicationId);
+			interviewVO.setInterviewQuestionId(interviewQuestionId[i]);
+			interviewAnswerList.add(interviewVO);
+		}
+		
+		applicationService.applyTeam(interviewAnswerList);
+		
+		return "redirect:/application/myApplication";
 	}
 
 }

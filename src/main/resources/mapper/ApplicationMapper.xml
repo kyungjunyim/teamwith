@@ -13,7 +13,7 @@
 	</resultMap>
 	<!-- 지원 내역 추가하기 -->
 	<insert id="addApplication" parameterType="ApplicationDTO" >
-		insert into application_tb (application_id,member_id,application_freewriting,team_id,role_id,application_date,application_status) values (#{applicationId},#{memberId},#{applicationFreewriting},#{teamId},#{roleId},sysdate,1)
+		insert into application_tb (application_id,member_id,application_freewriting,team_id,role_id,application_date,application_status) values (#{applicationId},#{memberId},#{applicationFreewriting},#{teamId},#{roleId},sysdate,0)
 	</insert>
 	<!-- 지원 내역 삭제하기 (아마 미사용) -->
 	<delete id="removeApplicationByApplicationId" parameterType="string">
