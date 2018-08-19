@@ -59,15 +59,6 @@ public class ProfileController {
 			String[] regionId, String[] skill, String[] categoryId, Model model, TendencyVO tendency) {
 
 		try {
-			if (regionId == null) {
-				System.out.println("region null");
-			} else {
-				System.out.println(regionId.length);
-				System.out.println(updateMemberInfo.getMemberId());
-				System.out.println(skill.length);
-				System.out.println(categoryId.length);
-				System.out.println(tendency);
-			}
 
 			/* memberInfo */
 			profileService.updateMemberInfo(updateMemberInfo, null);

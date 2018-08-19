@@ -16,15 +16,15 @@
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/teamwith15/js/bootstrap.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="/teamwith15/css/bootstrap.min.css">
-<link rel="stylesheet" href="/teamwith15/polog/css/main.css" />
-<link rel="stylesheet" href="/teamwith15/polog/css/profile.css" />
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/polog/css/main.css" />
+<link rel="stylesheet" href="/resources/polog/css/profile.css" />
 
 <!-- Scripts -->
 

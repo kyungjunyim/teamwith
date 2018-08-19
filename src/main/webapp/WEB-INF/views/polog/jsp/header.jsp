@@ -14,12 +14,12 @@
 	}
 </script>
 <body>
-	<form action="profileEdit" method="post" id="memberId_form">
-		<input type="hidden" name="memberId" id="memberId">
+	<form action="/profile/edit/${sessionScope.memberSimpleVO.memberId}" method="get" id="memberId_form">
+		<input type="hidden" name="memberId" id="memberId" value="${sessionScope.memberSimpleVO.memberId}">
 	</form>
 
-	<a href="/teamwith15/home.do" class="logo"><img
-		class="teamwith_logo" src="/teamwith15/image/logo/logoBox.png">
+	<a href="/" class="logo"><img
+		class="teamwith_logo" src="/resources/image/logo/logoBox.png">
 
 	</a>
 	<div>
@@ -37,7 +37,7 @@
 						<i onclick="profileEdit()" class="material-icons">how_to_reg</i></a></li>
 					<li><a
 						class="btn-floating gray darken-2 waves-effect waves-default"
-						href="pologEdit.jsp"><i class="material-icons">build</i></a></li>
+						href="/polog/edit"><i class="material-icons">build</i></a></li>
 					<li><a
 						class="btn-floating gray darken-2 waves-effect waves-default"
 						href="#one"><i class="material-icons">add</i></a></li>
