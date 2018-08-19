@@ -1,6 +1,8 @@
 package com.teamwith.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.teamwith.service.MemberService;
 import com.teamwith.service.ProfileService;
+import com.teamwith.vo.MemberProjectCategoryVO;
 import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.MemberTendencyVO;
 import com.teamwith.vo.MemberVO;
+import com.teamwith.vo.TendencyVO;
 
 @RequestMapping(value = "/profile")
 @Controller
@@ -51,34 +55,37 @@ public class ProfileController {
 	}
 
 	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.POST)
-	public String profileEdit(@PathVariable(value = "memId")String memberId, MemberVO updateMemberInfo, 
-			String[] regionId, MemberSkillVO skill, Model model) {
+	public String profileEdit(@PathVariable(value = "memId") String memberId, MemberVO updateMemberInfo,
+			String[] regionId, String[] skill, String[] categoryId, Model model, TendencyVO tendency) {
+
 		try {
 			if (regionId == null) {
 				System.out.println("region null");
 			} else {
 				System.out.println(regionId.length);
 				System.out.println(updateMemberInfo.getMemberId());
-				System.out.println(skill);
+				System.out.println(skill.length);
+				System.out.println(categoryId.length);
+				System.out.println(tendency);
 			}
 
 			/* memberInfo */
-			//profileService.updateMemberInfo(updateMemberInfo, null);
-			/*
-			 * // project category MemberProjectCategoryVO pcVO = new
-			 * MemberProjectCategoryVO(memberId, categories);
-			 * memberService.updateMemberProjectCategory(pcVO);
-			 * 
-			 * // skill Map<String, String> skillMap = new HashMap<String, String>(); if
-			 * (skills != null) { for (String sk : skills) { System.out.println(sk);
-			 * skillMap.put(sk, "1"); } } memberService.updateMemberSkill(new
-			 * MemberSkillVO(memberId, skillMap));
-			 * 
-			 * // tendency Map<String, String> tdMap = new HashMap<String, String>(); for
-			 * (int i = 1; i <= 5; i++) { tdMap.put("tendency-", tendencies[i - 1]); }
-			 * MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
-			 * profileService.updateMemberTendency(memberTendency);
-			 */
+			profileService.updateMemberInfo(updateMemberInfo, null);
+
+			MemberProjectCategoryVO pcVO = new MemberProjectCategoryVO(memberId, categoryId);
+			memberService.updateMemberProjectCategory(pcVO);
+
+			memberService.updateMemberSkill(new MemberSkillVO(memberId, skill));
+
+			Map<String, String> tdMap = new HashMap<String, String>();
+			tdMap.put("tendency-1", tendency.getTendency1());
+			tdMap.put("tendency-2", tendency.getTendency2());
+			tdMap.put("tendency-3", tendency.getTendency3());
+			tdMap.put("tendency-4", tendency.getTendency4());
+			tdMap.put("tendency-5", tendency.getTendency5());
+			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
+			profileService.updateMemberTendency(memberTendency);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
