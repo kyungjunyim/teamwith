@@ -262,9 +262,12 @@ public class TeamService {
 		team.setTeamContestLink(teamInfo.getTeamContestLink());
 		team.setMemberId(teamInfo.getMemberId());
 		
-		String teamPicPath = UploadFileUtils.uploadFile2(path, generatedId, file);
-		team.setTeamPic(teamPicPath);
-
+		String teamPicPath = UploadFileUtils.uploadFile2(path, generatedId+".jpg", file);
+		
+//		team.setTeamPic(path+generatedId+".jpg");
+		team.setTeamPic("/resources/image/team/"+generatedId+".jpg");
+		
+		System.out.println(team);
 		teamDAO.addTeam(team);
 
 		return generatedId;
