@@ -435,3 +435,17 @@ form .btn_logout {
 	border-color: #fff;
 	opacity: 1;
 }
+
+.register_label {
+	width: 120px;
+	margin: 10px 0;
+	margin-left: 30px;
+}
+
+.register_input {
+	border-radius: 7px;
+	padding-left: 10px;
+	font-size: 18px;
+	width: 270px;
+	color: #002b5a;
+}
