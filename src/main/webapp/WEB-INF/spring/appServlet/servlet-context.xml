@@ -34,6 +34,9 @@
 
 	<beans:bean id="loginInterceptor"
 		class="com.teamwith.interceptor.LoginInterceptor" />
+
+	<beans:bean id="adminInterceptor"
+		class="com.teamwith.interceptor.AdminInterceptor" />
 		
 	<interceptors>
 		<interceptor>
