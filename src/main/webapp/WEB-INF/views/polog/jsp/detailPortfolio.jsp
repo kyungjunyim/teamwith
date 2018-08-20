@@ -269,7 +269,7 @@ background-color: #ffddc9;
 		<button type="submit" class="btn portfolioExitBtn">돌아가기</button>
 	</form>
 	<!-- controller에 지우고 여긴 memberSimpleVO 바꾸기 테스트용임-->
-	<c:if test="${portfolio.memberId eq sessionScope.memberSimpleVO.memeberId }">
+	<c:if test="${portfolio.memberId eq sessionScope.memberSimpleVO.memberId }">
 	<form action="/portfolio/remove/${portfolio.portfolioId}" method="post">
 		<input type="hidden" name="memberId" value="${portfolio.memberId }">
 		<button type="submit" class="btn portfolioRemoveBtn">삭제하기</button>

@@ -65,6 +65,27 @@ public class TeamSearchController {
 
 		return "teambuilding/jsp/teamSearch";
 	}
+	
+	@RequestMapping(value="", method=RequestMethod.POST)
+	public String teamSearch(String[] region, String[] project, String[] role, String[] skill, String textCondition, String keyword) throws Exception {
+		for(String str : region) {
+			System.out.println(str);
+		}
+		for(String str : project) {
+			System.out.println(str);
+		}
+		for(String str : role) {
+			System.out.println(str);
+		}
+		for(String str : skill) {
+			System.out.println(str);
+		}
+		System.out.println(textCondition);
+		System.out.println(keyword);
+		
+		
+		return null;
+	}
 
 	@RequestMapping(value = "{teamId}", method = RequestMethod.GET)
 	public String teamSearch(@PathVariable("teamId") String teamId, HttpSession session, Model model) throws Exception {
