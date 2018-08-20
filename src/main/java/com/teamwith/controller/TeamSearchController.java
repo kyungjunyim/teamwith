@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 import com.teamwith.dto.InterviewQuestionDTO;
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.MemberService;
@@ -52,7 +53,7 @@ public class TeamSearchController {
 	private MemberSimpleVO memberSimpleVO;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String teamSearch(HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
+	public String teamSearch(HttpSession session, Model model) throws Exception {
 		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 
 		List<TeamSimpleVO> recentTeamList = setRecentTeam();
@@ -67,151 +68,128 @@ public class TeamSearchController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String teamSearch(String[] region, String[] project, String[] role, String[] skill, String textCondition,
-			String keyword) throws Exception {
-		Map<String, Double> resultMap = new HashMap<String, Double>();
-		List<String> teamIdListByRegion = null;
-		List<String> teamIdListByRole = null;
-		List<String> teamIdListByCategory = null;
-		List<String> teamIdListBySkill = null;
-
-		Criteria regionCri = new Criteria();
-		List<String> regionList = new ArrayList<String>();
-		for (String regionStr : region) {
-			regionList.add(regionStr);
-		}
-		regionCri.addCriteria("regionList", regionList);
-
-		teamIdListByRegion = teamService.searchTeam(regionCri);
-
-		if (teamIdListByRegion == null) {
-			return null;
+	public String teamSearch(HttpSession session, Model model, String[] region, String[] project, String[] role,
+			String[] skill, String textCondition, String keyword) throws Exception {
+		if (region == null && project == null && role == null && skill == null && keyword.trim().equals("")) {
+			return teamSearch(session, model);
 		} else {
-			for (String teamId : teamIdListByRegion) {
-				resultMap.put(teamId, 1.0);
-			}
-		}
+			model.addAttribute("recentTeamList", null);
+			model.addAttribute("recommendedTeamList", null);
+			List<String> resultIdList = null;
+			List<TeamSimpleVO> resultTeamList = new ArrayList<TeamSimpleVO>();
+			List<String> teamIdListByRegion = null;
+			List<String> teamIdListByRole = null;
+			List<String> teamIdListByCategory = null;
+			List<String> teamIdListBySkill = null;
 
-		Criteria categoryCri = new Criteria();
-		List<String> projectCategoryList = new ArrayList<String>();
-		for(String projectStr : project) {
-			projectCategoryList.add(projectStr);
-		}
-		categoryCri.addCriteria("projectCategoryList", projectCategoryList);
-
-		teamIdListByCategory = teamService.searchTeam(categoryCri);
-
-		if (teamIdListByCategory != null) {
-			for (String teamId : teamIdListByCategory) {
-				if (resultMap.get(teamId) == null) {
-					resultMap.put(teamId, 1.0);
-				} else {
-					Double temp = resultMap.get(teamId);
-					resultMap.put(teamId, temp + 1.0);
+			if (region != null) {
+				Criteria regionCri = new Criteria();
+				List<String> regionList = new ArrayList<String>();
+				for (String regionStr : region) {
+					regionList.add(regionStr);
 				}
-			}
-		}
-		
-		Criteria roleCri = new Criteria();
-		List<String> roleList = new ArrayList<String>();
-		for(String roleStr : role) {
-			roleList.add(roleStr);
-		}
-		roleCri.addCriteria("roleList", roleList);
-
-		teamIdListByRole = teamService.searchTeamDTO(roleCri);
-
-		if (teamIdListByRole != null) {
-			for (String teamId : teamIdListByRole) {
-				if (resultMap.get(teamId) == null) {
-					continue;
-				} else {
-					Double temp = resultMap.get(teamId);
-					if (temp < 3.0) {
-						resultMap.put(teamId, temp + 1.0);
+				regionCri.addCriteria("regionList", regionList);
+				teamIdListByRegion = teamService.searchTeam(regionCri);
+				if (teamIdListByRegion != null) {
+					resultIdList = new ArrayList<String>();
+					for (String teamId : teamIdListByRegion) {
+						resultIdList.add(teamId);
 					}
 				}
 			}
-		}
 
-		List<String> skillList = new ArrayList<String>();
-		String[] skillMap = memberSkillVO.getSkill();
-
-		for (String skill : skillMap) {
-			skillList.add(skill);
-		}
-
-		int skillSize = skillList.size();
-
-		Criteria skillCri = new Criteria();
-		skillCri.addCriteria("skillList", skillList);
-
-		teamIdListBySkill = teamService.searchTeamDTO(skillCri);
-
-		if (teamIdListBySkill != null) {
-			Map<String, Integer> countMap = new HashMap<String, Integer>();
-			for (String teamId : teamIdListBySkill) {
-				if (countMap.get(teamId) == null) {
-					countMap.put(teamId, 1);
-				} else {
-					int temp = countMap.get(teamId);
-					temp += 1;
-					countMap.put(teamId, temp);
+			if (role != null) {
+				Criteria roleCri = new Criteria();
+				List<String> roleList = new ArrayList<String>();
+				for (String roleStr : role) {
+					roleList.add(roleStr);
+				}
+				roleCri.addCriteria("roleList", roleList);
+				teamIdListByRole = teamService.searchTeamDTO(roleCri);
+				if (teamIdListByRole != null) {
+					if(resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for(String teamId : teamIdListByRole) {
+							if(!resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					}
+					else {
+						for(String teamId : teamIdListByRole) {
+							if(resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					}
 				}
 			}
 
-			Iterator<String> skillIterator = countMap.keySet().iterator();
-			while (skillIterator.hasNext()) {
-				String key = skillIterator.next();
-				if (resultMap.get(key) != null) {
-					double temp = resultMap.get(key);
-					temp += (double) countMap.get(key) / (double) skillSize;
-					resultMap.put(key, temp);
+			if (project != null) {
+				Criteria projectCri = new Criteria();
+				List<String> projectCategoryList = new ArrayList<String>();
+				for (String projectStr : project) {
+					projectCategoryList.add(projectStr);
+				}
+				projectCri.addCriteria("projectCategoryList", projectCategoryList);
+				teamIdListByCategory = teamService.searchTeam(projectCri);
+				if (teamIdListByCategory != null) {
+					if(resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for(String teamId : teamIdListByCategory) {
+							if(!resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					}
+					else {
+						for(String teamId : teamIdListByCategory) {
+							if(!resultIdList.contains(teamId)) {
+								continue;
+							}
+							else {
+								
+							}
+						}
+					}
 				}
 			}
-		}
 
-		List<String> resultTeamId = new ArrayList<String>();
-		Iterator<String> resultIterator = resultMap.keySet().iterator();
-		while (resultIterator.hasNext()) {
-			String key = resultIterator.next();
-			double temp = resultMap.get(key);
-			temp = temp / 4 * 100;
-			resultMap.put(key, temp);
-			resultTeamId.add(key);
-		}
-
-		Map<String, Double> sortedMap = sortByComparator(resultMap);
-		List<TeamRateVO> resultList = new ArrayList<TeamRateVO>();
-
-		Iterator<String> sortedIterator = sortedMap.keySet().iterator();
-		while (sortedIterator.hasNext()) {
-			String key = sortedIterator.next();
-			TeamSimpleVO tempTeamSimpleVO = null;
-			try {
-				tempTeamSimpleVO = teamService.getTeamSimple(key);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (skill != null) {
+				List<String> skillList = new ArrayList<String>();
+				for (String skillStr : skill) {
+					skillList.add(skillStr);
+				}
+				Criteria skillCri = new Criteria();
+				skillCri.addCriteria("skillList", skillList);
+				teamIdListBySkill = teamService.searchTeamDTO(skillCri);
+				if (teamIdListBySkill != null) {
+					if(resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for(String teamId : teamIdListBySkill) {
+							if(!resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					}
+					else {
+						for(String teamId : teamIdListBySkill) {
+							if(resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					}
+				}
 			}
-			TeamRateVO teamRateVO = new TeamRateVO();
 
-			teamRateVO.setTeamId(tempTeamSimpleVO.getTeamId());
-			teamRateVO.setTeamPic(tempTeamSimpleVO.getTeamPic());
-			teamRateVO.setTeamProjectName(tempTeamSimpleVO.getTeamProjectName());
-			teamRateVO.setProjectCategoryId(tempTeamSimpleVO.getProjectCategoryId());
-			teamRateVO.setTeamName(tempTeamSimpleVO.getTeamName());
-			teamRateVO.setTeamEndDate(tempTeamSimpleVO.getTeamEndDate());
-			teamRateVO.setTeamUpdateDate(tempTeamSimpleVO.getTeamUpdateDate());
-			teamRateVO.setMemberId(tempTeamSimpleVO.getMemberId());
-			teamRateVO.setMemberName(tempTeamSimpleVO.getMemberName());
-			teamRateVO.setRate(sortedMap.get(key));
+			for (String resultId : resultIdList) {
+				TeamSimpleVO teamSimpleVO = teamService.getTeamSimple(resultId);
+				resultTeamList.add(teamSimpleVO);
+			}
 
-			resultList.add(teamRateVO);
+			model.addAttribute("resultTeamList", resultTeamList);
+			return "teambuilding/jsp/teamSearch";
 		}
-
-		return resultList;
-
-		return null;
 	}
 
 	@RequestMapping(value = "{teamId}", method = RequestMethod.GET)
