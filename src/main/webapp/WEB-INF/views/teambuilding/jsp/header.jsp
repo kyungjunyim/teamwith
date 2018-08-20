@@ -23,21 +23,15 @@
 		</div>
 	</nav>
 
-	<button type="button" class="btn btn-primary" id="btn_modal"
-		data-toggle="modal" data-target="#exampleModalCenter"
-		style="display: none;"></button>
-	<div class="modal fade bd-example-modal-sm" id="exampleModalCenter"
-		tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-		aria-hidden="true">
-		<div class="modal-dialog modal-sm modal-dialog-centered"
-			role="document">
+	<button type="button" class="btn btn-primary" id="btn_modal" data-toggle="modal" data-target="#exampleModalCenter" style="display: none;"></button>
+	<div class="modal fade bd-example-modal-sm" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">
 						<img src="/resources/image/logo/logoText.png" class="title_logo_text">
 					</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>

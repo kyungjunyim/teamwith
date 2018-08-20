@@ -23,9 +23,7 @@
 	</form>
 	<div class="row login_row_link">
 		<div class="col-xs-4 login_col_register">
-			<a href="#" id="register" class="login_col_link">
-				<label style="font-size: 15px; cursor: pointer">회원가입</label>
-			</a>
+				<label id="register" style="font-size: 15px; cursor: pointer">회원가입</label>
 		</div>
 		<div class="col-xs-8 login_col_find">
 			<a href="#" id="find_account" class="login_col_link">
