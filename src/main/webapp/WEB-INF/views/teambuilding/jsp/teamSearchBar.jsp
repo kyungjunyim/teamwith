@@ -259,9 +259,9 @@
 		</div>
 		<div class="member_search_btn_size_big">
 			<select class="member_search_select_box" name="textCondition">
-				<option value="tc1">팀 명</option>
-				<option value="tc2">프로젝트 명</option>
-				<option value="tc3">공모전 명</option>
+				<option value="teamName">팀 명</option>
+				<option value="teamProjectName">프로젝트 명</option>
+				<option value="teamContestName">공모전 명</option>
 			</select>
 			<input class="member_search_input_box" type="text" name="keyword">
 			<button class="btn btn-md btn_color" type="button" id="search_btn">검색</button>

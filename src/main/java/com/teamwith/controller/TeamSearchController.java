@@ -81,6 +81,7 @@ public class TeamSearchController {
 			List<String> teamIdListByRole = null;
 			List<String> teamIdListByCategory = null;
 			List<String> teamIdListBySkill = null;
+			List<String> teamIdListByKeyword = null;
 
 			if (region != null) {
 				Criteria regionCri = new Criteria();
@@ -92,9 +93,7 @@ public class TeamSearchController {
 				teamIdListByRegion = teamService.searchTeam(regionCri);
 				if (teamIdListByRegion != null) {
 					resultIdList = new ArrayList<String>();
-					for (String teamId : teamIdListByRegion) {
-						resultIdList.add(teamId);
-					}
+					resultIdList.addAll(teamIdListByRegion);
 				}
 			}
 
@@ -107,18 +106,23 @@ public class TeamSearchController {
 				roleCri.addCriteria("roleList", roleList);
 				teamIdListByRole = teamService.searchTeamDTO(roleCri);
 				if (teamIdListByRole != null) {
-					if(resultIdList == null) {
+					if (resultIdList == null) {
 						resultIdList = new ArrayList<String>();
-						for(String teamId : teamIdListByRole) {
-							if(!resultIdList.contains(teamId)) {
+						for (String teamId : teamIdListByRole) {
+							if (!resultIdList.contains(teamId)) {
 								resultIdList.add(teamId);
 							}
 						}
-					}
-					else {
-						for(String teamId : teamIdListByRole) {
-							if(resultIdList.contains(teamId)) {
-								resultIdList.add(teamId);
+					} else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < teamIdListByRole.size(); j++) {
+								if (resultIdList.get(i).equals(teamIdListByRole.get(j))) {
+									flag = true;
+								}
+							}
+							if (flag == false) {
+								resultIdList.set(i, "empty");
 							}
 						}
 					}
@@ -134,21 +138,23 @@ public class TeamSearchController {
 				projectCri.addCriteria("projectCategoryList", projectCategoryList);
 				teamIdListByCategory = teamService.searchTeam(projectCri);
 				if (teamIdListByCategory != null) {
-					if(resultIdList == null) {
+					if (resultIdList == null) {
 						resultIdList = new ArrayList<String>();
-						for(String teamId : teamIdListByCategory) {
-							if(!resultIdList.contains(teamId)) {
+						for (String teamId : teamIdListByCategory) {
+							if (!resultIdList.contains(teamId)) {
 								resultIdList.add(teamId);
 							}
 						}
-					}
-					else {
-						for(String teamId : teamIdListByCategory) {
-							if(!resultIdList.contains(teamId)) {
-								continue;
+					} else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < teamIdListByCategory.size(); j++) {
+								if (resultIdList.get(i).equals(teamIdListByCategory.get(j))) {
+									flag = true;
+								}
 							}
-							else {
-								
+							if (flag == false) {
+								resultIdList.set(i, "empty");
 							}
 						}
 					}
@@ -164,18 +170,62 @@ public class TeamSearchController {
 				skillCri.addCriteria("skillList", skillList);
 				teamIdListBySkill = teamService.searchTeamDTO(skillCri);
 				if (teamIdListBySkill != null) {
-					if(resultIdList == null) {
+					if (resultIdList == null) {
 						resultIdList = new ArrayList<String>();
-						for(String teamId : teamIdListBySkill) {
-							if(!resultIdList.contains(teamId)) {
+						for (String teamId : teamIdListBySkill) {
+							if (!resultIdList.contains(teamId)) {
 								resultIdList.add(teamId);
 							}
 						}
+					} else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < teamIdListBySkill.size(); j++) {
+								if (resultIdList.get(i).equals(teamIdListBySkill.get(j))) {
+									flag = true;
+								}
+							}
+							if (flag == false) {
+								resultIdList.set(i, "empty");
+							}
+						}
 					}
-					else {
-						for(String teamId : teamIdListBySkill) {
-							if(resultIdList.contains(teamId)) {
+				}
+			}
+			
+			if(!keyword.trim().equals("")) {
+				Criteria textCri = new Criteria();
+				switch(textCondition) {
+				case "teamName":
+					textCri.addCriteria("teamName", keyword.trim());
+					break;
+				case "teamProjectName":
+					textCri.addCriteria("teamProjectName", keyword.trim());
+					break;
+				case "teamContestName":
+					textCri.addCriteria("teamContestName", keyword.trim());
+					break;
+				}
+				teamIdListByKeyword = teamService.searchTeam(textCri);
+				
+				if (teamIdListByKeyword != null) {
+					if (resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for (String teamId : teamIdListByKeyword) {
+							if (!resultIdList.contains(teamId)) {
 								resultIdList.add(teamId);
+							}
+						}
+					} else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < teamIdListByKeyword.size(); j++) {
+								if (resultIdList.get(i).equals(teamIdListByKeyword.get(j))) {
+									flag = true;
+								}
+							}
+							if (flag == false) {
+								resultIdList.set(i, "empty");
 							}
 						}
 					}
@@ -183,8 +233,10 @@ public class TeamSearchController {
 			}
 
 			for (String resultId : resultIdList) {
-				TeamSimpleVO teamSimpleVO = teamService.getTeamSimple(resultId);
-				resultTeamList.add(teamSimpleVO);
+				if (!resultId.equals("empty")) {
+					TeamSimpleVO teamSimpleVO = teamService.getTeamSimple(resultId);
+					resultTeamList.add(teamSimpleVO);
+				}
 			}
 
 			model.addAttribute("resultTeamList", resultTeamList);
@@ -224,6 +276,10 @@ public class TeamSearchController {
 					canApply = false;
 				}
 			}
+		}
+		
+		if(memberSimpleVO == null) {
+			canApply = false;
 		}
 
 		model.addAttribute("canApply", canApply);
