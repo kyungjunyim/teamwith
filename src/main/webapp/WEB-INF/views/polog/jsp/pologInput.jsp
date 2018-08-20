@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<link href="/resources/polog/css/pofile.css" rel="stylesheet">
+<script src="/resources/polog/js/contact.js"></script>
 </head>
 <body>
 	<form action="/polog/edit" method="post" id="polog_form"
