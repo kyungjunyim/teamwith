@@ -30,6 +30,11 @@
 
 
 <style type="text/css">
+section:before, section:after {
+	content: '';
+	display: block;
+	clear: both;
+}
 </style>
 </head>
 <body>
@@ -47,13 +52,14 @@
 		<section id="banner" class="major">
 			<jsp:include page="banner.jsp"></jsp:include>
 		</section>
-	</div>
-	<!-- Main -->
-	<div class="polog" id="polog">
+		<!-- Main -->
+		<section class="polog" id="polog">
 
-		<jsp:include page="pologInput.jsp"></jsp:include>
+			<jsp:include page="pologInput.jsp"></jsp:include>
 
+		</section>
 	</div>
+
 
 
 	<!-- footer -->

@@ -2,38 +2,36 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.teamwith.dao.PologDAO" >
-  	<resultMap id="polog" type="PologDTO">
-  		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
-  		<id property="pologTitle" column="polog_title" jdbcType="VARCHAR"/>
-  		<id property="pologTitlePosition" column="polog_title_position" jdbcType="VARCHAR"/>
-  		<id property="pologIntroPic" column="polog_intro_pic" jdbcType="VARCHAR"/>
-  		<id property="pologThemeColor" column="polog_theme_color" jdbcType="VARCHAR"/>
-  		<id property="pologBgColor" column="polog_bg_color" jdbcType="VARCHAR"/>
-  		<id property="pologBgPic" column="polog_bg_pic" jdbcType="VARCHAR"/>
-  		<id property="pologMenuPosition" column="polog_menu_position" jdbcType="VARCHAR"/>
-  		<id property="pologIntro" column="polog_intro" jdbcType="CLOB"/>
-  	</resultMap>
-  	<insert id="addPologByMemberId">
-  		insert into polog_tb(member_id,polog_title,polog_title_position,polog_theme_color,polog_bg_color,polog_menu_position) values(#{memberId},concat(#{memberId},'님의 폴로그'),'t1','#ffffff','#e4ecf4','l1')
-  	</insert>
-  	<insert id="addPologByAllInfo">
-  		insert into polog_tb values(#{memberId},#{pologTitle},#{pologTitlePosition},#{pologIntroPic},#{pologThemeColor},#{pologBgColor},#{pologBgPic},#{pologMenuPosition},#{pologIntro})
-  	</insert>
-  	<update id="updatePolog">
-  		update polog_tb set polog_title=#{pologTitle},polog_title_position=#{pologTitlePosition},
-  		polog_intro_pic=#{pologIntroPic},polog_theme_color=#{pologThemeColor},polog_bg_color=#{pologBgColor},
-  		polog_bg_pic=#{pologBgPic},polog_menu_position=#{pologMenuPosition},polog_intro=#{pologIntro} 
-  		where member_id=#{memberId} 
-  	</update>
-  	<delete id="removePolog">
-  		delete from polog_tb where member_id=#{memberId}
-  	</delete>
-  	<select id="searchAllPologList" resultMap="polog">
-  		SELECT * 
-  		FROM polog_tb
-  	</select>
-  	<select id="searchPologByMemberId" resultMap="polog">
-  		select * from polog_tb where member_id=#{memberId}
-  	</select>  	
-  </mapper> 
+<mapper namespace="com.teamwith.dao.PologDAO">
+	<resultMap id="polog" type="PologDTO">
+		<id property="memberId" column="member_id" jdbcType="VARCHAR" />
+		<id property="pologTitle" column="polog_title" jdbcType="VARCHAR" />
+		<id property="pologBgColor" column="polog_bg_color"
+			jdbcType="VARCHAR" />
+		<id property="pologBgPic" column="polog_bg_pic" jdbcType="VARCHAR" />
+		<id property="pologIntro" column="polog_intro" jdbcType="CLOB" />
+	</resultMap>
+	<insert id="addPologByMemberId">
+		insert into polog_tb(member_id,polog_title,polog_bg_color)
+		values(#{memberId},concat(#{memberId},'님의 폴로그'),'#002b5a')
+	</insert>
+	<insert id="addPologByAllInfo">
+		insert into polog_tb
+		values(#{memberId},#{pologTitle},#{pologBgColor},#{pologBgPic},#{pologIntro})
+	</insert>
+	<update id="updatePolog">
+		update polog_tb set polog_title=#{pologTitle},
+		polog_bg_color=#{pologBgColor},polog_bg_pic=#{pologBgPic},polog_intro=#{pologIntro}
+		where member_id=#{memberId}
+	</update>
+	<delete id="removePolog">
+		delete from polog_tb where member_id=#{memberId}
+	</delete>
+	<select id="searchAllPologList" resultMap="polog">
+		SELECT *
+		FROM polog_tb
+	</select>
+	<select id="searchPologByMemberId" resultMap="polog">
+		select * from polog_tb where member_id=#{memberId}
+	</select>
+</mapper> 

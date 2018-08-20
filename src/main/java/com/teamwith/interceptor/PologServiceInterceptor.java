@@ -49,7 +49,7 @@ public class PologServiceInterceptor extends HandlerInterceptorAdapter {
 
 		// my polog or (public and existent member) -> set Attributes
 		request.setAttribute("memberVO", mem);
-
+		request.setAttribute("pologVO", pologService.getPologInfo(memberId));
 		return true;
 	}
 

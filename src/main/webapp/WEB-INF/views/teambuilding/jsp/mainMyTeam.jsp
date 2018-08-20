@@ -47,7 +47,7 @@
 	</div>
 	</c:if>
 	<div class="row" style="margin: 20px auto">
-		<form action="teamRegister.do" method="post">
+		<form action="/teamInfo/register" method="get">
 			<input type="hidden" name="job" value="teamRegister">
 			<button type="submit" class="btn btn-md btn_submit">팀 만들기</button>
 		</form>
