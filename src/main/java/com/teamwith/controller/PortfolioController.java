@@ -49,6 +49,7 @@ public class PortfolioController {
 			model.addAttribute("error","no portfolioId");
 			return "/polog/jsp/detailPortfolio";
 		}
+		portfolioId="portfolio-"+portfolioId;
 		PortfolioVO portfolio=pologService.getPortfolio(portfolioId);
 		List<PortfolioContentVO> contentList=pologService.getPortfolioContent(portfolioId);
 		if(portfolio==null){
