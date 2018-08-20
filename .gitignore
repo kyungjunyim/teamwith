@@ -2,6 +2,7 @@
 *.class
 pom.properties
 MANIFEST.MF
+*.prefs
 
 # Log file
 *.log
