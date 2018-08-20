@@ -20,25 +20,28 @@
 					<tr>
 
 						<th><i class="material-icons">info</i>
-							&nbsp;&nbsp;Information</th>
+							&nbsp;&nbsp;Polog Settings</th>
 					</tr>
 					<tr>
 						<td>폴로그 제목</td>
-						<td id="member_name">${memberVO.memberName }</td>
+						<td><input type="text" id="polog_title"
+							name="pologTitle" class="profile_input"
+							style="text-align: right;" value="${pologVO.memberPhone }"></td>
 					</tr>
 					<tr>
 						<td>폴로그 배경색</td>
-						<td id="member_email">${memberVO.memberEmail }</td>
+						<td><input type="color" id="polog_bgcolor"
+							name="pologBgColor" class="profile_input"
+							style="text-align: right;" value="${pologVO.memberPhone }"></td>
 					</tr>
 					<tr>
 						<td>폴로그 소개</td>
-						<td><input type="text" id="member_phone" name="memberPhone"
-							class="profile_input" style="text-align: right;"
-							value="${memberVO.memberPhone }"></td>
+						<td><textarea id="polog_intro" class="profile_input"
+								name="pologIntro">${pologVO.memberIntro}</textarea></td>
 					</tr>
 					<tr>
 						<td>폴로그 배경 사진</td>
-						<td><input id="file" type="file" name="file"
+						<td><input id="file" type="file" name="pologBgPicFile"
 							class="form-control"> <!-- <button type="button" onclick="$('#file').trigger('click')">파일</button> -->
 						</td>
 					</tr>
