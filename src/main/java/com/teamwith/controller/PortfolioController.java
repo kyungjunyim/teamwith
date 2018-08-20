@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamwith.service.PologService;
+import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.PortfolioContentVO;
 import com.teamwith.vo.PortfolioVO;
 @Controller
@@ -73,8 +74,8 @@ public class PortfolioController {
 		rootPath=rootPath.replace("\\", "/");
 		String portfolioId=null;
 		try {
-			String memberId=(String)session.getAttribute("memberId");
-			if(memberId==null||memberId.isEmpty()){
+			MemberSimpleVO memberSimpleVO=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
+			if(memberSimpleVO==null||memberSimpleVO.getMemberId().isEmpty()||memberSimpleVO.getMemberId()==null){
 				model.addAttribute("error","not login status");
 				return "/polog/jsp/errorPage";
 			}
@@ -83,7 +84,7 @@ public class PortfolioController {
 			}else{
 				portfolioVO.setPortfolioBest("1");
 			}
-			portfolioVO.setMemberId((String)session.getAttribute("memberId"));
+			portfolioVO.setMemberId(memberSimpleVO.getMemberId());
 			portfolioVO.setPortfolioUpdateDate("2018-08-19");
 			
 			
@@ -148,6 +149,11 @@ public class PortfolioController {
 	}
 	@RequestMapping(value="/edit/{portfolioId}",method=RequestMethod.GET)
 	public String editPortfolioPage(@PathVariable("portfolioId") String portfolioId,Model model) {
+		PortfolioVO portfolio=pologService.getPortfolio(portfolioId);
+		List<PortfolioContentVO> portfolioContentList=pologService.getPortfolioContent(portfolioId);
+		
+		model.addAttribute("portfolioVO",portfolio);
+		model.addAttribute("portfolioContent",portfolioContentList);
 		
 		return "/polog/jsp/editPortfolio";
 	}

@@ -249,7 +249,7 @@ background-color: #ffddc9;
         </li>
         <!-- 3번부터 동적으로 생성해야 하는 부분 (시용자가 추가했을 경우) -->
         <c:forEach items="${requestScope.portfolioContent }" var="content" varStatus="i">
-        	<c:if test="${content.portfolioContentOrder!=portfolioContent[i.index-1].portfolioContentOrder }">
+        	<%-- <c:if test="${content.portfolioContentOrder!=portfolioContent[i.index-1].portfolioContentOrder }"> --%>
         		<c:set var="contentTemp" value="${content}" scope="request"/>
 	        	<c:choose>
 	        		<c:when test="${content.layoutId=='layout-1'}">
@@ -263,7 +263,7 @@ background-color: #ffddc9;
 	        			</li>
 	        		</c:when>
 	        	</c:choose>
-        	</c:if>
+        <%-- 	</c:if> --%>
         </c:forEach>
         
     </ul>
