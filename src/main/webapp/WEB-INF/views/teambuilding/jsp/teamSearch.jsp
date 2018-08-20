@@ -19,17 +19,19 @@
 				<div class="row main_row">
 					<jsp:include page="teamSearchBar.jsp" />
 				</div> 
-				<c:if test="${not empty sessionScope.memberSimpleVO }">
+				<c:if test="${not empty recommendedTeamList }">
 					<div class="row main_row">
 						<jsp:include page="recommendedTeam.jsp" />
 					</div>
-				</c:if>				
+				</c:if>
+				<c:if test="${not empty recentTeamList }">				
 				<div class="row main_row">
 					<jsp:include page="mainRecentTeam.jsp" />
 				</div>
-				<c:if test="${1 == 1 }">
-				<div class="row main_row" style="margin: 0;">
-					<jsp:include page="memberSearchResult.jsp" />
+				</c:if>
+				<c:if test="${not empty resultTeamList }">
+				<div class="row main_row">
+					<jsp:include page="teamSearchResult.jsp" />
 				</div>
 				</c:if>
 			</div>
@@ -49,7 +51,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row row_whole">
+		<div class="row row_whole" style="margin-top: 0px;">
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>

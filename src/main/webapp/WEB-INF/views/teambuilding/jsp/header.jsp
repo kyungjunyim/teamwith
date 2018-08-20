@@ -14,7 +14,7 @@
 				</div>
 			<ul class="nav nav_menu_list">
 				<li class="nav_menu">
-					<a class="nav-link menu_link" href="teamSearch">팀</a>
+					<a class="nav-link menu_link" href="/teamSearch">팀</a>
 				</li>
 				<li class="nav_menu"><a class="nav-link menu_link" href="/teambuilding/jsp/member.jsp">회원</a></li>
 				<li class="nav_menu"><a class="nav-link menu_link" href="searchPortfolio.do">포트폴리오</a></li>
