@@ -55,14 +55,6 @@ public class TeamInfoController {
 		try {
 			teamInfo.setMemberId(memberId);
 			
-			if (teamPicFile != null && !teamPicFile.getOriginalFilename().trim().equals("")) {
-				String rootPath = session.getServletContext().getRealPath("/");
-				String attachPath = "resources\\image\\member\\" + memberId;
-				String filename = teamPicFile.getOriginalFilename();
-				String newFilename = uploadFile(rootPath, attachPath, filename, teamPicFile.getBytes());
-				teamInfo.setTeamPic(newFilename);
-			}
-			
 			String path=session.getServletContext().getRealPath("/")+"resources\\image\\team\\";
 			teamId = teamService.registerTeam(teamInfo,teamPicFile.getBytes(),path);
 			
@@ -168,25 +160,5 @@ public class TeamInfoController {
 		model.addAttribute("interviewMap", interviewMap);
 
 		return "teambuilding/jsp/myApplicant";
-	}
-	
-	private String uploadFile(String uploadPath, String attachPath, String originalName, byte[] fileData)
-			throws Exception {
-		String newFilename = attachPath + getNewFilename(originalName);
-
-		File dir = new File(uploadPath);
-		if (!dir.exists()) {
-			dir.mkdirs(); // 존재하지 않는 모든 폴더 생성
-		}
-		File target = new File(uploadPath, newFilename);
-		FileCopyUtils.copy(fileData, target);
-		return "\\" + newFilename;
-	}
-
-	private String getNewFilename(String filename) {
-		if (filename.contains(".")) {
-			return filename.substring(filename.indexOf('.'));
-		}
-		return null;
 	}
 }
