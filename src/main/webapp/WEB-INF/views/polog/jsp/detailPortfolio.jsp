@@ -128,7 +128,11 @@ li{list-style:none}
 .product_con .product_list li:nth-child(4) a{background:#abe8cd;left:200px;}
 .product_con .product_list li:nth-child(5) a{background:#abe8cd;left:200px;} */
 
-.product_con .btn_prev,.product_con .btn_next { position:absolute;top:5%;}
+*{
+-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;
+}
+.product_con .btn_prev,.product_con .btn_next { position:absolute;top:5%;
+}
 .product_con .btn_prev { left:0px;}
 .product_con .btn_next { right:0px;}
 .btn_prev:hover,.btn_next:hover{cursor: pointer;}

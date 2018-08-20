@@ -70,6 +70,7 @@ public class PortfolioController {
 			String [] portfolioContentName,String [] layoutId,
 			@ModelAttribute PortfolioVO portfolioVO,Model model,HttpSession session) {
 		System.out.println(portfolioFile[0].getContentType());
+		session.setAttribute("memberId", "kim");
 		String rootPath = session.getServletContext().getRealPath("/");//service가 이 경로를 받을것
 		String portfolioId=null;
 		try {
@@ -144,7 +145,7 @@ public class PortfolioController {
 			return "/polog/jsp/errorPage";
 		}
 		else {
-			return "redirect:/portfolio/"+portfolioId;
+			return "redirect:/portfolio/"+portfolioId.split("-")[1];
 		}
 		
 	}
