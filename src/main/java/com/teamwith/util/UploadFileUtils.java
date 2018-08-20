@@ -101,7 +101,7 @@ public class UploadFileUtils {
 		
 		return saveName;
 	}
-	public static String uploadFile2(String uploadPath, String fileName, byte [] fileData) throws Exception {
+	public static String uploadFile2(String uploadPath, String fileName, byte[] fileData) throws Exception {
 		File dir=new File(uploadPath);
 		if(!dir.exists()) {
 			dir.mkdirs();
@@ -137,6 +137,7 @@ public class UploadFileUtils {
 		
 		ImageIO.write(destImg, file.getContentType().split("/")[1], newFile);
 	}
+
 	
 	
 }

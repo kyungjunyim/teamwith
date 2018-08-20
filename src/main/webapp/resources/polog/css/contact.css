@@ -1,12 +1,11 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
 /*!
  * Materialize v0.100.2 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
- */
-
-
-.element.style {
+ */.
+ 
+ element.style {
     padding: 20px;
 }
 

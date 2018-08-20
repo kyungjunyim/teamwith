@@ -9,7 +9,6 @@
 		<id property="memberEmail" column="member_email" />
 		<id property="memberBirth" column="member_birth" />
 		<id property="memberPic" column="member_pic" />
-		<id property="memberActive" column="member_active" />
 		<id property="memberPhone" column="member_phone" />
 		<id property="memberPublic" column="member_public" />
 		<id property="memberIntro" column="member_intro" />
@@ -32,9 +31,8 @@
 		member_tb(member_id, member_name,
 		member_password, member_email,
 		member_birth, member_phone,
-		member_active,
 		member_public,member_register_date, member_auth)
-		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},0,0,SYSDATE,0)
+		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},0,SYSDATE,0)
 	</insert>
 
 	<insert id="addAdminMember" parameterType="MemberDTO">
@@ -42,14 +40,13 @@
 		member_tb(member_id, member_name,
 		member_password, member_email,
 		member_birth, member_phone,
-		member_active,
 		member_public,member_register_date, member_auth)
-		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},0,0,SYSDATE,#{memberAuth})
+		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},0,SYSDATE,#{memberAuth})
 	</insert>
 
 	<update id="updateMemberStatus" parameterType="String">
 		UPDATE member_tb
-		SET member_active=-1, member_public=-1, member_auth=-1,
+		SET member_public=-1, member_auth=-1,
 		member_out_date=SYSDATE
 		WHERE member_id=#{memberId}
 	</update>
@@ -120,7 +117,7 @@
 		SELECT member_id, member_name, member_email,
 		member_birth,
 		member_pic,
-		member_active, member_phone, member_intro,
+		member_phone, member_intro,
 		role_id,
 		region_id_1,
 		region_id_2
