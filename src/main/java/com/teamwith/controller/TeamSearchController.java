@@ -65,25 +65,152 @@ public class TeamSearchController {
 
 		return "teambuilding/jsp/teamSearch";
 	}
-	
-	@RequestMapping(value="", method=RequestMethod.POST)
-	public String teamSearch(String[] region, String[] project, String[] role, String[] skill, String textCondition, String keyword) throws Exception {
-		for(String str : region) {
-			System.out.println(str);
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public String teamSearch(String[] region, String[] project, String[] role, String[] skill, String textCondition,
+			String keyword) throws Exception {
+		Map<String, Double> resultMap = new HashMap<String, Double>();
+		List<String> teamIdListByRegion = null;
+		List<String> teamIdListByRole = null;
+		List<String> teamIdListByCategory = null;
+		List<String> teamIdListBySkill = null;
+
+		Criteria regionCri = new Criteria();
+		List<String> regionList = new ArrayList<String>();
+		for (String regionStr : region) {
+			regionList.add(regionStr);
 		}
-		for(String str : project) {
-			System.out.println(str);
+		regionCri.addCriteria("regionList", regionList);
+
+		teamIdListByRegion = teamService.searchTeam(regionCri);
+
+		if (teamIdListByRegion == null) {
+			return null;
+		} else {
+			for (String teamId : teamIdListByRegion) {
+				resultMap.put(teamId, 1.0);
+			}
 		}
-		for(String str : role) {
-			System.out.println(str);
+
+		Criteria categoryCri = new Criteria();
+		List<String> projectCategoryList = new ArrayList<String>();
+		for(String projectStr : project) {
+			projectCategoryList.add(projectStr);
 		}
-		for(String str : skill) {
-			System.out.println(str);
+		categoryCri.addCriteria("projectCategoryList", projectCategoryList);
+
+		teamIdListByCategory = teamService.searchTeam(categoryCri);
+
+		if (teamIdListByCategory != null) {
+			for (String teamId : teamIdListByCategory) {
+				if (resultMap.get(teamId) == null) {
+					resultMap.put(teamId, 1.0);
+				} else {
+					Double temp = resultMap.get(teamId);
+					resultMap.put(teamId, temp + 1.0);
+				}
+			}
 		}
-		System.out.println(textCondition);
-		System.out.println(keyword);
 		
-		
+		Criteria roleCri = new Criteria();
+		List<String> roleList = new ArrayList<String>();
+		for(String roleStr : role) {
+			roleList.add(roleStr);
+		}
+		roleCri.addCriteria("roleList", roleList);
+
+		teamIdListByRole = teamService.searchTeamDTO(roleCri);
+
+		if (teamIdListByRole != null) {
+			for (String teamId : teamIdListByRole) {
+				if (resultMap.get(teamId) == null) {
+					continue;
+				} else {
+					Double temp = resultMap.get(teamId);
+					if (temp < 3.0) {
+						resultMap.put(teamId, temp + 1.0);
+					}
+				}
+			}
+		}
+
+		List<String> skillList = new ArrayList<String>();
+		String[] skillMap = memberSkillVO.getSkill();
+
+		for (String skill : skillMap) {
+			skillList.add(skill);
+		}
+
+		int skillSize = skillList.size();
+
+		Criteria skillCri = new Criteria();
+		skillCri.addCriteria("skillList", skillList);
+
+		teamIdListBySkill = teamService.searchTeamDTO(skillCri);
+
+		if (teamIdListBySkill != null) {
+			Map<String, Integer> countMap = new HashMap<String, Integer>();
+			for (String teamId : teamIdListBySkill) {
+				if (countMap.get(teamId) == null) {
+					countMap.put(teamId, 1);
+				} else {
+					int temp = countMap.get(teamId);
+					temp += 1;
+					countMap.put(teamId, temp);
+				}
+			}
+
+			Iterator<String> skillIterator = countMap.keySet().iterator();
+			while (skillIterator.hasNext()) {
+				String key = skillIterator.next();
+				if (resultMap.get(key) != null) {
+					double temp = resultMap.get(key);
+					temp += (double) countMap.get(key) / (double) skillSize;
+					resultMap.put(key, temp);
+				}
+			}
+		}
+
+		List<String> resultTeamId = new ArrayList<String>();
+		Iterator<String> resultIterator = resultMap.keySet().iterator();
+		while (resultIterator.hasNext()) {
+			String key = resultIterator.next();
+			double temp = resultMap.get(key);
+			temp = temp / 4 * 100;
+			resultMap.put(key, temp);
+			resultTeamId.add(key);
+		}
+
+		Map<String, Double> sortedMap = sortByComparator(resultMap);
+		List<TeamRateVO> resultList = new ArrayList<TeamRateVO>();
+
+		Iterator<String> sortedIterator = sortedMap.keySet().iterator();
+		while (sortedIterator.hasNext()) {
+			String key = sortedIterator.next();
+			TeamSimpleVO tempTeamSimpleVO = null;
+			try {
+				tempTeamSimpleVO = teamService.getTeamSimple(key);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			TeamRateVO teamRateVO = new TeamRateVO();
+
+			teamRateVO.setTeamId(tempTeamSimpleVO.getTeamId());
+			teamRateVO.setTeamPic(tempTeamSimpleVO.getTeamPic());
+			teamRateVO.setTeamProjectName(tempTeamSimpleVO.getTeamProjectName());
+			teamRateVO.setProjectCategoryId(tempTeamSimpleVO.getProjectCategoryId());
+			teamRateVO.setTeamName(tempTeamSimpleVO.getTeamName());
+			teamRateVO.setTeamEndDate(tempTeamSimpleVO.getTeamEndDate());
+			teamRateVO.setTeamUpdateDate(tempTeamSimpleVO.getTeamUpdateDate());
+			teamRateVO.setMemberId(tempTeamSimpleVO.getMemberId());
+			teamRateVO.setMemberName(tempTeamSimpleVO.getMemberName());
+			teamRateVO.setRate(sortedMap.get(key));
+
+			resultList.add(teamRateVO);
+		}
+
+		return resultList;
+
 		return null;
 	}
 
@@ -107,7 +234,7 @@ public class TeamSearchController {
 
 		List<RequireSkillVO> requireSkills = new ArrayList<RequireSkillVO>();
 		if (recruitInfo != null) {
-			for(RecruitVO recruit : recruitInfo) {
+			for (RecruitVO recruit : recruitInfo) {
 				requireSkills.addAll(teamService.getRequireSkills(recruit.getRecruitId()));
 			}
 		}
