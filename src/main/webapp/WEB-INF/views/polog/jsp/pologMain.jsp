@@ -32,7 +32,7 @@
 <style type="text/css">
 </style>
 </head>
-<body>
+<body id="pBody">
 
 	<!-- Wrapper -->
 	<div id="wrapper">
@@ -69,5 +69,10 @@
 	</footer>
 
 </body>
+<script>
+	$(document).ready(function() {
+		console.log(document.getElementById('pBody').style.background="${pologVO.pologBgColor}");
+	})
+</script>
 
 </html>
