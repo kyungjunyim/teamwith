@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.teamwith.dao.PortfolioDAO" >
+  	<resultMap id="portfolio" type="PortfolioDTO" >
+		<id property="portfolioId" column="portfolio_id" jdbcType="VARCHAR"/>
+		<id property="portfolioTitle" column="portfolio_title" jdbcType="VARCHAR"/>
+		<id property="portfolioIntro" column="portfolio_intro" jdbcType="CLOB"/>
+		<id property="portfolioStartDate" column="portfolio_start_date" jdbcType="DATE"/>
+		<id property="portfolioEndDate" column="portfolio_end_date" jdbcType="DATE"/>
+		<id property="portfolioTeamName" column="portfolio_team_name" jdbcType="VARCHAR"/>
+		<id property="portfolioPeopleNum" column="portfolio_people_num" jdbcType="INTEGER"/>
+		<id property="portfolioRole" column="portfolio_role" jdbcType="VARCHAR"/>
+		<id property="portfolioWork" column="portfolio_work" jdbcType="VARCHAR"/>
+		<id property="portfolioSkill" column="portfolio_skill" jdbcType="VARCHAR"/>
+		<id property="portfolioUpdateDate" column="portfolio_update_date" jdbcType="DATE"/>
+		<id property="portfolioBest" column="portfolio_best" jdbcType="INTEGER"/>
+		<id property="portfolioPic" column="portfolio_pic" jdbcType="VARCHAR"/>
+		<id property="projectCategoryId" column="project_category_id" jdbcType="VARCHAR"/>
+		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
+	</resultMap>  
+	
+	
+	<insert id="addPortfolio">
+		insert into portfolio_tb values(#{portfolioId},#{portfolioTitle},#{portfolioIntro},#{portfolioStartDate},
+		#{portfolioEndDate},#{portfolioTeamName},#{portfolioPeopleNum},#{portfolioRole},#{portfolioWork},
+		#{portfolioSkill},sysdate,#{portfolioBest},#{portfolioPic},#{projectCategoryId},#{memberId})
+	</insert>
+	<update id="updatePortfolio">
+		update portfolio_tb set portfolio_id=#{portfolioId},portfolio_title=#{portfolioTitle},portfolio_intro=#{portfolioIntro},
+		portfolio_start_date=#{portfolioStartDate},portfolio_end_date=#{portfolioEndDate},portfolio_people_num=#{portfolioPeopleNum},
+		portfolio_role=#{portfolioRole},portfolio_work=#{portfolioWork},portfolio_skill=#{portfolioSkill},portfolio_update_date=sysdate,
+		portfolio_best=#{portfolioBest},portfolio_pic=#{portfolioPic},project_category_id=#{projectCategoryId},member_id=#{memberId} 
+		where portfolio_id=#{portfolioId}
+	</update>
+	<delete id="removePortfolioByPortfolioId">
+		delete from portfolio_tb where portfolio_id=#{portfolioId}
+	</delete>
+	<delete id="removePortfolioByMemberId">
+		delete from portfolio_tb where member_id=#{memberId}
+	</delete>
+	<select id="searchAllPortfolioList" resultMap="portfolio">
+		SELECT *
+		FROM portfolio_tb
+	</select>
+	<select id="searchPortfolioByPortfolioId" resultMap="portfolio">
+		select * from portfolio_tb where portfolio_id=#{portfolioId}
+	</select>
+	<select id="searchPortfolioByMemberId" resultMap="portfolio">
+		select * from portfolio_tb where member_id=#{memberId}
+	</select>
+	<select id="searchPortfolioSimple" resultMap="portfolio">
+		SELECT *
+		FROM portfolio_tb
+		<choose>
+			<when test="criteria!=null">
+				<if test="criteria.condition=='recent'">
+					ORDER BY portfolio_update_date desc
+				</if>
+			</when>
+			<otherwise>
+				
+			</otherwise>
+		</choose>
+		
+	</select>
+	<select id="searchPortfolioCountByMemberId" resultType="Integer">
+		select COUNT(*) from portfolio_tb where member_id=#{memberId}
+	</select>
+	<select id="searchBestPortfolioCountByMemberId" resultType="Integer">
+		select COUNT(*) from portfolio_tb where member_id=#{memberId} AND portfolio_best=1
+	</select>
+	<select id="getId" resultType="string">
+		select portfolio_id from portfolio_tb order by portfolio_id desc
+	</select>
+  </mapper> 

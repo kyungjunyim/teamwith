@@ -69,9 +69,8 @@ public class PortfolioController {
 	public String registerPortfolio(MultipartFile [] portfolioFile,String []portfolioURL,String []contentOrder,String [] contentIntro,
 			String [] portfolioContentName,String [] layoutId,
 			@ModelAttribute PortfolioVO portfolioVO,Model model,HttpSession session) {
-		System.out.println(portfolioFile[0].getContentType());
-		session.setAttribute("memberId", "kim");
-		String rootPath = session.getServletContext().getRealPath("/");//service가 이 경로를 받을것
+		String rootPath = session.getServletContext().getRealPath("/"); //service가 이 경로를 받을것
+		rootPath=rootPath.replace("\\", "/");
 		String portfolioId=null;
 		try {
 			String memberId=(String)session.getAttribute("memberId");
@@ -86,7 +85,6 @@ public class PortfolioController {
 			}
 			portfolioVO.setMemberId((String)session.getAttribute("memberId"));
 			portfolioVO.setPortfolioUpdateDate("2018-08-19");
-			System.out.println("위에"+portfolioVO);
 			
 			
 			int fileIndex=1;
@@ -103,7 +101,6 @@ public class PortfolioController {
 			if(contentOrder!=null) {
 				for(int i=0;i<contentOrder.length;i++) {
 					PortfolioContentVO portfolioContent=null;
-					System.out.println("-------"+portfolioContentName[i]+"----------");
 					if(portfolioContentName!=null&&portfolioContentName[i].equals("image")) {
 						if(portfolioFile[fileIndex]!=null) {
 							
@@ -169,7 +166,7 @@ public class PortfolioController {
 			return "redirect:/polog/jsp/errorPage";
 		}
 		
-		return "redirect:/"+memberId;
+		return "redirect:/polog/"+memberId;
 	}
 	
 	

@@ -207,6 +207,11 @@ $(function(){
       }
 	  setting('-1');
 	 });
+    
+	$('#modalOkbtn').click(function(){
+		var categoryValue = $('input:radio[name="projectcategoryid"]:checked').val();
+		$('#pci').attr('value',categoryValue);
+	});
 });
 
 </script>
@@ -335,8 +340,8 @@ background-color: #ffddc9;
 }
 .addBtn{
 	position:fixed;
-	top:5%;
-	right:5%;
+	bottom:5%;
+	right:11%;
 	z-index:1000;
 
 }
@@ -414,6 +419,9 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 } 
+.porjectCategoryBtn{
+font-size:50%;
+}
 </style>
 </head>
 <body style="height:100%">
@@ -432,8 +440,9 @@ input:checked + .slider:before {
         	</div>
         	<div class="content_box">
 	        	<div class="first_content">Category
-	        		<div class="first_content_child">
-	        			<input type="text" class="form-control registerPortfolioInput" name="projectCategoryId" placeholder="카테고리를 모달창">
+	        		<div class="first_content_child porjectCategoryBtn">
+	        			<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#categoryModal"
+	        			id="projectCategoryBtn" >카테고리 선택</button>
 	        		</div>
 	        	</div>
 	        	
@@ -472,7 +481,7 @@ input:checked + .slider:before {
 	        	<div class="row second_content"><div class="col">My Role</div>
 	        	<div class="col-8"><input type="text" class="form-control registerPortfolioInput" name="portfolioRole" placeholder="역할을 입력하세요"></div></div>
 	        	<div class="row second_content"><div class="col">My Work</div>
-	        	<div class="col-8"><textarea class="form-control registerPortfolioInput"name="portfolioWork" rows="5" cols="50portfolioStartDate" placeholder="소개글을 입력하세요"></textarea></div></div>
+	        	<div class="col-8"><textarea class="form-control registerPortfolioInput"name="portfolioWork" rows="5" cols="50portfolioStartDate" placeholder="작업 내용을 입력하세요"></textarea></div></div>
 	        </div>
 	        
         </li>
@@ -480,26 +489,58 @@ input:checked + .slider:before {
         
         
     </ul>
-    <input class="btn addBtn" type="submit" value="등록완료"/>
+    <input type="hidden" name="projectCategoryId" id="pci" value="">
+    
+    
+    
+      <input class="btn addBtn btn-warning" type="submit" value="등록완료"/>
     </form>
-    <i class="btn_prev material-icons">arrow_left</i>
+ 
+     <i class="btn_prev material-icons">arrow_left</i>
     <i class="btn_next material-icons">arrow_right</i>	
 
    <jsp:include page="portfolioLayoutModal.jsp"/> 
 </div>
-<form action="polog.do?memberId=${sessionScope.memberSimpleVO.memberId }">
-		<button type="submit" class="btn portfolioExitBtn">돌아가기</button>
+<form action="/polog/${sessionScope.memberSimpleVO.memberId }">
+		<button type="submit" class="btn portfolioExitBtn btn-warning">돌아가기</button>
 	</form>
 <div id="layout1" style="display:none">
 <jsp:include page="portfolioContentLayout1.jsp"/>
 <input type="file" name="portfolioFile" value="split">
-<button type="button" class="btn" id="deleteBtn" >삭제</button>
+<button type="button" class="btn btn-warning" id="deleteBtn" >삭제</button>
 <input type="hidden" name="layoutId" value="layout-1"/>
 </div>
 <div id="layout2" style="display:none">
 <jsp:include page="portfolioContentLayout2.jsp"/>
-<button type="button" class="btn" id="deleteBtn">삭제</button>
+<button type="button" class="btn btn-warning" id="deleteBtn">삭제</button>
 <input type="hidden" name="layoutId" value="layout-2"/>
 </div>
+<!-- 카테고리모달 -->
+	<div class="modal team_regist_modal_font" id="categoryModal">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header team_regist_modal_title">분야 선택</div>
+								<!-- Modal body -->
+								<div class="modal-body">
+									<c:forEach items="${applicationScope.projectList }" var="project" varStatus="i" >
+										<c:if test="${(i.index mod 3) eq 0}">
+											<div class="row team_regist_big_modal_interval">
+										</c:if>
+										<div class="col team_regist_modal_element">
+											<input name="projectcategoryid" type="radio"
+												class="form-check-input" value="${project.key }">${project.value }
+										</div>
+										<c:if test="${(i.index mod 3) eq 2}">
+											</div>
+										</c:if>
+								</c:forEach>
+								<div class="row">
+									<button type="button" id="modalOkbtn"
+										class="btn btn-mid team_regist_btn_color team_regist_big_modal_btn_position"
+										data-dismiss="modal">확인</button>
+								</div>
+							</div>
+						</div>
+					</div>
 </body>
 </html>

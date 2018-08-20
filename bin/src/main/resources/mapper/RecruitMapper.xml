@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.RecruitDAO">
+	<resultMap type="RecruitDTO" id="recruit">
+		<id property="recruitId" column="recruit_id"/>
+		<id property="teamId" column="team_id"/>
+		<id property="recruitPeopleNum" column="recruit_people_num"/>
+		<id property="recruitPreference" column="recruit_preference"/>
+		<id property="recruitExplain" column="recruit_explain"/>
+		<id property="roleId" column="role_id"/>
+	</resultMap>
+	<!-- 모집 정보 추가 -->
+	<insert id="addRecruit" parameterType="RecruitDTO">
+		insert into recruit_tb values(#{recruitId},#{teamId},#{recruitPeopleNum},#{recruitPreference},#{recruitExplain},#{roleId})
+	</insert>
+	<!-- 모집 정보 삭제 -->
+	<delete id="removeRecruitByRecruitId" parameterType="string">
+		delete from recruit_tb where recruit_id=#{recruitId}
+	</delete>
+	<!-- recruit_tb의 모든 속성 수정 -->
+	<update id="updateRecruitAll" parameterType="RecruitDTO">
+		update recruit_tb set recruit_id=#{recruitId}, team_id=#{teamId}, recruit_people_num=#{recruitPeopleNum},recruit_preference=#{recruitPreference},recruit_explain=#{recruitExplain},role_id=#{roleId} where recruit_id=#{recruitId}
+	</update>
+	<!-- 모집 정보 수정 (recruit_people_num, recruit_preference, recruit_explain, role_id를 수정) -->
+	<update id="updateRecruit" parameterType="RecruitDTO">
+		update recruit_tb set recruit_people_num=#{recruitPeopleNum}, recruit_preference=#{recruitPreference},recruit_explain=#{recruitExplain},role_id=#{roleId} where recruit_id=#{recruitId}
+	</update>
+	<!-- 모집 정보중 모집 인원수만 수정 (recruit_people_num만 수정) -->
+	<update id="updateRecruitPeopleNum" parameterType="RecruitDTO">
+		update recruit_tb set recruit_people_num=#{recruitPeopleNum} where recruit_id=#{recruitId}
+	</update>
+	<!-- 특정 모집에 대한 모집 정보 검색(단일) -->
+	<select id="searchRecruitByRecruitId" parameterType="string" resultMap="recruit">
+		select * from recruit_tb where recruit_id=#{recruitId}
+	</select>
+	<!-- 특정 팀의 모든 모집 정보 검색 (다중) -->
+	<select id="searchRecruitByTeamId" parameterType="string" resultMap="recruit">
+		select * from recruit_tb where team_id=#{teamId}
+	</select>
+	<!-- 모든 모집 정보 불러오기 -->
+	<select id="searchRecruitAll" resultMap="recruit">
+		select * from recruit_tb
+	</select>
+	
+	<select id="getId" resultType="string">
+		SELECT recruit_id
+		FROM recruit_tb
+	</select>
+</mapper>

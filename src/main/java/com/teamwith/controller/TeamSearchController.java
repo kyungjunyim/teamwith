@@ -209,7 +209,6 @@ public class TeamSearchController {
 			resultList.add(teamRateVO);
 		}
 
-		return resultList;
 
 		return null;
 	}

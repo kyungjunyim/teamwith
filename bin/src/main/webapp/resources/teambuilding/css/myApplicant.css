@@ -1,0 +1,142 @@
+@charset "UTF-8";
+
+.col_container {
+	width: 860px;
+	margin: 0;
+	padding: 0;
+	background-color: #ffffff;
+	border-radius: 7px;
+}
+
+.my_application_row {
+	margin: auto;
+}
+
+.my_application_text_title {
+	margin: 30px auto; 
+}
+
+.main_title {
+	width: 860px;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 10px;
+}
+
+.my_application_empty {
+	margin: 130px auto 15px auto;
+	font-size: 16px;
+}
+
+.table_whole {
+	margin: auto;
+	width: 800px;
+}
+
+.table {
+	font-size: 16px;
+	text-align: center;
+	border: none;
+	margin-top: 30px;
+}
+
+.table th {
+	border: none;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.table td {
+	border: none;
+	border-bottom: 1px solid #dee2e6;
+	line-height: 55px;
+	color: #002b5a; 
+	cursor: pointer;
+}
+
+.team_image {
+	width: 55px;
+	height: 55px;
+}
+
+.btn_color_small {
+	width: 60px;
+	padding: 0;
+	font-size: 15px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+
+.btn_color_small:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
+
+.btn_submit_small {
+	width: 60px;
+	padding: 0;
+	font-size: 15px;
+	color: #fff;
+	background-color: #ff4111;
+	opacity: 0.7;
+}
+
+.btn_submit_small:hover {
+	color: #fff;
+	background-color: #ff4111;
+	border-color: #fff;
+	opacity: 1;
+}
+
+.btn_disable {
+	width: 60px;
+	padding: 0;
+	font-size: 15px;
+	color: #fff;
+	background-color: #000000;
+	opacity: 0.7;
+	disable: true;
+}
+
+.team_pic_div {
+	width: 140px;
+	height: 140px;
+	margin: 0;
+	padding: 10px; 
+}
+
+.team_pic {
+	width: 120px;
+	height: 120px;
+	border: none;
+	border-radius: 7px;
+}
+
+.row_team {
+	margin: auto;
+}
+
+.row_team:hover {
+	cursor: pointer;
+	background-color: #fff7f4;
+	border: none;
+	border-radius: 7px;
+}
+
+.team_info {
+	height: 140px;
+	text-align: center;
+	padding: 10px 30px;
+}
+
+.team_info_text {
+	font-size: 18px;
+	line-height: 40px;
+}
+
+.btn_change_status {
+	padding-left: 0;
+	padding-right: 0;
+	width: 60px;
+}
