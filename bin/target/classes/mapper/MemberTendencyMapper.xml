@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD DAO 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamwith.dao.MemberTendencyDAO">
+
+	<resultMap type="MemberTendencyDTO" id="memberTendencyList">
+		<id property="tendencyId" column="tendency_id" />
+		<id property="memberId" column="member_id" />
+		<id property="tendencyFigure" column="tendency_figure" />
+	</resultMap>
+
+	<insert id="addMemberTendency" parameterType="MemberTendencyDTO">
+		INSERT INTO member_tendency_tb
+		VALUES(#{memberId},#{tendencyId},#{tendencyFigure})
+	</insert>
+
+	<update id="updateTendencyFigure" parameterType="MemberTendencyDTO">
+		UPDATE member_tendency_tb 
+		SET tendency_figure = #{tendencyFigure} 
+		WHERE member_id=#{memberId} AND tendency_id=#{tendencyId}
+	</update>
+
+	<delete id="removeMemberTendency" parameterType="String">
+		DELETE FROM member_tendency_tb WHERE member_id=#{memberId}
+	</delete>
+
+	<select id="searchMemberTendency" parameterType="String" resultMap="memberTendencyList">
+		SELECT * FROM member_tendency_tb WHERE member_id =#{memberId}
+	</select>
+	
+	<select id="searchAllMemberTendency" resultMap="memberTendencyList">
+		SELECT * FROM member_tendency_tb
+	</select>
+
+</mapper>

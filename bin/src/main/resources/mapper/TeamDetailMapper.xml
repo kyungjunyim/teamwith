@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.TeamDetailDAO">
+	<resultMap type="TeamDetailVO" id="teamDetailView">
+		<id property="teamId" column="team_id" jdbcType="VARCHAR"/>
+		<id property="teamProjectName" column="team_project_name" jdbcType="VARCHAR"/>
+		<id property="teamName" column="team_name" jdbcType="VARCHAR"/>
+		<id property="teamSummary" column="team_summary" jdbcType="VARCHAR"/>
+		<id property="teamContent" column="team_content" jdbcType="CLOB"/>
+		<id property="projectCategoryId" column="project_category_id" jdbcType="VARCHAR"/>
+		<id property="regionId" column="region_id" jdbcType="VARCHAR"/>
+		<id property="teamEndDate" column="team_end_date" jdbcType="DATE"/>
+		<id property="teamStatus" column="team_status" jdbcType="INTEGER"/>
+		<id property="teamPic" column="team_pic" jdbcType="VARCHAR"/>
+		<id property="teamContestName" column="team_contest_name" jdbcType="VARCHAR"/>
+		<id property="teamContestLink" column="team_contest_link" jdbcType="VARCHAR"/>
+		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
+		<id property="memberName" column="member_name" jdbcType="VARCHAR"/>
+		<id property="memberPic" column="member_pic" jdbcType="VARCHAR"/>
+		<id property="roleId" column="role_id" jdbcType="VARCHAR"/>
+	</resultMap>
+	<!-- 팀 상세 조회 (윗부분) -->
+	<select id="searchTeamDetailByTeamId" parameterType="string" resultMap="teamDetailView">
+		select * from team_detail_view where team_id=#{teamId}
+	</select>
+	<!--  모든 팀 상세 정보 불러오기 -->
+	<select id="searchTeamDetailAll" resultMap="teamDetailView">
+		select * from team_detail_view
+	</select>
+</mapper>

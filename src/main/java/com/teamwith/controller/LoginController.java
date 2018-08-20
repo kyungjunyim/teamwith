@@ -41,5 +41,15 @@ public class LoginController {
 		
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/requireLogin", method=RequestMethod.GET)
+	public String requireLogin() {
+		return "teambuilding/jsp/requireLogin";
+	}
+	
+	@RequestMapping(value="/requireAdmin", method=RequestMethod.GET)
+	public String requireAdmin() {
+		return "teambuilding/jsp/requireAdmin";
+	}
 
 }

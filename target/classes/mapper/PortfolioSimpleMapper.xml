@@ -29,7 +29,7 @@
 	<select id="searchPortfolioSimpleByMemberId" resultMap="result">
 		SELECT *
 		FROM portfolio_simple_view
-		where member_id=#{memberId}
+		where member_id=#{memberId} <if test="best=='true'"> and portfolio_best=1</if>
 	</select>
 	
 	<select id="searchPortfolio" resultMap="result">

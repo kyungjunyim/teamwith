@@ -28,7 +28,16 @@
 
 	<beans:bean id="teamServiceInterceptor"
 		class="com.teamwith.interceptor.TeamServiceInterceptor" />
+			
+	<beans:bean id="pologServiceInterceptor"
+		class="com.teamwith.interceptor.PologServiceInterceptor" />
 
+	<beans:bean id="loginInterceptor"
+		class="com.teamwith.interceptor.LoginInterceptor" />
+
+	<beans:bean id="adminInterceptor"
+		class="com.teamwith.interceptor.AdminInterceptor" />
+		
 	<interceptors>
 		<interceptor>
 			<mapping path="/" />
@@ -44,18 +53,29 @@
 			<mapping path="/account" />
 			<beans:ref bean="teamServiceInterceptor" />
 		</interceptor>
-	</interceptors>
-	
-	
-	<beans:bean id="pologServiceInterceptor"
-		class="com.teamwith.interceptor.PologServiceInterceptor" />
-
-	<interceptors>
 		<interceptor>
 			<mapping path="/polog/*" />
 			<mapping path="/polog/*/*" />
 			<mapping path="/profile/*" />
 			<beans:ref bean="pologServiceInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/profile/edit/*"/>
+			<mapping path="/polog/edit/*"/>
+			<mapping path="/portfolio/register"/>
+			<mapping path="/portfolio/edit/*"/>
+			<mapping path="/portfolio/remove/*"/>
+			<mapping path="/application/myApplication"/>
+			<mapping path="/application/cancel/*"/>
+			<mapping path="/application/change/*"/>
+			<mapping path="/application/apply/*"/>
+			<mapping path="/teamInfo/register"/>
+			<mapping path="/teamInfo/applicant/*"/>
+			<mapping path="/team/remove/*"/>
+			<mapping path="/team/close/*"/>
+			<mapping path="/team/myTeam"/>
+			<mapping path="/logout"/>
+			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 	</interceptors>
 

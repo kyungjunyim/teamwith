@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD DAO 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamwith.dao.LicenseDAO">
+
+	<resultMap type="LicenseDTO" id="licenseList">
+		<id property="licenseId" column="license_id" />
+		<id property="memberId" column="member_id" />
+		<id property="licenseName" column="license_name" />
+		<id property="licenseDate" column="license_date"/>
+		<id property="licenseLevel" column="license_level" />
+	</resultMap>
+
+	<insert id="addLicense" parameterType="LicenseDTO">
+		INSERT INTO license_tb
+		VALUES(#{licenseId},#{memberId},#{licenseName},#{licenseDate},#{licenseLevel})
+
+	</insert>
+
+	<update id="updateLicense" parameterType="LicenseDTO">
+		UPDATE license_tb SET
+		license_name = #{licenseName}, license_date =
+		#{licenseDate},
+		license_level = #{licenseLevel} WHERE license_id =
+		#{licenseId}
+	</update>
+
+	<delete id="removeLicense" parameterType="String">
+		DELETE FROM license_tb WHERE license_id = #{licenseId}
+	</delete>
+
+	<delete id="removeLicenseByMember" parameterType="String">
+		DELETE FROM license_tb WHERE member_id = #{memberId}
+	</delete>
+
+	<select id="searchLicense" parameterType="String"
+		resultMap="licenseList">
+		SELECT * FROM license_tb WHERE member_id = #{memberId}
+	</select>
+
+	<select id="searchAllLicense" resultMap="licenseList">
+		SELECT * FROM license_tb
+	</select>
+	<select id="getId" resultType="String">
+		SELECT license_id FROM license_tb
+	</select>
+	
+
+</mapper>

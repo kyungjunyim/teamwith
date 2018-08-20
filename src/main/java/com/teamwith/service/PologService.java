@@ -1,6 +1,7 @@
 package com.teamwith.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -35,14 +36,23 @@ public class PologService {
 	@Inject
 	private PortfolioSimpleDAO portfolioSimpleDAO;
 
-	public List<PortfolioSimpleVO> getPortfolioList(String memberId) {
+	public List<PortfolioSimpleVO> getPortfolioList(String memberId,boolean isBest) {
 		if (memberId == null || memberId.isEmpty()) {
 			return null;
 		}
 		List<PortfolioSimpleVO> portfolioSimpleList = null;
 		boolean check = true;
 		try {
-			portfolioSimpleList = portfolioSimpleDAO.searchPortfolioSimpleByMemberId(memberId);
+			Map<String,Object> param=new HashMap<String,Object>();
+			if(isBest) {
+				param.put("memberId", memberId);
+				param.put("best", "true");
+				
+			}
+			else {
+				param.put("memberId", memberId);
+			}
+			portfolioSimpleList = portfolioSimpleDAO.searchPortfolioSimpleByMemberId(param);
 		} catch (Exception e) {
 			check = false;
 			e.printStackTrace();
@@ -131,7 +141,7 @@ public class PologService {
 			List<String> portfolioContentId = portfolioContentDAO.getId();
 			portfolioContent.setPortfolioContentId(this.generateId(portfolioContentId, "portfolio_content"));
 			if (file != null) {
-				String attachPath = "resources\\image\\portfolio\\";
+				String attachPath = "resources/image/portfolio/";
 		        String filename = file.getOriginalFilename();
 				String type=null;
 				if(file.getName().equals("portfolioFile")) {
@@ -143,9 +153,9 @@ public class PologService {
 						portfolioContent.getPortfolioContentId()+"."+type,file.getBytes());
 				if(file.getName().equals("portfolioFile")) {
 					
-					pdfName=UploadFileUtils.uploadPDF(rootPath+attachPath+portfolioContent.getPortfolioId()+"\\",portfolioContent.getPortfolioContentId()+".ppt");//포폴콘텐츠아이디로하면뎀
+					pdfName=UploadFileUtils.uploadPDF(rootPath+attachPath+portfolioContent.getPortfolioId()+"/",portfolioContent.getPortfolioContentId()+".ppt");//포폴콘텐츠아이디로하면뎀
 				}
-				portfolioContent.setPortfolioContentValue("\\"+attachPath+portfolioContent.getPortfolioId()+"\\"+pdfName);
+				portfolioContent.setPortfolioContentValue("/"+attachPath+portfolioContent.getPortfolioId()+"/"+pdfName);
 				
 			}
 			res = portfolioContentDAO.addPortfolioContent(portfolioContent.toDTO());
@@ -192,7 +202,6 @@ public class PologService {
 
 	public PortfolioVO registerPortfolio(PortfolioVO portfolio,MultipartFile file,String rootPath) {
 		if (portfolio == null) {
-			System.out.println("레지스터 포폴 널t");
 			return null;
 		}
 		int res = 0;
@@ -202,12 +211,12 @@ public class PologService {
 			portfolio.setPortfolioId(portfolioId1);
 		try {
 			if(file!=null) {
-				String attachPath = "resources\\image\\portfolio\\";
+				String attachPath = "resources/image/portfolio/";
 		        String filename = file.getOriginalFilename();
-		        String type=null;
+		        String type=file.getContentType().split("/")[1];
 				String newFileName=UploadFileUtils.uploadFile2(rootPath+attachPath+portfolio.getPortfolioId(),portfolio.getPortfolioId()+"."+type,
 						file.getBytes());
-				portfolio.setPortfolioPic("\\"+attachPath+portfolio.getPortfolioId()+"\\"+newFileName);
+				portfolio.setPortfolioPic("/"+attachPath+portfolio.getPortfolioId()+"/"+newFileName);
 				res = portfolioDAO.addPortfolio(portfolio.toDTO());
 			}
 		} catch (Exception e) {

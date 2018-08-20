@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD DAO 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamwith.dao.MemberDAO">
+	<resultMap type="MemberDTO" id="memberList">
+		<id property="memberId" column="member_id" />
+		<id property="memberName" column="member_name" />
+		<id property="memberPassword" column="member_password" />
+		<id property="memberEmail" column="member_email" />
+		<id property="memberBirth" column="member_birth" />
+		<id property="memberPic" column="member_pic" />
+		<id property="memberActive" column="member_active" />
+		<id property="memberPhone" column="member_phone" />
+		<id property="memberPublic" column="member_public" />
+		<id property="memberIntro" column="member_intro" />
+		<id property="memberOutDate" column="member_out_date" />
+		<id property="memberAuth" column="member_auth" />
+		<id property="roleId" column="role_id" />
+		<id property="regionId1" column="region_id_1" />
+		<id property="regionId2" column="region_id_2" />
+	</resultMap>
+
+	<resultMap type="MemberSimpleVO" id="memberSimpleList">
+		<id property="memberId" column="member_id" />
+		<id property="memberName" column="member_name" />
+		<id property="memberPic" column="member_pic" />
+		<id property="memberAuth" column="member_auth" />
+	</resultMap>
+
+	<insert id="addMember" parameterType="MemberDTO">
+		INSERT INTO
+		member_tb(member_id, member_name,
+		member_password, member_email,
+		member_birth, member_phone,
+		member_active,
+		member_public,member_register_date, member_auth)
+		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},0,0,SYSDATE,0)
+	</insert>
+
+	<insert id="addAdminMember" parameterType="MemberDTO">
+		INSERT INTO
+		member_tb(member_id, member_name,
+		member_password, member_email,
+		member_birth, member_phone,
+		member_active,
+		member_public,member_register_date, member_auth)
+		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},0,0,SYSDATE,#{memberAuth})
+	</insert>
+
+	<update id="updateMemberStatus" parameterType="String">
+		UPDATE member_tb
+		SET member_active=-1, member_public=-1, member_auth=-1,
+		member_out_date=SYSDATE
+		WHERE member_id=#{memberId}
+	</update>
+
+	<update id="updateNonMember" parameterType="String">
+		UPDATE member_tb SET
+		member_pic=null, member_phone=0,
+		member_intro=null,
+		role_id=null
+		WHERE
+		member_id=#{memberId}
+	</update>
+
+	<update id="updateMember" parameterType="MemberDTO">
+		UPDATE member_tb SET
+		<if test="memberPic!=null">
+			member_pic=
+			#{memberPic},
+		</if>
+		member_phone=#{memberPhone},
+		member_public=#{memberPublic},
+		member_intro=#{memberIntro},
+		role_id=#{roleId}, region_id_1 =
+		#{regionId1},
+		region_id_2=#{regionId2} WHERE member_id=#{memberId}
+	</update>
+
+	<update id="updatePassword" parameterType="map">
+		UPDATE member_tb
+		SET
+		member_password = ENCRYPTION_AES.ENC_AES(#{newMemberPassword})
+		WHERE
+		member_id = #{memberId}
+		AND member_password =
+		ENCRYPTION_AES.ENC_AES(#{memberPassword})
+	</update>
+
+	<update id="updateTempPassword" parameterType="map">
+		UPDATE member_tb
+		SET
+		member_password = ENCRYPTION_AES.ENC_AES(#{newMemberPassword})
+		WHERE
+		member_id = #{memberId}
+	</update>
+
+	<select id="searchAll" resultMap="memberList">
+		SELECT * FROM member_tb
+	</select>
+
+	<select id="searchMailOrId" parameterType="map"
+		resultType="String">
+		SELECT ${condition} from
+		member_tb
+		WHERE ${condition} =
+		#{value}
+	</select>
+
+	<select id="searchMember" parameterType="map"
+		resultMap="memberList">
+		SELECT * FROM member_tb
+		WHERE member_id = #{memberId}
+		AND
+		member_password = ENCRYPTION_AES.ENC_AES(#{memberPassword})
+	</select>
+
+	<select id="searchMemberInfo" parameterType="String"
+		resultMap="memberList">
+		SELECT member_id, member_name, member_email,
+		member_birth,
+		member_pic,
+		member_active, member_phone, member_intro,
+		role_id,
+		region_id_1,
+		region_id_2
+		FROM member_tb
+		WHERE member_id = #{memberId}
+		AND
+		member_public=0
+	</select>
+
+	<select id="searchMemberWithCondition" parameterType="map"
+		resultMap="memberList">
+		SELECT * FROM
+		member_tb WHERE ${condition} = #{value}
+	</select>
+
+	<select id="searchMemberByRoleRegion" parameterType="map"
+		resultMap="memberList">
+		SELECT
+		member_id, member_name, member_pic, member_auth FROM member_tb
+		WHERE member_public=0
+		<if test="roleId != null">
+			AND role_id=#{roleId}
+		</if>
+		<if test="regionId1 != null">
+			AND (region_id_1 = #{regionId1} OR region_id_2 =
+			#{regionId1})
+		</if>
+		<if test="regionId2 != null">
+			AND (region_id_1 = #{regionId2} OR region_id_2 =
+			#{regionId2})
+		</if>
+	</select>
+
+	<select id="searchMemberForSimpleView" parameterType="String"
+		resultMap="memberSimpleList">
+		SELECT
+		member_id, member_name, member_pic, member_auth FROM
+		member_tb
+		WHERE member_id = #{memberId}
+	</select>
+
+	<select id="searchMemberAccount" parameterType="map"
+		resultType="String">
+		SELECT
+		member_id FROM member_tb
+		WHERE 0=0
+		<if test="memberId != null">
+			AND member_id=#{memberId}
+		</if>
+		<if test="memberBirth != null">
+			AND member_birth = #{memberBirth}
+		</if>
+		<if test="memberEmail != null">
+			AND member_Email = #{memberEmail}
+		</if>
+	</select>
+
+</mapper>

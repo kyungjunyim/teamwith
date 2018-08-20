@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.RequireSkillDAO">
+	<resultMap type="RequireSkillDTO" id="requireSkill">
+		<id property="recruitId" column="recruit_id"/>
+		<id property="skillId" column="skill_id"/>
+	</resultMap>
+	<!-- 특정 모집에 요구 기술 정보 추가 -->
+	<insert id="addRequireSkill" parameterType="RequireSkillDTO">
+		insert into require_skill_tb values (#{recruitId},#{skillId})
+	</insert>
+	<!-- 특정 모집에 특정 요구 기술을 삭제 -->
+	<delete id="removeRequireSkill" parameterType="RequireSkillDTO">
+		delete from require_skill_tb where recruit_id=#{recruitId} and skill_id=#{skillId}
+	</delete>
+	<!-- 특정 모집의 모든 요구 기술을 삭제 -->
+	<delete id="removeRequireSkillByRecruitId" parameterType="string">
+		delete from require_skill_tb where recruit_id=#{recruitId}
+	</delete>
+	<!-- 특정 모집의 모든 요구 기술을 검색 (다중) -->
+	<select id="searchRequireSkillByRecruitId" parameterType="string" resultMap="requireSkill">
+		SELECT * 
+		FROM require_skill_tb 
+		WHERE recruit_id = #{recruitId}
+	</select>
+	<select id="searchRequireSkillByTeamId" parameterType="string" resultMap="requireSkill">
+		SELECT * 
+		FROM require_skill_tb 
+		WHERE team_id = #{teamId}
+	</select>
+	<!-- 특정 기술에 대한 모든 모집 검색 (다중) -->
+	<select id="searchRequireSkillBySkillId" parameterType="string" resultMap="requireSkill">
+		select * from require_skill_tb where skill_id=#{skillId}
+	</select>
+	<!-- 모든 요구 기술 레코드 불러오기 -->
+	<select id="saerchRequireSkillAll" resultMap="requireSkill">
+		select * from require_skill_tb
+	</select>
+</mapper>

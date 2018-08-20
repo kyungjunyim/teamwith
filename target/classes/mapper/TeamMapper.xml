@@ -21,7 +21,7 @@
 
 	<insert id="addTeam" parameterType="TeamDTO">
 		INSERT INTO team_tb
-		VALUES (#{teamId}, #{teamProjectName}, #{teamName}, #{teamSummary}, #{teamContent}, #{projectCategoryId}, #{regionId}, #{teamEndDate}, 0, SYSDATE, #{teamId}, #{teamContestName}, #{teamContestLink}, #{memberId})
+		VALUES (#{teamId}, #{teamProjectName}, #{teamName}, #{teamSummary}, #{teamContent}, #{projectCategoryId}, #{regionId}, #{teamEndDate}, 0, SYSDATE, #{teamPic}, #{teamContestName}, #{teamContestLink}, #{memberId})
 	</insert>
 	
 	<delete id="removeTeamByTeamId" parameterType="string">
