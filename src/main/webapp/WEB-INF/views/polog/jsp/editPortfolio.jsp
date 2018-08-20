@@ -431,13 +431,14 @@ font-size:50%;
    
         <li>
         	<div class="left_box" >
-        		<div class="pic_box">
-        			<input type="file" style="margin-top:50%;margin-left:20%"name="portfolioFile" accept=".png,.jpg,.jpeg,.bmp,.gif"><br>
+        		<div class="pic_box" style="background-image: url(${portfolioVO.portfolioPic});background-size: contain;">
+        			<input type="file" style="margin-top:50%;margin-left:20%"name="portfolioFile" accept=".png,.jpg,.jpeg,.bmp,.gif">
+        			<input type="hidden" name="oldPortfolioPic" value="${portfolioVO.portfolioPic}">
+        			<br>
         			포트폴리오 대표 사진을 등록해 주세요
-        			
         		</div>
         		<div style="margin-top:30px;font-size:180%">Title<br>
-        			<input type="text"  class="form-control " style="width:80%;margin:0 auto"  name="portfolioTitle" placeholder="제목을 입력하세요">
+        			<input type="text"  class="form-control " value="${portfolioVO.portfolioTitle }" style="width:80%;margin:0 auto" name="portfolioTitle" placeholder="제목을 입력하세요">
         		</div>
         	</div>
         	<div class="content_box">
@@ -450,19 +451,23 @@ font-size:50%;
 	        	
 	        	<div class="first_content" >Intro
 	        		<div class="first_content_child">
-	        			<textarea class="form-control registerPortfolioInput"  name="portfolioIntro" rows="7" style="resize:none" placeholder="소개글을 입력하세요"></textarea>
+	        			<textarea class="form-control registerPortfolioInput" name="portfolioIntro" rows="7" style="resize:none" placeholder="소개글을 입력하세요">${portfolioVO.portfolioIntro }</textarea>
 	        		</div>
 	        	</div>
 	        	
 	        	<div class="first_content" >Skills
 	        		<div class="first_content_child">
-	        	 		<input type="text" class="form-control registerPortfolioInput "  name="portfolioSkill"  placeholder="사용 기술을 입력하세요" ><br>
+	        	 		<input type="text" class="form-control registerPortfolioInput " value="${portfolioVO.portfolioSkill }"name="portfolioSkill"  placeholder="사용 기술을 입력하세요" ><br>
 	        		</div>
 	        	</div>
 	        	<div class="first_content" >
 					<div style="display:inline-block;">Best</div>
 						<label class="switch" style="padding-top:20px">
-							<input type="checkbox" name="portfolioBest">
+							<input type="checkbox" name="portfolioBest"
+							<c:if test="${portfolioVO.portfolioBest==1 }">
+								checked
+							</c:if>
+							>
 							<span class="slider round"></span>
 						</label>
 	        	</div>
@@ -474,21 +479,35 @@ font-size:50%;
 	        
 	        	<div>Team Info</div>
 	        	<div class="row second_content"><div class="col">Team name</div>
-	        	<div class="col-8">  <input type="text" class="form-control registerPortfolioInput" name="portfolioTeamName" placeholder="팀명을 입력하세요"></div></div>
+	        	<div class="col-8">  <input type="text" class="form-control registerPortfolioInput" value="${portfolioVO.portfolioTeamName }"name="portfolioTeamName" placeholder="팀명을 입력하세요"></div></div>
 	        	<div class="row second_content"><div class="col">People Number</div>
-	        	<div class="col-8"> <input type="number" class="form-control registerPortfolioInput" name="portfolioPeopleNum" placeholder="참여인원을 입력하세요"></div></div>
+	        	<div class="col-8"> <input type="number" class="form-control registerPortfolioInput" value="${portfolioVO.portfolioPeopleNum }"name="portfolioPeopleNum" placeholder="참여인원을 입력하세요"></div></div>
 	        	<div class="row second_content"><div class="col-4">Development period</div>
-	        	<div class="col-3" style="width:500px"><input type="date" class="form-control registerPortfolioInput"  name="portfolioStartDate" >
-	        	</div><div class="col-3"><input type="date" class="form-control registerPortfolioInput" name="portfolioEndDate" ></div></div>
+	        	<div class="col-3" style="width:500px"><input type="date" class="form-control registerPortfolioInput" value="${portfolioVO.portfolioStartDate }" name="portfolioStartDate" >
+	        	</div><div class="col-3"><input type="date" class="form-control registerPortfolioInput" value="${portfolioVO.portfolioEndDate }" name="portfolioEndDate" ></div></div>
 	        	<div class="row second_content"><div class="col">My Role</div>
-	        	<div class="col-8"><input type="text" class="form-control registerPortfolioInput" name="portfolioRole" placeholder="역할을 입력하세요"></div></div>
+	        	<div class="col-8"><input type="text" class="form-control registerPortfolioInput" value="${portfolioVO.portfolioRole }"name="portfolioRole" placeholder="역할을 입력하세요"></div></div>
 	        	<div class="row second_content"><div class="col">My Work</div>
-	        	<div class="col-8"><textarea class="form-control registerPortfolioInput"name="portfolioWork" rows="5" cols="50portfolioStartDate" placeholder="작업 내용을 입력하세요"></textarea></div></div>
+	        	<div class="col-8"><textarea class="form-control registerPortfolioInput" name="portfolioWork" rows="5" cols="50portfolioStartDate" placeholder="작업 내용을 입력하세요">${portfolioVO.portfolioWork }</textarea></div></div>
 	        </div>
 	        
         </li>
         <!-- 3번부터 동적으로 생성해야 하는 부분 (시용자가 추가했을 경우) -->
-        
+        <c:forEach items="${requestScope.portfolioContent }" var="content" varStatus="i">
+        		<c:set var="oldContent" value="${content}" scope="request"/>
+	        	<c:choose>
+	        		<c:when test="${content.layoutId=='layout-1'}">
+	        			<li>
+				        	<jsp:include page="portfolioContentLayout1.jsp"/>
+				        </li>
+	        		</c:when>
+	        		<c:when test="${content.layoutId=='layout-2'}">
+	        			<li>
+	        				<jsp:include page="portfolioContentLayout2.jsp"/>
+	        			</li>
+	        		</c:when>
+	        	</c:choose>
+        </c:forEach>
         
     </ul>
     <input type="hidden" name="projectCategoryId" id="pci" value="">
@@ -496,6 +515,7 @@ font-size:50%;
     
     
       <input class="btn addBtn btn-warning" type="submit" value="등록완료"/>
+      
     </form>
  
      <i class="btn_prev material-icons">arrow_left</i>
@@ -530,7 +550,11 @@ font-size:50%;
 										</c:if>
 										<div class="col team_regist_modal_element">
 											<input name="projectcategoryid" type="radio"
-												class="form-check-input" value="${project.key }">${project.value }
+												class="form-check-input" value="${project.key }" 
+												<c:if test="${portfolioVO.projectCategoryId==project.key }">
+													checked
+												</c:if>
+												/>${project.value }
 										</div>
 										<c:if test="${(i.index mod 3) eq 2}">
 											</div>

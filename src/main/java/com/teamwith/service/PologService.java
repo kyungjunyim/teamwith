@@ -209,6 +209,7 @@ public class PologService {
 			List<String> portfolioId = portfolioDAO.getId();
 			String portfolioId1=this.generateId(portfolioId, "portfolio");
 			portfolio.setPortfolioId(portfolioId1);
+			System.out.println("포폴아디널이냐"+portfolioId1);
 		try {
 			if(file!=null) {
 				String attachPath = "resources/image/portfolio/";
