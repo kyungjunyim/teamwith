@@ -52,11 +52,15 @@
 					</tr>
 					<tr>
 						<td>폴로그 제목</td>
-						<td id="member_name">${memberVO.memberName }</td>
+						<td><input type="text" id="member_phone" name="memberPhone"
+							class="profile_input" style="text-align: right;"
+							value="${memberVO.memberPhone }"></td>
 					</tr>
 					<tr>
 						<td>폴로그 배경색</td>
-						<td id="member_email">${memberVO.memberEmail }</td>
+						<td><input type="text" id="member_phone" name="memberPhone"
+							class="profile_input" style="text-align: right;"
+							value="${memberVO.memberPhone }"></td>
 					</tr>
 					<tr>
 						<td>폴로그 소개</td>
