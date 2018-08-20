@@ -67,7 +67,7 @@ public class TeamSearchController {
 	}
 	
 	@RequestMapping(value="", method=RequestMethod.POST)
-	public String teamSearch(String[] region, String[] project, String[] role, String[] skill) throws Exception {
+	public String teamSearch(String[] region, String[] project, String[] role, String[] skill, String textCondition, String keyword) throws Exception {
 		for(String str : region) {
 			System.out.println(str);
 		}
@@ -80,6 +80,9 @@ public class TeamSearchController {
 		for(String str : skill) {
 			System.out.println(str);
 		}
+		System.out.println(textCondition);
+		System.out.println(keyword);
+		
 		
 		return null;
 	}

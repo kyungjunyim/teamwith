@@ -3,6 +3,8 @@
 pom.properties
 MANIFEST.MF
 *.prefs
+*.classpath
+*.component
 
 # Log file
 *.log
