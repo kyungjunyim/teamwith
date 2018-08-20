@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.ApplicantDAO">
+	<resultMap type="ApplicantVO" id="ApplicantView">
+		<id property="teamId" column="team_id" jdbcType="VARCHAR"/>
+		<id property="applicationId" column="application_id" jdbcType="VARCHAR"/>
+		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
+		<id property="memberPic" column="member_pic" jdbcType="VARCHAR"/>
+		<id property="memberName" column="member_name" jdbcType="VARCHAR"/>
+		<id property="applicationDate" column="application_date" jdbcType="DATE"/>
+		<id property="applicationStatus" column="application_status" jdbcType="INTEGER"/>
+		<id property="roleId" column="role_id" jdbcType="VARCHAR"/>
+		<id property="applicationFreewriting" column="application_freewriting" jdbcType="VARCHAR"/>
+	</resultMap>
+	<!-- 나의 지원 내역 보기 -->
+	<select id="searchApplicantByMemberId" parameterType="string" resultMap="ApplicantView">
+		select * from applicant_view where member_id=#{memberId}
+	</select>
+	<!-- 내 팀에 지원자 내역 보기 -->
+	<select id="searchApplicantByTeamId" parameterType="string" resultMap="ApplicantView">
+		select * from applicant_view where team_id=#{teamId}
+	</select>
+	<!-- 모든 뷰 내용 불러오기 -->
+	<select id="searchApplicantAll" resultMap="ApplicantView">
+		select * from applicant_view
+	</select>
+</mapper>

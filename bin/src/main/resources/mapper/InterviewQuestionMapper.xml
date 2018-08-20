@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.InterviewQuestionDAO">
+	<resultMap type="InterviewQuestionDTO" id="interviewQuestion">
+		<id property="interviewQuestionId" column="interview_question_id"/>
+		<id property="teamId" column="team_id"/>
+		<id property="interviewQuestionContent" column="interview_question_content"/>
+	</resultMap>
+	<!-- 간단 면접 질문 추가 -->
+	<insert id="addInterviewQuestion" parameterType="InterviewQuestionDTO">
+		INSERT INTO interview_question_tb VALUES (#{interviewQuestionId},#{teamId},#{interviewQuestionContent})
+	</insert>
+	<!-- 간단 면접 질문 삭제 -->
+	<delete id="removeInterviewQuestion" parameterType="string">
+		DELETE FROM interview_question_tb WHERE interview_question_id=#{interviewQuestionId}
+	</delete>
+	<!-- interview_question_content만 수정 -->
+	<update id="updateInterviewQuestion" parameterType="InterviewQuestionDTO">
+		UPDATE interview_question_tb SET interview_question_content=#{interviewQuestionContent} WHERE interview_question_id=#{interviewQuestionId}
+	</update>
+	<!-- 모든 정보 수정(키값 빼고) -->
+	<update id="updateInterviewQuestionAll" parameterType="InterviewQuestionDTO">
+		UPDATE interview_question_tb SET interview_question_id=#{interviewQuestionId}, team_id=#{teamId}, interview_question_content=#{interviewQuestionContent} where interview_question_id=#{interviewQuestionId}
+	</update>
+	<!-- 키값으로 단일 검색 -->
+	<select id="searchInterviewQuestionByInterviewQuestionId" parameterType="string" resultMap="interviewQuestion">
+		select * from interview_question_tb where interview_question_id=#{interviewQuestionId}
+	</select>
+	<!-- 특정 팀의 간단 면접 질문 검색 -->
+	<select id="searchInterviewQuestionByTeamId" parameterType="string" resultMap="interviewQuestion">
+		select * from interview_question_tb where team_id=#{teamId}
+	</select>
+	<select id="getInterviewQuestionId" resultType="string">
+		select interview_question_id from interview_question_tb
+	</select>
+</mapper>

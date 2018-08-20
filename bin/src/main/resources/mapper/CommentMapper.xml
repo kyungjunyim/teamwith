@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.CommentDAO">
+	<resultMap type="CommentDTO" id="result">
+		<id property="commentId" column="comment_id"/>
+		<id property="commentContent" column="comment_content"/>
+		<id property="commentUpdateDate" column="comment_update_date"/>
+		<id property="memberId" column="member_id"/>
+		<id property="teamId" column="team_id"/>
+		<id property="parentCommentId" column="parent_comment_id"/>
+	</resultMap>
+	
+	<!-- 댓글 달기 또는 대댓글 달기 -->
+ 	<insert id="addComment" parameterType="CommentDTO">
+		INSERT INTO comment_tb
+		VALUES (#{commentId}, #{commentContent}, SYSDATE, #{memberId}, #{teamId}, #{parentCommentId, jdbcType=VARCHAR})
+	</insert>
+	<!-- 댓글 지우기 또는 대댓글 지우기 -->
+	<delete id="removeCommentByCommentId" parameterType="string">
+		delete from comment_tb where comment_id=#{commentId}
+	</delete>
+	<!-- 특정 회원이 남긴 댓글이나 대댓글을 모두 지우기 -->
+	<delete id="removeCommentByMemberId" parameterType="string">
+		delete from comment_tb where member_id=#{memberId}
+	</delete>
+	<!-- 특정 댓글 또는 대댓글의 내용 수정 -->
+	<update id="updateComment" parameterType="CommentDTO">
+		update comment_tb set comment_content=#{commentContent}, comment_update_date=sysdate where comment_id=#{commentId}
+	</update>
+	<!-- 특정 댓글 또는 대댓글의 모든 속성값 수정 -->
+	<update id="updateCommentAll" parameterType="CommentDTO">
+		update comment_tb set comment_id=#{commentId}, comment_content=#{commentContent},comment_update_date=#{commentUpdateDate},member_id=#{memberId},team_id=#{teamId},parent_comment_id=#{parentCommentId} where comment_id=#{commentId}
+	</update>
+	<!-- 특정 팀에 달린 댓글과 대댓글을 모두 검색 -->
+	<select id="searchCommentByTeamId" parameterType="string" resultMap="result">
+		select * from comment_tb where team_id=#{teamId} order by comment_update_date desc
+	</select>
+	<!-- 특정 댓글에 달린 대댓글을 모두 검색 -->
+	<select id="searchCommentByParentCommentId" parameterType="string" resultMap="result">
+		select * from comment_tb where parent_commment_id=#{parentCommentId} order by comment_update_date desc
+	</select>
+	<!-- 모든 댓글 레코드 불러오기 -->
+	<select id="searchCommentAll" resultMap="result">
+		select * from comment_tb
+	</select>
+	
+	<select id="getId" resultType="string">
+		SELECT comment_id
+		FROM comment_tb
+	</select>
+	
+	<update id="updateCommentContent" parameterType="map">
+		UPDATE comment_tb
+		SET comment_content = #{commentContent}
+		WHERE comment_id = #{commentId}
+	</update>
+</mapper>

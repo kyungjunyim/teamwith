@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.teamwith.dao.InterviewDAO" >
+  	<resultMap id="InterviewView" type="InterviewVO" >
+		<id property="teamId" column="team_id" jdbcType="VARCHAR"/>
+		<id property="interviewQuestionContent" column="interview_question_content" jdbcType="VARCHAR"/>
+		<id property="interviewAnswerContent" column="interview_answer_content" jdbcType="VARCHAR"/>
+		<id property="applicationId" column="application_id" jdbcType="VARCHAR"/>
+		<id property="interviewQuestionId" column="interview_question_id" jdbcType="VARCHAR"/>
+	</resultMap>  
+	
+	<select id="searchInterview" parameterType="string" resultMap="InterviewView">
+		select * from interview_view where application_id=#{applicationId}
+	</select>
+	<select id="searchInterviewAll" parameterType="string" resultMap="InterviewView">
+		select * from interview_view where team_id=#{teamId}
+	</select>
+	
+  </mapper> 

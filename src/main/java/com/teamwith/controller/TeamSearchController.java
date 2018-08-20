@@ -242,6 +242,7 @@ public class TeamSearchController {
 			model.addAttribute("resultTeamList", resultTeamList);
 			return "teambuilding/jsp/teamSearch";
 		}
+
 	}
 
 	@RequestMapping(value = "{teamId}", method = RequestMethod.GET)

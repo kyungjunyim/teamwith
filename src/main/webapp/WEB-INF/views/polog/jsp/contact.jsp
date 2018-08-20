@@ -44,12 +44,8 @@
 					<div class="row" style="text-align: center">
 						<a class="waves-effect waves-light btn grey darken-1"
 
-							target="_blank" href="https://github.com/HWANGKYUJIN/fastbooster"><i
-							class="material-icons right">code</i>Github</a> <a
-							class="waves-effect waves-light btn green darken-2"
-							target="_blank" href=""><i
-
-							class="material-icons right">library_books</i>Medium</a>
+							target="_blank" href="https://github.com/HWANGKYUJIN/teamwith"><i
+							class="material-icons right">code</i>Github</a>
 					</div>
 				</div>
 				<div class="card-reveal">

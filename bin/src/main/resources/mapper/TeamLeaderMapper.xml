@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.teamwith.dao.TeamLeaderDAO" >
+  	<resultMap id="teamLeaderView" type="TeamLeaderVO" >
+		<id property="teamId" column="team_id" jdbcType="VARCHAR"/>
+		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
+		<id property="memberPic" column="member_pic" jdbcType="VARCHAR"/>
+		<id property="memberName" column="member_name" jdbcType="VARCHAR"/>
+		<id property="roleId" column="role_id" jdbcType="VARCHAR"/>
+	</resultMap>  
+	
+	<select id="searchTeamLeader" resultMap="teamLeaderView">
+		select * from jongseung_view where team_id=#{teamId}
+	</select>
+	
+  </mapper> 

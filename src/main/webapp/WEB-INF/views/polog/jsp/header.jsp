@@ -41,7 +41,7 @@
 								class="material-icons">build</i></a></li>
 						<li><a
 							class="btn-floating gray darken-2 waves-effect waves-default"
-							href="#one"><i class="material-icons">add</i></a></li>
+							href="/portfolio/register"><i class="material-icons">add</i></a></li>
 					</c:if>
 					<li><a
 						class="btn-floating yellow darken-3 waves-effect waves-default"

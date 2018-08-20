@@ -216,7 +216,7 @@ background-color: #ffddc9;
         		 
         	</div>
         	<div class="content_box">
-	        	<div class="first_content" >Category<div class="first_content_child">${portfolio.projectCategoryId }</div></div>
+	        	<div class="first_content" >Category<div class="first_content_child">${applicationScope.projectList[portfolio.projectCategoryId ] }</div></div>
 	        	
 	        	<div class="first_content" >Intro<div class="first_content_child">
 	        	${portfolio.portfolioIntro }
@@ -269,7 +269,7 @@ background-color: #ffddc9;
     </ul>
     <i class="btn_prev material-icons">arrow_left</i>
     <i class="btn_next material-icons">arrow_right</i>	
-	<form action="/${portfolio.memberId }">
+	<form action="/polog/${portfolio.memberId }">
 		<button type="submit" class="btn portfolioExitBtn">돌아가기</button>
 	</form>
 	<!-- controller에 지우고 여긴 memberSimpleVO 바꾸기 테스트용임-->

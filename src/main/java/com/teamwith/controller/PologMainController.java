@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.teamwith.service.MemberService;
+import com.teamwith.service.PologService;
 import com.teamwith.service.ProfileService;
 import com.teamwith.vo.MemberPraiseCntVO;
 import com.teamwith.vo.MemberPraiseVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.MemberTendencyVO;
-import com.teamwith.vo.MemberVO;
+import com.teamwith.vo.PortfolioSimpleVO;
 
 @Controller
 public class PologMainController {
@@ -31,6 +32,8 @@ public class PologMainController {
 	ProfileService profileService;
 	@Inject
 	MemberService memberService;
+	@Inject
+	PologService pologService;
 
 	@RequestMapping(value = "/polog/{memberId}", method = RequestMethod.GET)
 	public String pologMain(@PathVariable(value = "memberId") String memberId, Model model, HttpSession session) {
@@ -52,6 +55,9 @@ public class PologMainController {
 
 			model.addAttribute("skillVO", skill);
 			model.addAttribute("tendencyVO", tendency);
+			
+			List<PortfolioSimpleVO> portfolioSimpleList=pologService.getPortfolioList(memberId,true);
+			model.addAttribute("portfolioSimpleList",portfolioSimpleList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
