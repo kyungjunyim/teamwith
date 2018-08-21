@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD DAO 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamwith.dao.MemberSkillDAO">
+
+	<resultMap type="MemberSkillDTO" id="memberSkillList">
+		<id property="skillId" column="skill_id" />
+		<id property="memberId" column="member_id" />
+	</resultMap>
+
+	<insert id="addMemberSkill" parameterType="MemberSkillDTO">
+		INSERT INTO
+		member_skill_tb
+		VALUES(#{memberId},#{skillId})
+	</insert>
+
+	<delete id="reomveMemberSkill" parameterType="MemberSkillDTO">
+		DELETE FROM
+		member_skill_tb
+		WHERE member_id = #{memberId}
+		AND skill_id = #{skillId}
+	</delete>
+	
+	<delete id="reomveMemberAllSkill" parameterType="String">
+		DELETE FROM
+		member_skill_tb
+		WHERE member_id = #{memberId}
+	</delete>
+
+	<select id="searchSkillByMember" parameterType="String"
+		resultMap="memberSkillList">
+		SELECT * FROM member_skill_tb WHERE member_id =#{memberId}
+	</select>
+
+	<select id="searchMemberBySkill" resultMap="memberSkillList">
+		SELECT * FROM member_skill_tb WHERE skill_id IN
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="searchAllMemberSkill" resultMap="memberSkillList">
+		SELECT * FROM
+		member_skill_tb
+	</select>
+
+
+</mapper>

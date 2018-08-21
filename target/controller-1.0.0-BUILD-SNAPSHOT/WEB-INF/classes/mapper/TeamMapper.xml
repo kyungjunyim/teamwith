@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamwith.dao.TeamDAO">
+	<resultMap id="result" type="TeamDTO">
+		<id property="teamId" column="team_id"/>
+		<id property="teamProjectName" column="team_project_name"/>
+		<id property="teamName" column="team_name"/>
+		<id property="teamSummary" column="team_summary"/>
+		<id property="teamContent" column="team_content"/>
+		<id property="projectCategoryId" column="project_category_id"/>
+		<id property="regionId" column="region_id"/>
+		<id property="teamEndDate" column="team_end_date"/>
+		<id property="teamStatus" column="team_status"/>
+		<id property="teamUpdateDate" column="team_update_date"/>
+		<id property="teamPic" column="team_pic"/>
+		<id property="teamContestName" column="team_contest_name"/>
+		<id property="teamContestLink" column="team_contest_link"/>
+		<id property="memberId" column="member_id"/>
+	</resultMap>
+
+	<insert id="addTeam" parameterType="TeamDTO">
+		INSERT INTO team_tb
+		VALUES (#{teamId}, #{teamProjectName}, #{teamName}, #{teamSummary}, #{teamContent}, #{projectCategoryId}, #{regionId}, #{teamEndDate}, 0, SYSDATE, #{teamPic}, #{teamContestName}, #{teamContestLink}, #{memberId})
+	</insert>
+	
+	<delete id="removeTeamByTeamId" parameterType="string">
+		DELETE FROM team_tb
+		WHERE team_id = #{teamId}
+	</delete>
+	
+	<delete id="removeTeamByMemberId" parameterType="string">
+		DELETE FROM team_tb
+		WHERE member_id = #{memberId}
+	</delete>
+	
+	<update id="updateTeamInfoByCondition" parameterType="map">
+		UPDATE team_tb
+		SET #{condition} = #{teamPic}
+		WHERE team_id = #{teamId}
+	</update>
+	
+	<update id="updateTeamUpdateDate" parameterType="string">
+		UPDATE team_tb
+		SET team_update_date = SYSDATE
+		WHERE team_id = #{teamId}
+	</update>
+	
+	<update id="updateTeamStatus" parameterType="map">
+		UPDATE team_tb
+		SET team_status = #{status}, team_end_date = SYSDATE
+		WHERE team_id = #{teamId}
+	</update>
+	
+	<update id="updateTeam" parameterType="TeamDTO">
+		UPDATE team_tb
+		SET team_project_name = #{teamProjectName}, team_name = #{teamName}, team_summary = #{teamSummary}, team_content = #{teamContent},
+		project_category_id = #{projectCategoryId}, region_id = #{regionId}, team_end_date = #{teamEndDate}, team_update_date = SYSDATE,
+		team_pic = #{teamPic}, team_contest_name = #{teamContestName}, team_contest_link = #{teamContestLink}
+		WHERE team_id = #{teamId}
+	</update>
+	
+	<select id="searchTeamByStatus" parameterType="int" resultMap="result">
+		SELECT *
+		FROM team_tb
+		WHERE team_status = #{teamStatus}
+	</select>
+
+	<select id="searchTeamByCondition" parameterType="Criteria"  resultMap="result">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM team_tb
+		WHERE team_status = 0
+		]]>
+		<if test="criteria.teamProjectName != null">
+			AND team_project_name LIKE CONCAT(CONCAT('%',#{criteria.teamProjectName}),'%')
+		</if>
+		<if test="criteria.teamName != null">
+			AND team_name LIKE CONCAT(CONCAT('%',#{criteria.teamName}),'%')
+		</if>
+		<if test="criteria.teamContestName != null">
+			AND team_contest_name LIKE CONCAT(CONCAT('%',#{criteria.teamContestName}),'%')
+		</if>
+		<if test="criteria.projectCategoryList != null">
+			AND project_category_id IN 
+			<foreach item="projectCategoryId" collection="criteria.projectCategoryList" index="index" open="(" separator="," close=")">
+			#{projectCategoryId}
+			</foreach>
+		</if>		
+		<if test="criteria.regionList != null">
+			AND region_id IN 
+			<foreach item="regionId" collection="criteria.regionList" index="index" open="(" separator="," close=")">
+			#{regionId}
+			</foreach>			
+		</if>
+		<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+	
+	<select id="searchTeamAll" resultMap="result">
+		SELECT *
+		FROM team_tb
+	</select>
+	
+	<select id="getId" resultType="string">
+		SELECT team_id
+		FROM team_tb
+	</select>
+	
+</mapper>

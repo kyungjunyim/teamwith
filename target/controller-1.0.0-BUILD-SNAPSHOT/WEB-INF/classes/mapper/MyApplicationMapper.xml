@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamwith.dao.MyApplicationDAO">
+	<resultMap id="result" type="MyApplicationVO">
+		<id property="teamId" column="team_id"/>
+		<id property="teamPic" column="team_pic"/>
+		<id property="teamName" column="team_name" />
+		<id property="roleId" column="role_id" />
+		<id property="applicationDate" column="application_date" />
+		<id property="applicationFreewriting" column="application_freewriting" />
+		<id property="applicationStatus" column="application_status"/>
+		<id property="applicationId" column="application_id" />
+		<id property="memberId" column="member_id" />
+	</resultMap>
+	
+	<select id="searchMyApplication" parameterType="string" resultMap="result">
+		SELECT *
+		FROM my_application_view where member_id=#{memberId}
+	</select>
+</mapper>
