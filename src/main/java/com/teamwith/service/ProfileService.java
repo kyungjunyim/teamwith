@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.teamwith.dao.CareerDAO;
 import com.teamwith.dao.LicenseDAO;
@@ -21,6 +22,8 @@ import com.teamwith.util.CodeGenerator;
 import com.teamwith.util.MailUtil;
 import com.teamwith.vo.CareerVO;
 import com.teamwith.vo.LicenseVO;
+import com.teamwith.vo.MemberProjectCategoryVO;
+import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.MemberTendencyVO;
 import com.teamwith.vo.MemberVO;
 
@@ -36,9 +39,7 @@ public class ProfileService {
 	@Inject
 	private MemberTendencyDAO memberTendencyDAO;
 
-	private String memberPicPath = "c:/teamwith/image/member";
-
-	private ProfileService() {
+	public ProfileService() {
 	}
 
 	public String searchMemberAccount(Map<String, String> map) throws Exception {
@@ -196,11 +197,22 @@ public class ProfileService {
 		if (member == null) {
 			return -1;
 		}
-
-		ProfileService profileService;
-		// profileService.addMemberLicense(null);
-
 		memberDAO.updateMember(member.toDTO());
+		return 0;
+	}
+
+	@Transactional
+	public int updateMemberAllInfo(MemberService memberService, MemberVO member, MemberProjectCategoryVO pc, MemberSkillVO sk, MemberTendencyVO td)
+			throws Exception {
+		if (member == null) {
+			return -1;
+		}
+
+		updateMemberInfo(member);
+		memberService.updateMemberProjectCategory(pc);
+		memberService.updateMemberSkill(sk);
+		updateMemberTendency(td);
+
 		return 0;
 
 	}

@@ -37,6 +37,7 @@ public class AccountController {
 		return "redirect:/";
 	}
 	
+
 	@RequestMapping(value="/findId", method=RequestMethod.POST)
 	public String findId(Model model, String memberBirth, String memberEmail) throws Exception {
 		
@@ -50,5 +51,29 @@ public class AccountController {
 		model.addAttribute("msg", accountService.findAccount(memberId, memberBirth, memberEmail));
 		
 		return "teambuilding/jsp/findResult";
+  }
+    
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+	public String remove(Model model, String memberId, RedirectAttributes rttr) {
+		try {
+			accountService.hideMember(memberId);
+			rttr.addFlashAttribute("removeResult", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			rttr.addFlashAttribute("removeResult", "fail");
+		}
+		return "redirect:/";
+	}
+  
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public String changePassword(Model model, String memberId, String memberPassword, String newPassword, RedirectAttributes rttr) {
+		try {
+			accountService.updatePassword(memberId, memberPassword, newPassword);
+			rttr.addFlashAttribute("chnagePwdResult", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			rttr.addFlashAttribute("chnagePwdResult", "fail");
+		}
+		return "redirect:/";
 	}
 }

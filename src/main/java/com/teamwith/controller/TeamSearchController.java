@@ -192,10 +192,10 @@ public class TeamSearchController {
 					}
 				}
 			}
-			
-			if(!keyword.trim().equals("")) {
+
+			if (!keyword.trim().equals("")) {
 				Criteria textCri = new Criteria();
-				switch(textCondition) {
+				switch (textCondition) {
 				case "teamName":
 					textCri.addCriteria("teamName", keyword.trim());
 					break;
@@ -207,7 +207,7 @@ public class TeamSearchController {
 					break;
 				}
 				teamIdListByKeyword = teamService.searchTeam(textCri);
-				
+
 				if (teamIdListByKeyword != null) {
 					if (resultIdList == null) {
 						resultIdList = new ArrayList<String>();
@@ -278,8 +278,8 @@ public class TeamSearchController {
 				}
 			}
 		}
-		
-		if(memberSimpleVO == null) {
+
+		if (memberSimpleVO == null) {
 			canApply = false;
 		}
 
@@ -385,41 +385,41 @@ public class TeamSearchController {
 
 		List<String> skillList = new ArrayList<String>();
 		String[] skillMap = memberSkillVO.getSkill();
-
-		for (String skill : skillMap) {
-			skillList.add(skill);
-		}
-
-		int skillSize = skillList.size();
-
-		Criteria skillCri = new Criteria();
-		skillCri.addCriteria("skillList", skillList);
-
-		teamIdListBySkill = teamService.searchTeamDTO(skillCri);
-
-		if (teamIdListBySkill != null) {
-			Map<String, Integer> countMap = new HashMap<String, Integer>();
-			for (String teamId : teamIdListBySkill) {
-				if (countMap.get(teamId) == null) {
-					countMap.put(teamId, 1);
-				} else {
-					int temp = countMap.get(teamId);
-					temp += 1;
-					countMap.put(teamId, temp);
-				}
+		if (skillMap != null) {
+			for (String skill : skillMap) {
+				skillList.add(skill);
 			}
 
-			Iterator<String> skillIterator = countMap.keySet().iterator();
-			while (skillIterator.hasNext()) {
-				String key = skillIterator.next();
-				if (resultMap.get(key) != null) {
-					double temp = resultMap.get(key);
-					temp += (double) countMap.get(key) / (double) skillSize;
-					resultMap.put(key, temp);
+			int skillSize = skillList.size();
+
+			Criteria skillCri = new Criteria();
+			skillCri.addCriteria("skillList", skillList);
+
+			teamIdListBySkill = teamService.searchTeamDTO(skillCri);
+
+			if (teamIdListBySkill != null) {
+				Map<String, Integer> countMap = new HashMap<String, Integer>();
+				for (String teamId : teamIdListBySkill) {
+					if (countMap.get(teamId) == null) {
+						countMap.put(teamId, 1);
+					} else {
+						int temp = countMap.get(teamId);
+						temp += 1;
+						countMap.put(teamId, temp);
+					}
+				}
+
+				Iterator<String> skillIterator = countMap.keySet().iterator();
+				while (skillIterator.hasNext()) {
+					String key = skillIterator.next();
+					if (resultMap.get(key) != null) {
+						double temp = resultMap.get(key);
+						temp += (double) countMap.get(key) / (double) skillSize;
+						resultMap.put(key, temp);
+					}
 				}
 			}
 		}
-
 		List<String> resultTeamId = new ArrayList<String>();
 		Iterator<String> resultIterator = resultMap.keySet().iterator();
 		while (resultIterator.hasNext()) {

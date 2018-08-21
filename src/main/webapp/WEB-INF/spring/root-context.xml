@@ -37,6 +37,14 @@
 			ref="sqlSessionFactory" />
 	</bean>
 
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven />
+
+
 	<bean id="applicantDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface"
@@ -211,7 +219,7 @@
 			value="com.teamwith.dao.TeamSkillDAO" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<context:component-scan

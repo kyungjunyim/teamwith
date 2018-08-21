@@ -8,8 +8,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.teamwith.vo.MemberTendencyVO;
 import com.teamwith.vo.MemberVO;
 import com.teamwith.vo.MyApplicationVO;
 
@@ -25,7 +25,7 @@ public class AccountService {
 	@Inject
 	private ApplicationService applicationService;
 
-	private AccountService() {
+	public AccountService() {
 	}
 
 	public boolean isDuple(String memberId, String memberEmail) {
@@ -61,13 +61,15 @@ public class AccountService {
 	public String findAccount(String memberBirth, String memberEmail) throws Exception {
 		return findAccount(null, memberBirth, memberEmail);
 	}
-
+	
+	@Transactional
 	public void registerMember(MemberVO member) throws Exception {
 		profileService.registerMember(member);
 		pologService.createPolog(member.getMemberId());
 		profileService.initTendency(member.getMemberId());
 	}
-
+	
+	@Transactional
 	public void hideMember(String memberId) {
 		profileService.hideMember(memberId);
 		List<MyApplicationVO> myApp = applicationService.getMyApplication(memberId);
@@ -82,6 +84,7 @@ public class AccountService {
 		}
 	}
 
+	@Transactional
 	public void removeMember(String memberId) throws Exception {
 		memberService.removeMemberAllPraise(memberId);
 		memberService.removeMemberProjectCategory(memberId);
