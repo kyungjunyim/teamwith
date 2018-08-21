@@ -57,6 +57,9 @@ public class PologMainController {
 			model.addAttribute("tendencyVO", tendency);
 			
 			List<PortfolioSimpleVO> portfolioSimpleList=pologService.getPortfolioList(memberId,true);
+			for(PortfolioSimpleVO p:portfolioSimpleList) {
+				p.setPortfolioId(p.getPortfolioId().split("-")[1]);
+			}
 			model.addAttribute("portfolioSimpleList",portfolioSimpleList);
 
 		} catch (Exception e) {
