@@ -1,127 +1,166 @@
-.label_no_exist {
-	width: 740px; 
-	text-align: center; 
-	font-size: 20px; 
-	color: #002b5a;
-}
-.member_search_modal_title{
-	color: #ff4111;
-	text-align: center;
-}
-.member_search_modal_element{
-	margin-left:20px;
-}
-.member_search_modal_font{
-	font-size:18px;
-}
-.member_searcht_big_modal_interval{
-	margin-top:15px;
-}
-.member_search_title {
-	width: 860px;
-	font-size: 25px;
-	font-weight: bold;
-	margin: 10px;
-}
-.member_search_pagenation{
-	margin:auto;
-	font-size:25px;
-}
-.member_search_row_whole {
-	width: 840px;
-	margin: 10px 60px;
-	padding: 0;	
-}
-.member_search_content_row {
-	width: 185px;
+.search_bar_row {
 	margin: 0;
-	padding: 0;
-}
-.member_search_content {
-	width: 185px;
-	padding: 0;
-	margin: auto;
-}
-.member_search_image_col {
-	width: 120px;
-	height: 120px;
-	padding: 0;
-	margin: auto;
-}
-.member_search_text {
-	text-align: center;
-	width: 185px;
-	height: 40px;
-	margin: auto;
-	line-height: 40px;
-}
-.member_search_double_text_height{
-	height:80px;
-}
-.member_search_recent_member_text_row{
-	width:120px;
-	height:40px;
-	margin:auto;
-}
-.member_search_recent_date_font{
-	font-size: 19pt;
-	color:#777777;
-}
-.member_search_text_big{
-	font-size: 20pt;
-}
-.member_search_layout {
 	width: 860px;
-	margin: 0 10px 10px 0;
-	background-color: #ffffff;
-	border-radius: 7px;
+	height:50px;	
 }
+
+.member_search_btn_padding{
+	padding: 0;
+	margin-left: 10px;
+	width: 100px;
+	line-height: 50px;
+}
+
 .member_search_btn_color {
 	width: 140px;
 	padding: 0px 10px;
-	font-size: 23px;
+	font-size: 17px;
 	color: #002b5a;
 	background-color: #ffffff;
 	border-color: #002b5a;
 }
+
 .member_search_btn_color:hover {
 	color: #ff4111;
 	background-color: #f7e7e3;
 	border-color: #ff4111;
 }
-.member_search_bar_position{
-	margin-top:10px;
-	margin-left:10px;
-}
+
 .member_search_btn_size{
 	width: 100px;
 }
+
+.modal_check_box {
+	height: 40px;
+}
+
+.btn_color_small {
+	width: 100px;
+	margin: auto;
+	padding: 0;
+	font-size: 15px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+
+.btn_color_small:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
+
 .member_search_btn_size_big{
-	width:600px;
+	width:345px;
+	margin:0 auto;
+	margin-left: 75px;
+	padding-top: 9px;
 }
-.member_search_btn_padding{
-	padding-right:0px;
-	padding-left:10px;
-}
+
 .member_search_select_box{
-	font-size:20px;
-	height:37.73px;
+	font-size: 13px;
+	height: 31px;
 }
+
 .member_search_input_box{
-	font-size:20px;
+	font-size:14px;
 	width:200px;
-	height:37.73px;
+	height:31px;
 }
-.member_search_search_btn{
-	height:37.73px;
-	width:90px;
+
+.btn_color {
+	width: 50px;
+	height:30px;
+	padding: 0px 10px;
+	font-size: 14px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
 }
-.member_search_font_size{
-	font-size:20px;
+
+.btn_color:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
 }
+
+.main_title {
+	width: 860px;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 10px;
+}
+
+.main_row_whole {
+	width: 840px;
+	margin: 10px 60px;
+	padding: 0;	
+}
+
+.label_no_exist {
+	width: 740px; 
+	text-align: center; 
+	font-size: 18px; 
+	color: #002b5a;
+}
+
+.best_member_row_whole {
+	width: 840px;
+	margin: 10px 60px 20px 60px;
+	padding: 0;
+}
+
+.main_content_col {
+	width: 140px;
+	margin: 0 22.5px;
+	padding: 0;
+}
+
+.main_content_col:hover {
+	cursor: pointer;
+	border-radius: 15px;
+	background-color: #fff7f4;
+}
+
+.member_image_row {
+	width: 140px;
+	padding: 0;
+	margin: 0;
+}
+
 .member_image {
 	width: 120px;
 	height: 120px;
-	margin: auto;
+	margin: 10px;
 	border-radius: 7px;	
+}
+
+.member_content_text {
+	margin: 0;
+	width: 140px;
+}
+
+.member_text {
+	font-size: 19px;
+	color: #002b5a;
+	width: 140px;
+	margin: 0;
+	text-align: center;
+	height: 30px;
+	line-height: 30px;
+	cursor: pointer;
+}
+
+.member_praise_text {
+	font-size: 17px;
+	color: #ff4111;
+}
+
+.member_search_pagination{
+	margin:auto;
+	font-size: 18px;
+}
+
+.member_search_pagination li {
+	margin: 0 10px;
 }
