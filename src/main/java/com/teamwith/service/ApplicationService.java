@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.teamwith.dao.ApplicantDAO;
 import com.teamwith.dao.ApplicationDAO;
@@ -26,17 +27,17 @@ import com.teamwith.vo.MyApplicationVO;
 public class ApplicationService {
 	@Inject
 	private InterviewDAO interviewDAO;
-	@Inject 
+	@Inject
 	private MyApplicationDAO myApplicationDAO;
 	@Inject
 	private ApplicationDAO applicationDAO;
-	@Inject 
+	@Inject
 	private ApplicantDAO applicantDAO;
 	@Inject
 	private InterviewQuestionDAO interviewQuestionDAO;
 	@Inject
 	private InterviewAnswerDAO interviewAnswerDAO;
-	
+
 	public List<InterviewVO> getMyInterview(String applicationId) {
 		List<InterviewVO> result = interviewDAO.searchInterview(applicationId);
 		return result;
@@ -51,14 +52,15 @@ public class ApplicationService {
 		}
 		return result;
 	}
-	//내 상태가 합류된 팀 아이디.. 
+
+	// 내 상태가 합류된 팀 아이디..
 	public List<String> getJoinedTeamId(String memberId) {
 		List<String> result = new ArrayList<String>();
 		try {
 			List<ApplicationDTO> applications = applicationDAO.searchApplicationByMemberId(memberId);
 			for (ApplicationDTO application : applications) {
-				if(application.getApplicationStatus()==1)
-				result.add(application.getTeamId());
+				if (application.getApplicationStatus() == 1)
+					result.add(application.getTeamId());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,11 +82,11 @@ public class ApplicationService {
 		List<InterviewVO> result = interviewDAO.searchInterviewAll(teamId);
 		return result;
 	}
-	
+
 	public List<InterviewQuestionDTO> getInterviewQuestion(String teamId) {
-		List<InterviewQuestionDTO> result= null;
+		List<InterviewQuestionDTO> result = null;
 		try {
-			result=interviewQuestionDAO.searchInterviewQuestionByTeamId(teamId);
+			result = interviewQuestionDAO.searchInterviewQuestionByTeamId(teamId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,9 +126,19 @@ public class ApplicationService {
 		return result;
 	}
 
+	@Transactional
+	public void applyTeam(ApplicationVO application, List<InterviewVO> interviewAnswer) {
+		String appId = applyTeam(application);
+		for (InterviewVO vo : interviewAnswer) {
+			vo.setApplicationId(appId);
+		}
+		applyTeam(interviewAnswer);
+
+	}
+
 	public String applyTeam(ApplicationVO application) {
 		ApplicationDTO applicationDTO = null;
-		String id=null;
+		String id = null;
 		try {
 			applicationDTO = application.toDTO();
 			id = generateId(applicationDAO.getApplicationId(), "application");
@@ -134,13 +146,13 @@ public class ApplicationService {
 			applicationDAO.addApplication(applicationDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			id=null;
+			id = null;
 		}
 		return id;
 	}
 
 	public int applyTeam(List<InterviewVO> interviewAnswer) {
-		int result=0;
+		int result = 0;
 		try {
 			for (InterviewVO interview : interviewAnswer) {
 				InterviewAnswerDTO interviewDTO = new InterviewAnswerDTO();
@@ -150,7 +162,7 @@ public class ApplicationService {
 				interviewDTO.setInterviewAnswerContent(interview.getInterviewAnswerContent());
 				interviewDTO.setInterviewAnswerId(id);
 				interviewDTO.setInterviewQuestionId(interview.getInterviewQuestionId());
-				result=interviewAnswerDAO.addInterviewAnswer(interviewDTO);
+				result = interviewAnswerDAO.addInterviewAnswer(interviewDTO);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,24 +172,23 @@ public class ApplicationService {
 	}
 
 	public List<MemberSearchVO> getTeamMember(String teamId) {
-		List<MemberSearchVO> result=null;
-		try{
-			List<ApplicantVO> applicants=applicantDAO.searchApplicantByTeamId(teamId);
-			result=new ArrayList<MemberSearchVO>();
-			for(ApplicantVO applicant : applicants) {
-				if(Integer.parseInt(applicant.getApplicationStatus())==1) {
-					MemberSearchVO teamMember=new MemberSearchVO();
+		List<MemberSearchVO> result = null;
+		try {
+			List<ApplicantVO> applicants = applicantDAO.searchApplicantByTeamId(teamId);
+			result = new ArrayList<MemberSearchVO>();
+			for (ApplicantVO applicant : applicants) {
+				if (Integer.parseInt(applicant.getApplicationStatus()) == 1) {
+					MemberSearchVO teamMember = new MemberSearchVO();
 					teamMember.setMemberId(applicant.getMemberId());
 					teamMember.setMemberName(applicant.getMemberName());
 					teamMember.setMemberPic(applicant.getMemberPic());
 					result.add(teamMember);
 				}
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 

@@ -16,7 +16,7 @@ public class LoginService {
 	private MemberDAO memberDAO;
 
 
-	private LoginService() {
+	public LoginService() {
 	}
 
 	public MemberSimpleVO login(String memberId, String memberPassword) throws Exception {

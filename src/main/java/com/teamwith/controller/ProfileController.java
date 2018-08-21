@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.annotation.MultipartConfig;
@@ -82,12 +81,14 @@ public class ProfileController {
 				updateMemberInfo.setMemberPic(newFilename);
 			}
 			/* memberInfo */
-			profileService.updateMemberInfo(updateMemberInfo);
+			
+	//		profileService.updateMemberInfo(updateMemberInfo);
 
 			MemberProjectCategoryVO pcVO = new MemberProjectCategoryVO(memberId, categoryId);
-			memberService.updateMemberProjectCategory(pcVO);
+			logger.info(pcVO.toString());
+	//		memberService.updateMemberProjectCategory(pcVO);
 
-			memberService.updateMemberSkill(new MemberSkillVO(memberId, skill));
+	//		memberService.updateMemberSkill(new MemberSkillVO(memberId, skill));
 
 			Map<String, String> tdMap = new HashMap<String, String>();
 			tdMap.put("tendency-1", tendency.getTendency1());
@@ -97,7 +98,10 @@ public class ProfileController {
 			tdMap.put("tendency-5", tendency.getTendency5());
 
 			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
-			profileService.updateMemberTendency(memberTendency);
+	//		profileService.updateMemberTendency(memberTendency);
+			
+			profileService.updateMemberAllInfo(memberService,updateMemberInfo,pcVO,new MemberSkillVO(memberId, skill),memberTendency);
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

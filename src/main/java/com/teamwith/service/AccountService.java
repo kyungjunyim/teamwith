@@ -25,7 +25,7 @@ public class AccountService {
 	@Inject
 	private ApplicationService applicationService;
 
-	private AccountService() {
+	public AccountService() {
 	}
 
 	public boolean isDuple(String memberId, String memberEmail) {

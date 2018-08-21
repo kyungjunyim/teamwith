@@ -104,6 +104,7 @@ public class PologService {
 	}
 
 	/** 포폴컨텐츠랑 포폴 한방에 등록 */
+	@Transactional
 	public String registerPortfolioAndContent(Map<Object, MultipartFile> portfolioAndContent, String rootPath) {
 		if (portfolioAndContent == null) {
 			return null;
