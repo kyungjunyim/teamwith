@@ -43,6 +43,53 @@
 
 	</select>
 
+	<select id="searchMemberIdByRoleList" parameterType="Criteria"
+		resultMap="memberSearchView">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+		]]>
+		<if test="criteria.roleList != null">
+			AND role_id IN
+			<foreach item="item" collection="criteria.roleList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+	<select id="searchMemberIdByRegionList" parameterType="Criteria"
+		resultMap="memberSearchView">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+		]]>
+		<if test="criteria.regionList != null">
+			AND (region_id_1 IN
+			<foreach item="item" collection="criteria.regionList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			OR region_id_2 IN
+			<foreach item="item" collection="criteria.regionList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			)
+		</if>
+			<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+
 	<select id="searchMemberByRoleRegion" parameterType="Criteria"
 		resultMap="memberSearchView">
 		<![CDATA[

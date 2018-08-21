@@ -100,7 +100,46 @@ public class MemberService {
 		}
 		return result;
 	}
-
+	
+	public List<String> getMemberIdByRegionList(Criteria cri) throws Exception {
+		if(cri == null) {
+			return null;
+		}
+		List<MemberSearchVO> temp = memberSearchDAO.searchMemberIdByRegionList(cri);
+		List<String> result = new ArrayList<String>();
+		
+		for(MemberSearchVO memberSearchVO : temp) {
+			result.add(memberSearchVO.getMemberId());
+		}
+		return result;
+	}
+	
+	public List<String> getMemberIdByRoleList(Criteria cri) throws Exception {
+		if(cri == null) {
+			return null;
+		}
+		List<MemberSearchVO> temp = memberSearchDAO.searchMemberIdByRoleList(cri);
+		List<String> result = new ArrayList<String>();
+		
+		for(MemberSearchVO memberSearchVO : temp) {
+			result.add(memberSearchVO.getMemberId());
+		}
+		return result;
+	}
+	
+	public List<String> getMemberIdByCondition(Criteria cri) throws Exception {
+		if(cri == null) {
+			return null;
+		}
+		List<MemberSearchVO> temp = memberSearchDAO.searchMember(cri);
+		List<String> result = new ArrayList<String>();
+		
+		for(MemberSearchVO memberSearchVO : temp) {
+			result.add(memberSearchVO.getMemberId());
+		}
+		return result;
+	}
+	
 	public List<String> getMemberBySkillId(List<String> skillId) throws Exception {
 		if (skillId == null) {
 			return null;
