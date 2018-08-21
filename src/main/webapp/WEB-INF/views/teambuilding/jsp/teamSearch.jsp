@@ -55,8 +55,22 @@
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
+	<jsp:include page="modalSet.jsp" />
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/teambuilding/js/frame.js"></script>
+<script>
+$("#register").on("click", function(){
+	$("#btn_member_register").click();
+});
+
+$("#find_account").on("click", function() {
+	$("#btn_find_account").click();
+});
+
+$("#label_remove_member").on("click", function() {
+	$("#btn_remove_member").click();
+});
+</script>
 </html>

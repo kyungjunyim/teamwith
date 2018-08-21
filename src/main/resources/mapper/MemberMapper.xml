@@ -110,6 +110,7 @@
 		WHERE member_id = #{memberId}
 		AND
 		member_password = ENCRYPTION_AES.ENC_AES(#{memberPassword})
+		AND member_public != -1
 	</select>
 
 	<select id="searchMemberInfo" parameterType="String"

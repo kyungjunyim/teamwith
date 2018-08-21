@@ -41,7 +41,7 @@ public class AccountService {
 		Map<String, String> loginInfo = new HashMap<String, String>();
 		loginInfo.put("memberId", memberId);
 		loginInfo.put("memberPassword", memberPassword);
-		loginInfo.put("newPassword", newPassword);
+		loginInfo.put("newMemberPassword", newPassword);
 		return profileService.updatePassword(loginInfo);
 	}
 

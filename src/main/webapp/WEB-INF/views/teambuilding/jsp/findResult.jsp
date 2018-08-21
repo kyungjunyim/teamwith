@@ -16,7 +16,7 @@
 					</h5>
 				</div>
 				<div class="modal-body modal_text" style="text-align: center;">${msg }</div><br />
-				<button type="button" class="btn btn-md btn_submit" onclick="location='/'" style="margin: 0 auto; margin-bottom: 30px;">로그인 하기</button>
+				<button type="button" class="btn btn-md btn_submit" onclick="location='/'" style="margin: 0 auto; margin-bottom: 30px;">홈으로 가기</button>
 			</div>
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
