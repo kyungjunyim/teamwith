@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamwith.dao.FaqDAO">
+
+ 	<resultMap type="FaqDTO" id="result">
+		<result property="faqId" column="faq_id" />
+		<result property="faqQuestion" column="faq_question" />
+		<result property="faqAnswer" column="faq_answer" />
+		<result property="teamId" column="team_id" />
+	</resultMap>
+	
+	<insert id="addFaq" parameterType="FaqDTO">
+		INSERT INTO faq_tb
+		VALUES (#{faqId}, #{faqQuestion}, #{faqAnswer}, #{teamId})
+	</insert>
+
+	<delete id="removeFaqByFaqId" parameterType="string">
+		DELETE FROM faq_tb
+		WHERE faq_id = #{faqId}
+	</delete>
+
+	<delete id="removeFaqByTeamId" parameterType="string">
+		DELETE FROM faq_tb
+		WHERE team_id = #{teamId}
+	</delete>
+
+	<update id="updateFaqQuestion" parameterType="map">
+		UPDATE faq_tb
+		SET faq_question = #{faqQuestion}
+		WHERE faq_id = #{faqId}
+	</update>
+
+	<update id="updateFaqAnswer" parameterType="map">
+		UPDATE faq_tb
+		SET faq_answer = #{faqAnswer}
+		WHERE faq_id = #{faqId}
+	</update>
+
+	<update id="updateFaq" parameterType="FaqDTO">
+		UPDATE faq_tb
+		SET faq_question = #{faqQuestion}, faq_answer = #{faqAnswer}
+		WHERE faq_id = #{faqId}
+	</update>
+
+	<select id="searchFaqByFaqId" parameterType="string" resultMap="result">
+		SELECT *
+		FROM faq_tb
+		WHERE faq_id = #{faqId}
+	</select>
+
+	<select id="searchFaqByTeamId" parameterType="string" resultMap="result">
+		SELECT *
+		FROM faq_tb
+		WHERE team_id = #{teamId}
+	</select>
+	
+	<select id="searchFaqAll" resultMap="result">
+		SELECT *
+		FROM faq_tb
+	</select>
+	
+	<select id="getId" resultType="string">
+		SELECT faq_id
+		FROM faq_tb
+	</select>
+	
+</mapper>

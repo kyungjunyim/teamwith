@@ -1,0 +1,166 @@
+.search_bar_row {
+	margin: 0;
+	width: 860px;
+	height:50px;	
+}
+
+.member_search_btn_padding{
+	padding: 0;
+	margin-left: 10px;
+	width: 100px;
+	line-height: 50px;
+}
+
+.member_search_btn_color {
+	width: 140px;
+	padding: 0px 10px;
+	font-size: 17px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+
+.member_search_btn_color:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
+
+.member_search_btn_size{
+	width: 100px;
+}
+
+.modal_check_box {
+	height: 40px;
+}
+
+.btn_color_small {
+	width: 100px;
+	margin: auto;
+	padding: 0;
+	font-size: 15px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+
+.btn_color_small:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
+
+.member_search_btn_size_big{
+	width:345px;
+	margin:0 auto;
+	margin-left: 75px;
+	padding-top: 9px;
+}
+
+.member_search_select_box{
+	font-size: 13px;
+	height: 31px;
+}
+
+.member_search_input_box{
+	font-size:14px;
+	width:200px;
+	height:31px;
+}
+
+.btn_color {
+	width: 50px;
+	height:30px;
+	padding: 0px 10px;
+	font-size: 14px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+
+.btn_color:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
+
+.main_title {
+	width: 860px;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 10px;
+}
+
+.main_row_whole {
+	width: 840px;
+	margin: 10px 60px;
+	padding: 0;	
+}
+
+.label_no_exist {
+	width: 740px; 
+	text-align: center; 
+	font-size: 18px; 
+	color: #002b5a;
+}
+
+.best_member_row_whole {
+	width: 840px;
+	margin: 10px 60px 20px 60px;
+	padding: 0;
+}
+
+.main_content_col {
+	width: 140px;
+	margin: 0 22.5px;
+	padding: 0;
+}
+
+.main_content_col:hover {
+	cursor: pointer;
+	border-radius: 15px;
+	background-color: #fff7f4;
+}
+
+.member_image_row {
+	width: 140px;
+	padding: 0;
+	margin: 0;
+}
+
+.member_image {
+	width: 120px;
+	height: 120px;
+	margin: 10px;
+	border-radius: 7px;	
+}
+
+.member_content_text {
+	margin: 0;
+	width: 140px;
+}
+
+.member_text {
+	font-size: 19px;
+	color: #002b5a;
+	width: 140px;
+	margin: 0;
+	text-align: center;
+	height: 30px;
+	line-height: 30px;
+	cursor: pointer;
+}
+
+.member_praise_text {
+	font-size: 17px;
+	color: #ff4111;
+}
+
+.member_search_pagination{
+	margin:auto;
+	font-size: 18px;
+}
+
+.member_search_pagination li {
+	margin: 0 10px;
+}

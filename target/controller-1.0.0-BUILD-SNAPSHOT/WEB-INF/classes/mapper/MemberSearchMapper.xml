@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamwith.dao.MemberSearchDAO">
+	<resultMap id="memberSearchView" type="MemberSearchVO">
+		<id property="memberId" column="member_id" />
+		<id property="memberPic" column="member_pic" />
+		<id property="memberName" column="member_name" />
+		<id property="roleId" column="role_id" />
+		<id property="memberRegisterDate" column="member_register_date" />
+		<id property="regionId1" column="region_id_1" />
+		<id property="regionId2" column="region_id_2" />
+		<id property="totalPraiseCnt" column="total_praise_cnt" />
+	</resultMap>
+
+	<select id="searchMemberAll" resultMap="memberSearchView">
+		select * from
+		member_search_view
+		WHERE member_public = 0
+	</select>
+
+	<select id="searchMemberByMemberId" parameterType="String"
+		resultMap="memberSearchView">
+		SELECT * FROM
+		member_search_view
+		WHERE member_public = 0
+		AND
+		member_id = #{memberId}
+	</select>
+
+	<select id="searchRecentMember" parameterType="Criteria"
+		resultMap="memberSearchView">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+		ORDER BY member_register_date DESC
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+
+	</select>
+
+	<select id="searchMemberIdByRoleList" parameterType="Criteria"
+		resultMap="memberSearchView">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+		]]>
+		<if test="criteria.roleList != null">
+			AND role_id IN
+			<foreach item="item" collection="criteria.roleList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+	<select id="searchMemberIdByRegionList" parameterType="Criteria"
+		resultMap="memberSearchView">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+		]]>
+		<if test="criteria.regionList != null">
+			AND (region_id_1 IN
+			<foreach item="item" collection="criteria.regionList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			OR region_id_2 IN
+			<foreach item="item" collection="criteria.regionList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			)
+		</if>
+			<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+
+	<select id="searchMemberByRoleRegion" parameterType="Criteria"
+		resultMap="memberSearchView">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+	]]>
+
+		<if test="criteria.roleList != null">
+			AND role_id IN
+			<foreach item="item" collection="criteria.roleList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="criteria.regionList != null">
+			AND (region_id_1 IN
+			<foreach item="item" collection="criteria.regionList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			OR region_id_2 IN
+			<foreach item="item" collection="criteria.regionList"
+				index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			)
+		</if>
+			<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+	<select id="searchMemberByPraiseCnt" parameterType="Criteria"
+		resultMap="memberSearchView">
+	<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+		ORDER BY total_praise_cnt DESC
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+
+	<select id="searchMember" parameterType="Criteria"
+		resultMap="memberSearchView"> 
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM member_search_view 
+		WHERE member_public = 0
+	]]>
+		<if test="criteria.memberName != null">
+			AND member_name LIKE
+			CONCAT(CONCAT('%',#{criteria.memberName}),'%')
+		</if>
+		<if test="criteria.memberId != null">
+			AND member_id LIKE
+			CONCAT(CONCAT('%',#{criteria.memberId}),'%')
+		</if>
+
+		<if test="criteria.roleId != null">
+			AND role_id=#{criteria.roleId}
+		</if>
+		<if test="criteria.regionId1 != null">
+			AND (region_id_1 = #{criteria.regionId1} OR region_id_2 =
+			#{criteria.regionId1})
+		</if>
+		<if test="criteria.regionId2 != null">
+			AND (region_id_1 = #{criteria.regionId2} OR region_id_2 =
+			#{criteria.regionId2})
+		</if>
+			<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+</mapper> 

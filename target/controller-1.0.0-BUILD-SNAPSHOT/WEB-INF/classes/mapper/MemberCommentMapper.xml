@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamwith.dao.MemberCommentDAO">
+	<resultMap id="result" type="MemberCommentVO">
+		<id property="commentId" column="comment_id" />
+		<id property="commentContent" column="comment_content" />
+		<id property="commentUpdateDate" column="comment_update_date" />
+		<id property="memberId" column="member_id" />
+		<id property="teamId" column="team_id" />
+		<id property="parentCommentId" column="parent_comment_id" />
+		<id property="memberPic" column="member_pic" />
+		<id property="memberName" column="member_name" />
+	</resultMap>
+	
+	<select id="searchMemberComment" resultMap="result">
+		SELECT *
+		FROM member_comment_view
+	</select>
+	
+</mapper>

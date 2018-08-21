@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamwith.dao.PortfolioSimpleDAO">
+	<resultMap id="result" type="PortfolioSimpleVO">
+		<id property="portfolioId" column="portfolio_id" />
+		<id property="portfolioPic" column="portfolio_pic" />
+		<id property="memberId" column="member_id" />
+		<id property="memberName" column="member_name" />
+		<id property="portfolioTitle" column="portfolio_title" />
+		<id property="portfolioBest" column="portfolio_best" />
+		<id property="projectCategoryId" column="project_category_id" />
+		<id property="portfolioIntro" column="portfolio_intro" />
+		<id property="portfolioUpdateDate" column="portfolio_update_date"/>
+	</resultMap>
+	
+	<select id="searchPortfolioSimpleAll" resultMap="result">
+		select B.portfolio_id,B.portfolio_pic,B.member_id,B.member_name,B.portfolio_title,B.portfolio_best,B.project_category_id
+ 		,B.portfolio_intro,B.portfolio_update_date
+		from (
+		select rownum as rnum ,A.portfolio_id,A.portfolio_pic,A.member_id,A.member_name,A.portfolio_title,A.portfolio_best,A.project_category_id
+ 		,A.portfolio_intro,A.portfolio_update_date
+ 		from (
+ 		select *
+ 		from portfolio_simple_view
+ 		order by portfolio_update_date) A
+ 		where rownum <![CDATA[<=]]>	${perPageNum*page}) B
+ 		where B.rnum <![CDATA[>=]]> ${((page-1)*10)+1}
+	</select>
+	<select id="searchPortfolioSimpleByMemberId" resultMap="result">
+		SELECT *
+		FROM portfolio_simple_view
+		where member_id=#{memberId} <if test="best=='true'"> and portfolio_best=1</if>
+	</select>
+	
+	<select id="searchPortfolio" resultMap="result">
+			select B.portfolio_id,B.portfolio_pic,B.member_id,B.member_name,B.portfolio_title,B.portfolio_best,B.project_category_id
+ 		,B.portfolio_intro,B.portfolio_update_date
+		from (
+		select rownum as rnum ,A.portfolio_id,A.portfolio_pic,A.member_id,A.member_name,A.portfolio_title,A.portfolio_best,A.project_category_id
+ 		,A.portfolio_intro,A.portfolio_update_date
+ 		from (
+ 		select *
+ 		from portfolio_simple_view
+ 		where
+ 		<if test="criteria.projectCategory!=null">
+			<foreach collection="criteria.projectCategory" item="category" index="index" separator="OR">
+				project_category_id=#{category}
+				
+			</foreach>
+		</if>
+		<if test="criteria.portfolioTitle!=null">
+			<if test="criteria.projectCategory!=null">
+				OR 
+			</if>
+			 portfolio_title like '%'||#{criteria.portfolioTitle}||'%'
+		</if>
+ 		
+ 		order by portfolio_update_date) A
+ 		where rownum <![CDATA[<=]]>	${perPageNum*page}) B
+ 		where B.rnum <![CDATA[>=]]> ${((page-1)*10)+1}
+		
+		
+	</select>
+	
+	
+</mapper>
