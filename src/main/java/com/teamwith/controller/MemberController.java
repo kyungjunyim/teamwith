@@ -47,7 +47,11 @@ public class MemberController {
 			List<String> memberIdListBySkill = null;
 			List<String> memberIdListByKeyword = null;
 			
-			memberIdListByCategory = memberService.getMemberByProjectCategoryId(projectCategoryId);
+			if(region != null) {
+				Criteria regionCri = new Criteria();
+				regionCri.addCriteria(condition, memberIdListByKeyword);
+			}
+			memberService.getMemberByRoleRegion(cri);
 			
 			return null;
 		}
