@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.teamwith.service.MemberService;
 import com.teamwith.util.Criteria;
 import com.teamwith.vo.MemberSearchVO;
+import com.teamwith.vo.TeamSimpleVO;
 
 @RequestMapping("/member")
 @Controller
@@ -49,11 +50,152 @@ public class MemberController {
 			
 			if(region != null) {
 				Criteria regionCri = new Criteria();
-				regionCri.addCriteria(condition, memberIdListByKeyword);
+				List<String> regionList = new ArrayList<String>();
+				for (String regionStr : region) {
+					regionList.add(regionStr);
+				}
+				System.out.println(regionList);
+				regionCri.addCriteria("regionList", regionList);
+				memberIdListByRegion = memberService.getMemberIdByRegionList(regionCri);
+				System.out.println(memberIdListByRegion);
+				if(memberIdListByRegion != null) {
+					resultIdList = new ArrayList<String>();
+					resultIdList.addAll(memberIdListByRegion);
+				}
 			}
-			memberService.getMemberByRoleRegion(cri);
 			
-			return null;
+			if (role != null) {
+				Criteria roleCri = new Criteria();
+				List<String> roleList = new ArrayList<String>();
+				for (String roleStr : role) {
+					roleList.add(roleStr);
+				}
+				roleCri.addCriteria("roleList", roleList);
+				memberIdListByRole = memberService.getMemberIdByRoleList(roleCri);
+				if (memberIdListByRole != null) {
+					if (resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for (String teamId : memberIdListByRole) {
+							if (!resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					} else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < memberIdListByRole.size(); j++) {
+								if (resultIdList.get(i).equals(memberIdListByRole.get(j))) {
+									flag = true;
+								}
+							}
+							if (flag == false) {
+								resultIdList.set(i, "empty");
+							}
+						}
+					}
+				}
+			}
+			
+			if(project != null) {
+				List<String> projectCategoryId = new ArrayList<String>();
+				for(String projectStr : project) {
+					projectCategoryId.add(projectStr);
+				}
+				memberIdListByCategory = memberService.getMemberByProjectCategoryId(projectCategoryId);
+				
+				if(memberIdListByCategory != null) {
+					if(resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for(String memberId : memberIdListByCategory) {
+							if(!resultIdList.contains(memberId)) {
+								resultIdList.add(memberId);	
+							}
+						}
+					}
+					else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < memberIdListByCategory.size(); j++) {
+								if (resultIdList.get(i).equals(memberIdListByCategory.get(j))) {
+									flag = true;
+								}
+							}
+							if (flag == false) {
+								resultIdList.set(i, "empty");
+							}
+						}						
+					}
+				}
+			}
+			
+			if (skill != null) {
+				List<String> skillList = new ArrayList<String>();
+				for (String skillStr : skill) {
+					skillList.add(skillStr);
+				}
+				memberIdListBySkill = memberService.getMemberBySkillId(skillList);
+				if (memberIdListBySkill != null) {
+					if (resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for (String teamId : memberIdListBySkill) {
+							if (!resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					} else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < memberIdListBySkill.size(); j++) {
+								if (resultIdList.get(i).equals(memberIdListBySkill.get(j))) {
+									flag = true;
+								}
+							}
+							if (flag == false) {
+								resultIdList.set(i, "empty");
+							}
+						}
+					}
+				}
+			}
+			
+			if(!keyword.trim().equals("")) {
+				Criteria textCri = new Criteria();
+				textCri.addCriteria("memberName", keyword.trim());
+				memberIdListByKeyword = memberService.getMemberIdByCondition(textCri);
+				
+				if (memberIdListByKeyword != null) {
+					if (resultIdList == null) {
+						resultIdList = new ArrayList<String>();
+						for (String teamId : memberIdListByKeyword) {
+							if (!resultIdList.contains(teamId)) {
+								resultIdList.add(teamId);
+							}
+						}
+					} else {
+						for (int i = 0; i < resultIdList.size(); i++) {
+							boolean flag = false;
+							for (int j = 0; j < memberIdListByKeyword.size(); j++) {
+								if (resultIdList.get(i).equals(memberIdListByKeyword.get(j))) {
+									flag = true;
+								}
+							}
+							if (flag == false) {
+								resultIdList.set(i, "empty");
+							}
+						}
+					}
+				}
+			}
+			
+			for (String resultId : resultIdList) {
+				if (!resultId.equals("empty")) {
+					MemberSearchVO memberSearchVO = memberService.getMemberSearchInfo(resultId);
+					resultMemberList.add(memberSearchVO);
+				}
+			}
+
+			model.addAttribute("resultMemberList", resultMemberList);
+			return "teambuilding/jsp/searchMember";
 		}
 	}
 }

@@ -11,6 +11,10 @@ public interface MemberSearchDAO {
 	public MemberSearchVO searchMemberByMemberId(String memberId) throws Exception;
 
 	public List<MemberSearchVO> searchMemberByRoleRegion(Criteria cri) throws Exception;
+	
+	public List<MemberSearchVO> searchMemberIdByRoleList(Criteria cri) throws Exception;
+	
+	public List<MemberSearchVO> searchMemberIdByRegionList(Criteria cri) throws Exception;
 
 	public List<MemberSearchVO> searchRecentMember(Criteria cri) throws Exception;
 
