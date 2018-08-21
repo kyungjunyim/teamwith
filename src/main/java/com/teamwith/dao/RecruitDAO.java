@@ -10,6 +10,7 @@ public interface RecruitDAO {
 	public int addRecruit(RecruitDTO recruit) throws Exception;
 	/** ���� ���� ����*/
 	public int removeRecruitByRecruitId(String recruitId) throws Exception;
+	public int removeRecruitByTeamId(String teamId) throws Exception;
 	/** recruit_tb�� ��� ���� ����*/
 	public int updateRecruitAll(RecruitDTO recruit) throws Exception;
 	/** recruit_id�� �ش��ϴ� ���ڵ��� recruit_people_num, recruit_preference, recruit_explain, role_id ����*/
