@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.teamwith.service.AccountService;
+import com.teamwith.service.LoginService;
+import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberVO;
 
 @RequestMapping("/account")
@@ -17,6 +19,10 @@ import com.teamwith.vo.MemberVO;
 public class AccountController {
 	@Inject
 	AccountService accountService;
+	@Inject
+	LoginService loginService;
+	@Inject
+	MemberSimpleVO memberSimpleVO;
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String accountRegister(Model model, MemberVO member, RedirectAttributes rttr) {
@@ -54,26 +60,38 @@ public class AccountController {
   }
     
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
-	public String remove(Model model, String memberId, RedirectAttributes rttr) {
-		try {
+	public String remove(Model model, HttpSession session, String memberPassword) throws Exception {
+		String memberId = ((MemberSimpleVO) session.getAttribute("memberSimpleVO")).getMemberId();
+		if(login(memberId, memberPassword)) {
 			accountService.hideMember(memberId);
-			rttr.addFlashAttribute("removeResult", "success");
-		} catch (Exception e) {
-			e.printStackTrace();
-			rttr.addFlashAttribute("removeResult", "fail");
+			model.addAttribute("msg", "회원 탈퇴가 성공적으로 처리되었습니다!");
+			session.invalidate();
 		}
-		return "redirect:/";
+		else {
+			model.addAttribute("msg", "회원 탈퇴에 실패하였습니다!");
+		}
+		return "teambuilding/jsp/findResult";
+	}
+	
+	private boolean login(String memberId, String memberPassword) throws Exception {
+		// 로그인 메소드 호출
+		memberSimpleVO = loginService.login(memberId, memberPassword);
+		if(memberSimpleVO == null) {
+			return false;
+		} else {
+			return true;	
+		}
 	}
   
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-	public String changePassword(Model model, String memberId, String memberPassword, String newPassword, RedirectAttributes rttr) {
+	public String changePassword(Model model, String memberId, String memberPassword, String newPassword) {
 		try {
 			accountService.updatePassword(memberId, memberPassword, newPassword);
-			rttr.addFlashAttribute("chnagePwdResult", "success");
+			model.addAttribute("msg", "비밀번호가 성공적으로 변경되었습니다!");
 		} catch (Exception e) {
 			e.printStackTrace();
-			rttr.addFlashAttribute("chnagePwdResult", "fail");
+			model.addAttribute("msg", "비밀번호 변경에 실패하였습니다!");
 		}
-		return "redirect:/";
+		return "teambuilding/jsp/findResult";
 	}
 }

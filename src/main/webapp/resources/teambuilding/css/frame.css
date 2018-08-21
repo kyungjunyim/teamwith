@@ -364,14 +364,13 @@ body {
 	text-align: center;	
 }
 
-form .btn_logout {
-	 margin-right: 15px; 
-	 border: none; 
-	 margin-left: -80px; 
+.btn_logout {
+	border-radius: 7px;
+	 border: 1px solid #002b5a; 
 	 background-color: white; 
 	 color: #002b5a; 
 	 cursor: pointer; 
-	 margin-top: 12px;
+	 margin: 10px auto;
 	 font-size: 11px;
 }
 
