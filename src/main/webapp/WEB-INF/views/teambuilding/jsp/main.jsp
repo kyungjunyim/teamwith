@@ -59,7 +59,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body modal_text">
+				<div class="modal-body">
 					<label class="register_label">아이디</label>
 					<input type="text" placeholder="아이디" class="register_input" name="member_id" required><br>
 					<label class="register_label">비밀번호</label>
