@@ -28,7 +28,7 @@
 		#{portfolioSkill},sysdate,#{portfolioBest},#{portfolioPic},#{projectCategoryId},#{memberId})
 	</insert>
 	<update id="updatePortfolio">
-		update portfolio_tb set portfolio_id=#{portfolioId},portfolio_title=#{portfolioTitle},portfolio_intro=#{portfolioIntro},
+		update portfolio_tb set portfolio_title=#{portfolioTitle},portfolio_intro=#{portfolioIntro},
 		portfolio_start_date=#{portfolioStartDate},portfolio_end_date=#{portfolioEndDate},portfolio_people_num=#{portfolioPeopleNum},
 		portfolio_role=#{portfolioRole},portfolio_work=#{portfolioWork},portfolio_skill=#{portfolioSkill},portfolio_update_date=sysdate,
 		portfolio_best=#{portfolioBest},portfolio_pic=#{portfolioPic},project_category_id=#{projectCategoryId},member_id=#{memberId} 

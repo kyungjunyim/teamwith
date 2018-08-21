@@ -29,10 +29,11 @@
 						</c:choose>
 					</c:if>
 					<c:if test="${!empty requestScope.oldContent }">
+					<input type="hidden" name="portfolioContentId" value="${oldContent.portfolioContentId }">
 						<c:choose>
 							<c:when test="${oldContent.portfolioContentName=='image' }">
 								<div
-									style="width:100%;height:100%;background-image: url(${oldContent.portfolioContentValue });background-size: contain;">
+									style="width:100%;height:100%;background-image: url(${oldContent.portfolioContentValue });background-size:100% 100%">
 									<input type="file" style="margin-top: 50%"
 										accept=".png,.jpg,.jpeg,.bmp,.gif" name="portfolioFile" /> <input
 										type="hidden" name="portfolioContentName" value="image" /> <input

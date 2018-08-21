@@ -14,7 +14,7 @@
 <title>Insert title here</title>
 <script>
 var index=-1;
-var order=1;
+var order='${requestScope.portfolioContentSize+1}';
 
 $(function(){
 	
@@ -109,7 +109,7 @@ $(function(){
     $('#okbtn').click(function(){
     	
 		/* var $test=$($('#layout1').html()); */
-		
+		alert(order);
 		var str='';
 		if(index==1){
 			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" accept=".png,.jpg,.jpeg,.bmp,.gif" name="portfolioFile"/>'
@@ -189,7 +189,12 @@ $(function(){
     $( document ).on( 'click', '#deleteBtn', function () {
     	oldNum = selNum;
         selNum = selNum - 1;
+        
+      
         order=order-1;
+        var conid=$(this).next().children().children('input[name="portfolioContentId"]').val();
+        var $dcon=$('<input type="hidden" name="deleteContent" value="'+conid+'">');
+        $('#removeContent').append($dcon);
 	  $(this).parent().remove();
 	 
 	  $proList = $(".product_lis, li");
@@ -426,12 +431,14 @@ font-size:50%;
 </head>
 <body style="height:100%">
 <div class="product_con">
-<form action="/portfolio/register" method="post" enctype="multipart/form-data">
+<form action="/portfolio/edit/${portfolioVO.portfolioId }" method="post" enctype="multipart/form-data">
+	<div id="removeContent" style="display:none"></div>
+	<input type="hidden" name="portfolioId" value="${portfolioVO.portfolioId }">
     <ul class="product_list">
    
         <li>
         	<div class="left_box" >
-        		<div class="pic_box" style="background-image: url(${portfolioVO.portfolioPic});background-size: contain;">
+        		<div class="pic_box" style="background-image: url(${portfolioVO.portfolioPic});background-size:100% 100%;">
         			<input type="file" style="margin-top:50%;margin-left:20%"name="portfolioFile" accept=".png,.jpg,.jpeg,.bmp,.gif">
         			<input type="hidden" name="oldPortfolioPic" value="${portfolioVO.portfolioPic}">
         			<br>
@@ -493,28 +500,38 @@ font-size:50%;
 	        
         </li>
         <!-- 3번부터 동적으로 생성해야 하는 부분 (시용자가 추가했을 경우) -->
+        <c:set var="end" value="no" scope="request"/>
         <c:forEach items="${requestScope.portfolioContent }" var="content" varStatus="i">
         		<c:set var="oldContent" value="${content}" scope="request"/>
 	        	<c:choose>
 	        		<c:when test="${content.layoutId=='layout-1'}">
 	        			<li>
+	        				<div id="layout1">
+	        				<button type="button" class="btn btn-warning" id="deleteBtn">삭제</button>
 				        	<jsp:include page="portfolioContentLayout1.jsp"/>
+				        	<input type="hidden" name="layoutId" value="layout-1"/>
+				        	
+				        	</div>
 				        </li>
 	        		</c:when>
 	        		<c:when test="${content.layoutId=='layout-2'}">
 	        			<li>
+	        				<div id="layout2" >
 	        				<jsp:include page="portfolioContentLayout2.jsp"/>
+	        				<input type="hidden" name="layoutId" value="layout-2"/>
+	        				<button type="button" class="btn btn-warning" id="deleteBtn">삭제</button>
+	        				</div>
 	        			</li>
 	        		</c:when>
 	        	</c:choose>
         </c:forEach>
-        
+        <c:set var="end" value="ok" scope="request"/>
     </ul>
     <input type="hidden" name="projectCategoryId" id="pci" value="">
     
     
     
-      <input class="btn addBtn btn-warning" type="submit" value="등록완료"/>
+      <input class="btn addBtn btn-warning" type="submit" value="수정완료"/>
       
     </form>
  
@@ -528,7 +545,6 @@ font-size:50%;
 	</form>
 <div id="layout1" style="display:none">
 <jsp:include page="portfolioContentLayout1.jsp"/>
-<input type="file" name="portfolioFile" value="split">
 <button type="button" class="btn btn-warning" id="deleteBtn" >삭제</button>
 <input type="hidden" name="layoutId" value="layout-1"/>
 </div>

@@ -111,20 +111,51 @@ public class PologService {
 		PortfolioVO portfolio = null;
 		PortfolioContentVO pc = null;
 		Iterator<Object> it = portfolioAndContent.keySet().iterator();
+		Iterator<Object> tt=portfolioAndContent.keySet().iterator();
+		Object [] objtmp=new Object[portfolioAndContent.size()];
+		while(tt.hasNext()) {
+			Object o=tt.next();
+			if(o instanceof PortfolioVO) {
+				objtmp[0]=(PortfolioVO)o;
+			}
+			else if(o instanceof PortfolioContentVO) {
+				objtmp[Integer.parseInt(((PortfolioContentVO)o).getPortfolioContentOrder())]=(PortfolioContentVO)o;
+			}
+		}
 		try {
+			for(int i=0;i<objtmp.length;i++) {
+				if (objtmp[i] instanceof PortfolioVO) {
+					System.out.println("포폴 시작");
+					portfolio = this.registerPortfolio((PortfolioVO) objtmp[i], portfolioAndContent.get(objtmp[i]), rootPath);
+					result = portfolio.getPortfolioId();
+					System.out.println("포폴완료");
+				} else if (objtmp[i] instanceof PortfolioContentVO) {
+					System.out.println("포컨시작");
+					pc = (PortfolioContentVO) objtmp[i];
+					pc.setPortfolioId(portfolio.getPortfolioId());
+					this.registerPortfolioContent(pc, portfolioAndContent.get(objtmp[i]), rootPath);
+					System.out.println("포컨완료");
+				}
+			}
+		}
+		/*try {
 			while (it.hasNext()) {
 				Object obj = it.next();
 				System.out.println("" + obj);
 				if (obj instanceof PortfolioVO) {
+					System.out.println("포폴 시작");
 					portfolio = this.registerPortfolio((PortfolioVO) obj, portfolioAndContent.get(obj), rootPath);
 					result = portfolio.getPortfolioId();
+					System.out.println("포폴완료");
 				} else if (obj instanceof PortfolioContentVO) {
+					System.out.println("포컨시작");
 					pc = (PortfolioContentVO) obj;
 					pc.setPortfolioId(portfolio.getPortfolioId());
 					this.registerPortfolioContent(pc, portfolioAndContent.get(obj), rootPath);
+					System.out.println("포컨완료");
 				}
 			}
-		} catch (Exception e) {
+		}*/ catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -142,29 +173,31 @@ public class PologService {
 		try {
 			List<String> portfolioContentId = portfolioContentDAO.getId();
 			portfolioContent.setPortfolioContentId(this.generateId(portfolioContentId, "portfolio_content"));
+			
 			if (file != null) {
 				String attachPath = "resources/image/portfolio/";
 				String filename = file.getOriginalFilename();
 				String type = null;
-				if (file.getName().equals("portfolioFile")) {
-					type = "ppt";
+				if (file.getContentType().split("/")[0].equals("application")) {
+					type = "pptx";
 				} else {
 					type = file.getContentType().split("/")[1];
 				}
 				String savedFileName = UploadFileUtils.uploadFile2(
 						rootPath + attachPath + portfolioContent.getPortfolioId(),
 						portfolioContent.getPortfolioContentId() + "." + type, file.getBytes());
-				if (file.getName().equals("portfolioFile")) {
-
-					pdfName = UploadFileUtils.uploadPDF(rootPath + attachPath + portfolioContent.getPortfolioId() + "/",
-							portfolioContent.getPortfolioContentId() + ".ppt");// 포폴콘텐츠아이디로하면뎀
+				if (file.getContentType().split("/")[0].equals("application")) {
+					System.out.println("PDF에들옴");
+					savedFileName = UploadFileUtils.uploadPDF(rootPath + attachPath + portfolioContent.getPortfolioId() + "/",
+							portfolioContent.getPortfolioContentId() + ".pptx");// 포폴콘텐츠아이디로하면뎀
+					
 				}
 				portfolioContent
-						.setPortfolioContentValue("/" + attachPath + portfolioContent.getPortfolioId() + "/" + pdfName);
+				.setPortfolioContentValue("/" + attachPath + portfolioContent.getPortfolioId() + "/" + savedFileName);
 
 			}
 			res = portfolioContentDAO.addPortfolioContent(portfolioContent.toDTO());
-
+			System.out.println("portfolioContentValue = "+portfolioContent.getPortfolioContentValue());
 		} catch (Exception e) {
 			check = false;
 			e.printStackTrace();
@@ -257,20 +290,40 @@ public class PologService {
 		return res;
 	}
 
-	public int updatePortfolioContent(PortfolioContentVO portfolioContent, Part file) {
+	public int updatePortfolioContent(PortfolioContentVO portfolioContent, MultipartFile file,String rootPath) {
 		if (portfolioContent == null) {
 			return 0;
 		}
+		
+		System.out.println("넘어온 포폴컨텐츠 값");
+		System.out.println(portfolioContent);
 		int res = 0;
 		boolean check = true;
+		String savedFileName=null;
 		try {
-			res = portfolioContentDAO.updatePortfolioContent(portfolioContent.toDTO());
-			if (res != 0) {
-				if (file != null) {
-					UploadFileUtils.uploadFile("C:\\teamwith\\image\\portfolio\\" + portfolioContent.getPortfolioId(),
-							portfolioContent.getPortfolioContentId(), file);
+			
+			if (file != null&&file.getSize()!=0) {
+				String attachPath = "resources/image/portfolio/";
+				String filename = file.getOriginalFilename();
+				String type = null;
+				if (file.getContentType().split("/")[0].equals("application")) {
+					type = "pptx";
+				} else {
+					type = file.getContentType().split("/")[1];
 				}
+				savedFileName = UploadFileUtils.uploadFile2(
+						rootPath + attachPath + portfolioContent.getPortfolioId(),
+						portfolioContent.getPortfolioContentId() + "." + type, file.getBytes());
+				
+				if (file.getContentType().split("/")[0].equals("application")&&file.getSize()!=0) {
+					System.out.println("PDF에들옴");
+					savedFileName = UploadFileUtils.uploadPDF(rootPath + attachPath + portfolioContent.getPortfolioId() + "/",
+							portfolioContent.getPortfolioContentId() + ".pptx");// 포폴콘텐츠아이디로하면뎀
+				}
+				portfolioContent
+				.setPortfolioContentValue("/" + attachPath + portfolioContent.getPortfolioId() + "/" + savedFileName);
 			}
+			res = portfolioContentDAO.updatePortfolioContent(portfolioContent.toDTO());
 		} catch (Exception e) {
 			e.printStackTrace();
 			check = false;
@@ -278,23 +331,27 @@ public class PologService {
 			if (!check)
 				return 0;
 		}
+		System.out.println("포폴콘텐츠 수정 결과  -  "+portfolioContent);
 		return res;
 	}
 
-	public int updatePortfolio(PortfolioVO portfolio, Part file) {
+	public int updatePortfolio(PortfolioVO portfolio, MultipartFile file,String rootPath) {
 		if (portfolio == null) {
 			return 0;
 		}
 		int res = 0;
 		boolean check = true;
 		try {
-			res = portfolioDAO.updatePortfolio(portfolio.toDTO());
-			if (res != 0) {
 				if (file != null) {
-					UploadFileUtils.uploadFile("C:\\teamwith\\image\\portfolio\\" + portfolio.getPortfolioId(),
-							portfolio.getPortfolioId(), file);
+					String attachPath = "resources/image/portfolio/";
+					String filename = file.getOriginalFilename();
+					String type = file.getContentType().split("/")[1];
+					String newFileName = UploadFileUtils.uploadFile2(rootPath + attachPath + portfolio.getPortfolioId(),
+							portfolio.getPortfolioId() + "." + type, file.getBytes());
+					portfolio.setPortfolioPic("/" + attachPath + portfolio.getPortfolioId() + "/" + newFileName);
+					
 				}
-			}
+				res = portfolioDAO.updatePortfolio(portfolio.toDTO());
 		} catch (Exception e) {
 			e.printStackTrace();
 			check = false;
@@ -355,12 +412,16 @@ public class PologService {
 
 	public int removePortfolioContent(String portfolioContentId) {
 		if (portfolioContentId == null || portfolioContentId.isEmpty()) {
+			System.out.println("$$@@@@@@@@@@@@@@@리무브");
+			System.out.println("$$@@@@@@@@@@@@@@@리무브 아이디:"+portfolioContentId);
 			return 0;
 		}
+		System.out.println("$$@@@@@@@@@@@@@@@리무브 아이디:"+portfolioContentId);
 		int res = 0;
 		boolean check = true;
 		try {
-			res = portfolioContentDAO.removePortfolioContentByPortfolioId(portfolioContentId);
+			res = portfolioContentDAO.removePortfolioContentByPortfolioContentId(portfolioContentId);
+			System.out.println("$$@@@@@@@@@@@@@@@리무브 됨?");
 		} catch (Exception e) {
 			e.printStackTrace();
 			check = false;
@@ -368,6 +429,7 @@ public class PologService {
 			if (!check)
 				return 0;
 		}
+		System.out.println("$$@@@@@@@@@@@@@@@리무브결과"+res);
 		return res;
 	}
 

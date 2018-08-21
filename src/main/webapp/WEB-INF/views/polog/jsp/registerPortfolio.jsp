@@ -508,7 +508,6 @@ font-size:50%;
 	</form>
 <div id="layout1" style="display:none">
 <jsp:include page="portfolioContentLayout1.jsp"/>
-<input type="file" name="portfolioFile" value="split">
 <button type="button" class="btn btn-warning" id="deleteBtn" >삭제</button>
 <input type="hidden" name="layoutId" value="layout-1"/>
 </div>

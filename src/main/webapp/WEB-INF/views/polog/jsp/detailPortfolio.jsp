@@ -197,6 +197,11 @@ font-size:80%;margin-left:11%;margin-top:2%
 	bottom:5%;
 	right:12%;
 }
+.portfolioModifyBtn{
+	position:fixed;
+	top:5%;
+	right:5%;
+}
 .pic_box{
 width:80%;
  height:73%;
@@ -270,13 +275,16 @@ background-color: #ffddc9;
     <i class="btn_prev material-icons">arrow_left</i>
     <i class="btn_next material-icons">arrow_right</i>	
 	<form action="/polog/${portfolio.memberId }">
-		<button type="submit" class="btn portfolioExitBtn">돌아가기</button>
+		<button type="submit" class="btn portfolioExitBtn btn-warning">돌아가기</button>
 	</form>
 	<!-- controller에 지우고 여긴 memberSimpleVO 바꾸기 테스트용임-->
 	<c:if test="${portfolio.memberId eq sessionScope.memberSimpleVO.memberId }">
 	<form action="/portfolio/remove/${portfolio.portfolioId}" method="post">
 		<input type="hidden" name="memberId" value="${portfolio.memberId }">
-		<button type="submit" class="btn portfolioRemoveBtn">삭제하기</button>
+		<button type="submit" class="btn portfolioRemoveBtn btn-warning">삭제하기</button>
+	</form>
+	<form action="/portfolio/edit/${portfolio.portfolioId }" method="get">
+		<button type="submit" class="btn portfolioModifyBtn btn-warning">수정하기</button>
 	</form>
 	</c:if>
     

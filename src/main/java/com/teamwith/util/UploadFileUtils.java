@@ -35,7 +35,6 @@ public class UploadFileUtils {
 		XMLSlideShow ppt=new XMLSlideShow(fis);
 		fis.close();
 		Dimension pgsize=ppt.getPageSize();
-		
 		XSLFSlide[] slide=ppt.getSlides();
 		BufferedImage images=null;
 		for(int i=0;i<slide.length;i++) {
@@ -59,7 +58,7 @@ public class UploadFileUtils {
 			FileOutputStream out=new FileOutputStream(newFile+"\\tempImage-"+i+".png");
 			ImageIO.write(images, "png", out);
 		}
-		File pptFile=new File(filePath+fileName+".ppt");
+		File pptFile=new File(filePath+fileName+".pptx");
 		pptFile.delete();
 		Document document=new Document();
 		File dir=new File(filePath);
