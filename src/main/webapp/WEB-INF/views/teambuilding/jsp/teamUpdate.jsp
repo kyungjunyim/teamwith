@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>팀 등록하기</title>
+<title>팀 수정하기</title>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/teambuilding/css/frame.css">
 <link rel="stylesheet" href="/resources/teambuilding/css/teamRegister.css">

@@ -15,8 +15,10 @@
 					팀 수정 </label>
 			</div>
 			<hr class="team_regist_hr">
-			<form id="updateForm" action="update" method="post"
-				class="team_regist_whole" enctype="multipart/form-data">
+			<form id="updateForm"
+				action="/teamInfo/edit/${fn:substringAfter(teamInfo.teamId, 'team-') }"
+				method="post" class="team_regist_whole"
+				enctype="multipart/form-data">
 				<div class="row team_regist_row">
 					<div class="col-xs-6 team_regist_form_col team_regist_form_text">프로젝트
 						제목</div>
@@ -185,6 +187,7 @@
 				<input name="faqQuestions" type="text"
 					class="form-control team_regist_form_inputbox"
 					<c:if test="${fn:length(faqList) ge 1}">value="${faqList[0].faqQuestion }"</c:if>>
+				<input type="hidden" name="faqIds" value="${faqList[0].faqId }">
 			</div>
 		</div>
 		<div class="row team_regist_row">
@@ -199,7 +202,60 @@
 			</div>
 		</div>
 	</div>
-	<div id="addFaq"></div>
+	<div id="addFaq">
+		<c:if test="${fn:length(faqList) ge 2 }">
+			<div>
+				<hr class="team_regist_hr">
+				<div class="row team_regist_row">
+					<div class="col-xs-6 team_regist_form_col team_regist_form_text">FAQ
+						Question</div>
+					<div class="col-xs-6 team_regist_form_col  team_regist_form_input">
+						<input name="faqQuestions" type="text"
+							class="form-control team_regist_form_inputbox"
+							<c:if test="${fn:length(faqList) ge 2}">value="${faqList[1].faqQuestion }"</c:if>>
+						<input type="hidden" name="faqIds" value="${faqList[1].faqId }">
+					</div>
+				</div>
+				<div class="row team_regist_row">
+					<div class="col-xs-6 team_regist_form_col team_regist_form_text">FAQ
+						Answer</div>
+					<div class="col-xs-6 team_regist_form_col  team_regist_form_input">
+						<input name="faqAnswers" type="text"
+							class="form-control team_regist_form_inputbox"
+							<c:if test="${fn:length(faqList) ge 2}">value="${faqList[1].faqAnswer }"</c:if>>
+						<button type="button" class="btn btn-md team_regist_btn_color"
+							id="btn_remove_faq" onclick="remove_faq(this)">삭제하기</button>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		<c:if test="${fn:length(faqList) ge 3 }">
+			<div>
+				<hr class="team_regist_hr">
+				<div class="row team_regist_row">
+					<div class="col-xs-6 team_regist_form_col team_regist_form_text">FAQ
+						Question</div>
+					<div class="col-xs-6 team_regist_form_col  team_regist_form_input">
+						<input name="faqQuestions" type="text"
+							class="form-control team_regist_form_inputbox"
+							<c:if test="${fn:length(faqList) ge 3}">value="${faqList[2].faqQuestion }"</c:if>>
+						<input type="hidden" name="faqIds" value="${faqList[2].faqId }">
+					</div>
+				</div>
+				<div class="row team_regist_row">
+					<div class="col-xs-6 team_regist_form_col team_regist_form_text">FAQ
+						Answer</div>
+					<div class="col-xs-6 team_regist_form_col  team_regist_form_input">
+						<input name="faqAnswers" type="text"
+							class="form-control team_regist_form_inputbox"
+							<c:if test="${fn:length(faqList) ge 3}">value="${faqList[2].faqAnswer }"</c:if>>
+						<button type="button" class="btn btn-md team_regist_btn_color"
+							id="btn_remove_faq" onclick="remove_faq(this)">삭제하기</button>
+					</div>
+				</div>
+			</div>
+		</c:if>
+	</div>
 	<div class="row team_regist_row">
 		<div class="col-xs-6 team_regist_form_col team_regist_form_text"></div>
 		<div class="col-xs-6 team_regist_form_col">
@@ -221,7 +277,40 @@
 			</div>
 		</div>
 	</div>
-	<div id="addInterview"></div>
+	<div id="addInterview">
+		<c:if test="${fn:length(interviewList) ge 2 }">
+			<div>
+				<hr class="team_regist_hr">
+				<div class="row team_regist_row">
+			<div class="col-xs-6 team_regist_form_col team_regist_form_text">간단
+				면접 질문</div>
+			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+				<input name="interviewQuestionContents" type="text"
+					class="form-control team_regist_form_inputbox"
+					<c:if test="${fn:length(interviewList) ge 2}">value="${interviewList[1].interviewQuestionContent }"</c:if>>
+				<button type="button" class="btn btn-md team_regist_btn_color"
+					id="btn_remove_interview" onclick="remove_interview(this)">삭제하기</button>
+			</div>
+		</div>
+			</div>		
+		</c:if>
+		<c:if test="${fn:length(interviewList) ge 3 }">
+			<div>
+				<hr class="team_regist_hr">
+				<div class="row team_regist_row">
+			<div class="col-xs-6 team_regist_form_col team_regist_form_text">간단
+				면접 질문</div>
+			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+				<input name="interviewQuestionContents" type="text"
+					class="form-control team_regist_form_inputbox"
+					<c:if test="${fn:length(interviewList) ge 3}">value="${interviewList[2].interviewQuestionContent }"</c:if>>
+				<button type="button" class="btn btn-md team_regist_btn_color"
+					id="btn_remove_interview" onclick="remove_interview(this)">삭제하기</button>
+			</div>
+		</div>
+			</div>		
+		</c:if>
+	</div>
 	<div class="row team_regist_row">
 		<div class="col-xs-6 team_regist_form_col team_regist_form_text"></div>
 		<div class="col-xs-6 team_regist_form_col">
@@ -282,7 +371,9 @@
 			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
 				<input name="recruitPeopleNum" type="number"
 					<c:if test="${fn:length(recruitList) ge 1}">value="${recruitList[0].recruitPeopleNum }"</c:if>
-					class="form-control team_regist_form_inputbox">
+					class="form-control team_regist_form_inputbox"> <input
+					name="recruitIds" type="hidden"
+					value="${recruitList[0].recruitId }">
 			</div>
 		</div>
 		<div class="row team_regist_row">
@@ -313,7 +404,8 @@
 						</c:if>
 						<div class="col" style="margin-left: 20px;">
 							<input type="checkbox" class="form-check-input modal_check_box"
-								name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+								name="skill1" id="${skills.key }" value="${skills.value }"
+								<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 						</div>
 						<c:if test="${status.index % 3 == 2 }">
 				</div>
@@ -342,7 +434,8 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -371,7 +464,8 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -400,7 +494,8 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -496,7 +591,9 @@
 			인원</div>
 		<div class="col-xs-6 team_regist_form_col team_regist_form_input">
 			<input name="recruitPeopleNum" type="number"
-				class="form-control team_regist_form_inputbox" value="${recruitList[1].recruitPeopleNum }">
+				class="form-control team_regist_form_inputbox"
+				value="${recruitList[1].recruitPeopleNum }"> <input
+				name="recruitIds" type="hidden" value="${recruitList[1].recruitId }">
 		</div>
 	</div>
 	<div class="row team_regist_row">
@@ -525,7 +622,8 @@
 						</c:if>
 						<div class="col" style="margin-left: 20px;">
 							<input type="checkbox" class="form-check-input modal_check_box"
-								name="skill2" id="${skills.key }" value="${skills.value }">${skills.value }
+								name="skill2" id="${skills.key }" value="${skills.value }"
+								<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 						</div>
 						<c:if test="${status.index % 3 == 2 }">
 				</div>
@@ -554,7 +652,8 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill2" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill2" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -583,7 +682,8 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill2" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill2" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -612,7 +712,8 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill2" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill2" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -642,7 +743,7 @@
 		<div class="col-xs-6 team_regist_form_col team_regist_form_input">
 			<input name="recruitPreferences" type="text"
 				class="form-control team_regist_form_inputbox"
-				<c:if test="${fn:length(recruitList) ge 1}">value="${recruitList[0].recruitPreference }"</c:if>>
+				<c:if test="${fn:length(recruitList) ge 1}">value="${recruitList[1].recruitPreference }"</c:if>>
 		</div>
 	</div>
 	<div class="row team_regist_row">
@@ -651,13 +752,230 @@
 		<div class="col-xs-6 team_regist_form_col team_regist_form_input">
 			<textarea name="recruitExplains"
 				class="form-control team_regist_form_inputbox" style="resize: none"><c:if
-					test="${fn:length(recruitList) ge 1}">${recruitList[0].recruitExplain} </c:if></textarea>
+					test="${fn:length(recruitList) ge 1}">${recruitList[1].recruitExplain} </c:if></textarea>
 			<button type="button" class="btn btn-md team_regist_btn_color"
 				id="btn_remove_role" onclick="remove_item(this)">삭제하기</button>
 		</div>
 	</div>
+	</div>
+	</c:if>
+	<c:if test="${fn:length(recruitList) ge 3 }">
+		<div name="recruitDIV" class="skill0">
+			<div class="row team_regist_row">
+				<div class="col-xs-6 team_regist_form_col team_regist_form_text">모집
+					분야</div>
+				<div class="col-xs-6 team_regist_form_col">
+					<button type="button" class="btn btn-md team_regist_btn_color"
+						data-toggle="modal" data-target="#recruitCategoryModal3">모집
+						분야 선택</button>
+				</div>
+			</div>
+			<div name="recruitCategoryModal"
+				class=" modal team_regist_modal_font" id="recruitCategoryModal3">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header team_regist_modal_title">모집 분야 선택</div>
+						<!-- Modal body -->
+						<div class="modal-body">
+							<c:forEach items="${applicationScope.roleList }" var="role"
+								varStatus="i">
+								<c:if test="${(i.index mod 2) eq 0}">
+									<div class="row">
+								</c:if>
+								<div class="col team_regist_modal_element">
+									<input class="form-check-input" type="radio" name="role3"
+										value="${role.key }"
+										<c:if test="${recruitList[2].roleId eq role.key}">checked="checked"</c:if>>${role.value }
+								</div>
+								<c:if test="${(i.index mod 2) eq 1}">
+						</div>
+	</c:if>
+	</c:forEach>
+	<div class="row">
+		<button type="button"
+			class="btn btn-mid team_regist_btn_color team_regist_modal_btn_position"
+			data-dismiss="modal">확인</button>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	<!-- ------------------ recruitCategoryModal1을 가져왔따!!! 위에 디브 닫는거 개수 의심할것-->
+	<div class="row team_regist_row" id="recruitPeopleNumDiv">
+		<div class="col-xs-6 team_regist_form_col team_regist_form_text">모집
+			인원</div>
+		<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+			<input name="recruitPeopleNum" type="number"
+				class="form-control team_regist_form_inputbox"
+				value="${recruitList[2].recruitPeopleNum }"> <input
+				name="recruitIds" type="hidden" value="${recruitList[3].recruitId }">
+		</div>
+	</div>
+	<div class="row team_regist_row">
+		<div class="col-xs-6 team_regist_form_col team_regist_form_text">필요
+			역량</div>
+		<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+			<button type="button" class="btn btn-md team_regist_btn_color"
+				data-toggle="modal" data-target="#skillModal3">필요 역량 선택</button>
+		</div>
+	</div>
+	<div name="selectSkill" class="modal fade bd-example-modal-sm"
+		id="skillModal3" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text_orange" id="exampleModalLongTitle">개발
+						역량</h5>
+				</div>
+				<div class="modal-body modal_text">
+					<c:forEach items="${applicationScope.developerSkillList }"
+						var="skills" varStatus="status">
+						<c:if test="${status.index % 3 == 0 }">
+							<div class="row">
+						</c:if>
+						<div class="col" style="margin-left: 20px;">
+							<input type="checkbox" class="form-check-input modal_check_box"
+								name="skill3" id="${skills.key }" value="${skills.value }"
+								<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+						</div>
+						<c:if test="${status.index % 3 == 2 }">
+				</div>
+				</c:if>
+				<c:set var="index" value="${status.index }" />
+				</c:forEach>
+				<c:if test="${index % 3 == 1 }">
+					<div class="col" style="margin-left: 20px;"></div>
+			</div>
+			</c:if>
+			<c:if test="${index % 3 == 0 }">
+				<div class="col" style="margin-left: 20px;"></div>
+				<div class="col" style="margin-left: 20px;"></div>
+		</div>
+		</c:if>
+	</div>
+	<div class="modal-header">
+		<h5 class="modal-title text_orange" id="exampleModalLongTitle">디자인
+			역량</h5>
+	</div>
+	<div class="modal-body modal_text">
+		<c:forEach items="${applicationScope.designerSkillList }" var="skills"
+			varStatus="status">
+			<c:if test="${status.index % 3 == 0 }">
+				<div class="row">
+			</c:if>
+			<div class="col" style="margin-left: 20px;">
+				<input type="checkbox" class="form-check-input modal_check_box"
+					name="skill3" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+			</div>
+			<c:if test="${status.index % 3 == 2 }">
+	</div>
+	</c:if>
+	<c:set var="index" value="${status.index }" />
+	</c:forEach>
+	<c:if test="${index % 3 == 1 }">
+		<div class="col" style="margin-left: 20px;"></div>
+		</div>
+	</c:if>
+	<c:if test="${index % 3 == 0 }">
+		<div class="col" style="margin-left: 20px;"></div>
+		<div class="col" style="margin-left: 20px;"></div>
+		</div>
 	</c:if>
 	</div>
+	<div class="modal-header">
+		<h5 class="modal-title text_orange" id="exampleModalLongTitle">기획
+			역량</h5>
+	</div>
+	<div class="modal-body modal_text">
+		<c:forEach items="${applicationScope.plannerSkillList }" var="skills"
+			varStatus="status">
+			<c:if test="${status.index % 3 == 0 }">
+				<div class="row">
+			</c:if>
+			<div class="col" style="margin-left: 20px;">
+				<input type="checkbox" class="form-check-input modal_check_box"
+					name="skill3" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+			</div>
+			<c:if test="${status.index % 3 == 2 }">
+	</div>
+	</c:if>
+	<c:set var="index" value="${status.index }" />
+	</c:forEach>
+	<c:if test="${index % 3 == 1 }">
+		<div class="col" style="margin-left: 20px;"></div>
+		</div>
+	</c:if>
+	<c:if test="${index % 3 == 0 }">
+		<div class="col" style="margin-left: 20px;"></div>
+		<div class="col" style="margin-left: 20px;"></div>
+		</div>
+	</c:if>
+	</div>
+	<div class="modal-header">
+		<h5 class="modal-title text_orange" id="exampleModalLongTitle">기타
+			역량</h5>
+	</div>
+	<div class="modal-body modal_text">
+		<c:forEach items="${applicationScope.etcSkillList }" var="skills"
+			varStatus="status">
+			<c:if test="${status.index % 3 == 0 }">
+				<div class="row">
+			</c:if>
+			<div class="col" style="margin-left: 20px;">
+				<input type="checkbox" class="form-check-input modal_check_box"
+					name="skill3" id="${skills.key }" value="${skills.value }"
+					<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+			</div>
+			<c:if test="${status.index % 3 == 2 }">
+	</div>
+	</c:if>
+	<c:set var="index" value="${status.index }" />
+	</c:forEach>
+	<c:if test="${index % 3 == 1 }">
+		<div class="col" style="margin-left: 20px;"></div>
+		</div>
+	</c:if>
+	<c:if test="${index % 3 == 0 }">
+		<div class="col" style="margin-left: 20px;"></div>
+		<div class="col" style="margin-left: 20px;"></div>
+		</div>
+	</c:if>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-md btn_color_small"
+			data-dismiss="modal">확인</button>
+	</div>
+	</div>
+	</div>
+	</div>
+	<div class="row team_regist_row">
+		<div class="col-xs-6 team_regist_form_col team_regist_form_text">우대
+			조건</div>
+		<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+			<input name="recruitPreferences" type="text"
+				class="form-control team_regist_form_inputbox"
+				<c:if test="${fn:length(recruitList) ge 2}">value="${recruitList[2].recruitPreference }"</c:if>>
+		</div>
+	</div>
+	<div class="row team_regist_row">
+		<div class="col-xs-6 team_regist_form_col team_regist_form_text">모집
+			상세 설명</div>
+		<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+			<textarea name="recruitExplains"
+				class="form-control team_regist_form_inputbox" style="resize: none"><c:if
+					test="${fn:length(recruitList) ge 2}">${recruitList[2].recruitExplain} </c:if></textarea>
+			<button type="button" class="btn btn-md team_regist_btn_color"
+				id="btn_remove_role" onclick="remove_item(this)">삭제하기</button>
+		</div>
+	</div>
+	</div>
+	</c:if>
+	</div>
+	</form>
 	<div class="row team_regist_row">
 		<div class="col-xs-6 team_regist_form_col team_regist_form_text"></div>
 		<div class="col-xs-6 team_regist_form_col">
@@ -667,18 +985,17 @@
 	</div>
 	<div class="row team_regist_row team_regist_row_btns">
 		<button type="button" class="btn btn-md team_regist_btn_cancel">취소하기</button>
-		<button id="registBtn" type="button"
-			class="btn btn-md team_regist_btn_submit">등록하기</button>
+		<button id="updateBtn" type="button"
+			class="btn btn-md team_regist_btn_submit">수정하기</button>
 	</div>
-	</form>
 	</div>
 	</div>
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 	$('document').ready(function(e) {
-		$("#registBtn").click(function(e) {
-			$('#registForm').submit();
+		$("#updateBtn").click(function(e) {
+			$('#updateForm').submit();
 		});
 	});
 	var recruitNum = 0;

@@ -96,6 +96,19 @@ public class TeamService {
 		return result;
 	}
 
+	public RequireSkillVO getRequireSkillsKyu(String recruitId) throws Exception {
+		RequireSkillVO result = new RequireSkillVO();
+		List<RequireSkillDTO> skills = requireSkillDAO.searchRequireSkillByRecruitId(recruitId);
+		List<String> convert = new ArrayList<String>();
+		for (RequireSkillDTO dto : skills) {
+			convert.add(dto.getSkillId());
+		}
+		result.setRecruitId(recruitId);
+		result.setSkillIds(convert);
+		return result;
+	}
+
+	// 이 메소드.. 뭔가 이상하오..
 	public List<RequireSkillVO> getRequireSkillsByTeamId(String teamId) throws Exception {
 		List<RequireSkillDTO> list = requireSkillDAO.searchRequireSkillByRecruitId(teamId);
 		List<RequireSkillVO> result = new ArrayList<RequireSkillVO>();
@@ -189,7 +202,7 @@ public class TeamService {
 		List<String> result = new ArrayList<String>();
 
 		List<TeamSkillDTO> list = teamSkillDAO.searchTeamDTOByRoleSkill(cri);
-		
+
 		for (TeamSkillDTO obj : list) {
 			result.add(obj.getTeamId());
 		}
@@ -205,7 +218,7 @@ public class TeamService {
 
 	public int registerFaq(List<FaqVO> faq) throws Exception {
 		int result = 0;
-		
+
 		for (FaqVO obj : faq) {
 			List<String> faqId = faqDAO.getId();
 
@@ -244,7 +257,7 @@ public class TeamService {
 		return result;
 	}
 
-	public String registerTeam(TeamDetailVO teamInfo, byte[] file,String path) throws Exception {
+	public String registerTeam(TeamDetailVO teamInfo, byte[] file, String path) throws Exception {
 		List<String> teamId = teamDAO.getId();
 		String generatedId = generateId(teamId, "team");
 
@@ -261,12 +274,12 @@ public class TeamService {
 		team.setTeamContestName(teamInfo.getTeamContestName());
 		team.setTeamContestLink(teamInfo.getTeamContestLink());
 		team.setMemberId(teamInfo.getMemberId());
-		
-		String teamPicPath = UploadFileUtils.uploadFile2(path, generatedId+".jpg", file);
-		
+
+		String teamPicPath = UploadFileUtils.uploadFile2(path, generatedId + ".jpg", file);
+
 //		team.setTeamPic(path+generatedId+".jpg");
-		team.setTeamPic("/resources/image/team/"+generatedId+".jpg");
-		
+		team.setTeamPic("/resources/image/team/" + generatedId + ".jpg");
+
 		System.out.println(team);
 		teamDAO.addTeam(team);
 
@@ -287,11 +300,16 @@ public class TeamService {
 
 	public int updateFaq(List<FaqVO> faq) throws Exception {
 		int result = 0;
-
-		for (FaqVO obj : faq) {
-			result += faqDAO.updateFaq(obj.toDTO());
+		
+		if(faq!=null&&!faq.isEmpty()) {
+			faqDAO.removeFaqByTeamId(faq.get(0).getTeamId());
+			for (FaqVO obj : faq) {
+				List<String> faqId = faqDAO.getId();
+				String generatedId = generateId(faqId, "faq");
+				obj.setFaqId(generatedId);
+				result += faqDAO.addFaq(obj.toDTO());
+			}
 		}
-
 		return result;
 	}
 
@@ -321,7 +339,7 @@ public class TeamService {
 		return registerRequireSkill(requireSkill);
 	}
 
-	public String updateTeam(TeamDetailVO teamInfo, Part file) throws Exception {
+	public String updateTeam(TeamDetailVO teamInfo, byte[] file, String path) throws Exception {
 		TeamDTO team = new TeamDTO();
 
 		team.setTeamId(teamInfo.getTeamId());
@@ -337,8 +355,10 @@ public class TeamService {
 		team.setTeamContestLink(teamInfo.getTeamContestLink());
 		team.setMemberId(teamInfo.getMemberId());
 
-		UploadFileUtils.uploadFile("c:/teamwith/image/team", teamInfo.getTeamId(), file);
-
+		if (file != null) {
+			String teamPicPath = UploadFileUtils.uploadFile2(path, team.getTeamId() + ".jpg", file);
+			team.setTeamPic("/resources/image/team/" + team.getTeamId() + ".jpg");
+		}
 		teamDAO.updateTeam(team);
 
 		return team.getTeamId();

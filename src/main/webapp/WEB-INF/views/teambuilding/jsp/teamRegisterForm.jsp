@@ -339,7 +339,7 @@
 						</c:if>
 						<div class="col" style="margin-left: 20px;">
 							<input type="checkbox" class="form-check-input modal_check_box"
-								name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+								name="skill1" id="${skills.key }" value="${skills.key }">${skills.value }
 						</div>
 						<c:if test="${status.index % 3 == 2 }">
 				</div>
@@ -368,7 +368,7 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.key }">${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -397,7 +397,7 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.key }">${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -426,7 +426,7 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }">${skills.value }
+					name="skill1" id="${skills.key }" value="${skills.key }">${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>

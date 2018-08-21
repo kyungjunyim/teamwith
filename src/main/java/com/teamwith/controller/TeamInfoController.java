@@ -31,7 +31,7 @@ import com.teamwith.vo.TeamSimpleVO;
 
 @Controller
 @RequestMapping(value = "/teamInfo")
-@MultipartConfig(maxFileSize=1024*1024*10)
+@MultipartConfig(maxFileSize = 1024 * 1024 * 10)
 public class TeamInfoController {
 	@Inject
 	private TeamService teamService;
@@ -48,15 +48,15 @@ public class TeamInfoController {
 			String[] faqQuestions, String[] faqAnswers, String[] interviewQuestionContents, String[] skill1,
 			String[] skill2, String[] skill3, String[] recruitPreferences, String[] recruitExplains,
 			String[] recruitPeopleNum, MultipartFile teamPicFile) {
-		String teamId=null;
-		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
-		String memberId=login.getMemberId();
+		String teamId = null;
+		MemberSimpleVO login = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		String memberId = login.getMemberId();
 		try {
 			teamInfo.setMemberId(memberId);
-			
-			String path=session.getServletContext().getRealPath("/")+"resources\\image\\team\\";
-			teamId = teamService.registerTeam(teamInfo,teamPicFile.getBytes(),path);
-			
+
+			String path = session.getServletContext().getRealPath("/") + "resources\\image\\team\\";
+			teamId = teamService.registerTeam(teamInfo, teamPicFile.getBytes(), path);
+
 			List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
 			for (String interview : interviewQuestionContents) {
 				InterviewVO interviewQuestion = new InterviewVO();
@@ -102,27 +102,27 @@ public class TeamInfoController {
 				}
 				recruitList.add(recruit);
 			}
-			List<String> recruitIds=teamService.registerRecruit(recruitList);
+			List<String> recruitIds = teamService.registerRecruit(recruitList);
 
-			for(int i=0;i<recruitIds.size();i++) {
-				RequireSkillVO requireSkill=new RequireSkillVO();
+			for (int i = 0; i < recruitIds.size(); i++) {
+				RequireSkillVO requireSkill = new RequireSkillVO();
 				requireSkill.setRecruitId(recruitIds.get(i));
-				List<String> skillList=new ArrayList<String>();
-				String[] skills=null;
-				switch(i) {
-					case 0:
-						skills=skill1;
-						break;
-					case 1:
-						skills=skill2;
-						break;
-					case 2:
-						skills=skill3;
-						break;
-					default:
-						break;
+				List<String> skillList = new ArrayList<String>();
+				String[] skills = null;
+				switch (i) {
+				case 0:
+					skills = skill1;
+					break;
+				case 1:
+					skills = skill2;
+					break;
+				case 2:
+					skills = skill3;
+					break;
+				default:
+					break;
 				}
-				for(String skill: skills) {
+				for (String skill : skills) {
 					skillList.add(skill);
 				}
 				requireSkill.setSkillIds(skillList);
@@ -131,7 +131,7 @@ public class TeamInfoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/teamSearch/"+teamId.substring(5);
+		return "redirect:/teamSearch/" + teamId.substring(5);
 	}
 
 	@RequestMapping(value = "/applicant/{teamId}", method = RequestMethod.GET)
@@ -160,28 +160,131 @@ public class TeamInfoController {
 
 		return "teambuilding/jsp/myApplicant";
 	}
-	@RequestMapping(value="/edit/{teamId}",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/edit/{teamId}", method = RequestMethod.GET)
 	public String updateTeamView(@PathVariable("teamId") String teamId, Model model) {
 		String key = "team-" + teamId;
-		
+
 		try {
-			TeamDetailVO teamInfo=teamService.getTeamInfo(key);
-			model.addAttribute("teamInfo",teamInfo);
-			List<FaqVO> faqList=teamService.getFaq(key);
-			model.addAttribute("faqList",faqList);
-			List<InterviewQuestionDTO> interviewList=applicationService.getInterviewQuestion(key);
-			model.addAttribute("interviewList",interviewList);
-			List<RecruitVO> recruitList=teamService.getRecruitInfo(key);
-			System.out.println(recruitList.get(0));
-			model.addAttribute("recruitList",recruitList);
-			System.out.println(recruitList);
+			TeamDetailVO teamInfo = teamService.getTeamInfo(key);
+			model.addAttribute("teamInfo", teamInfo);
+			List<FaqVO> faqList = teamService.getFaq(key);
+			model.addAttribute("faqList", faqList);
+			List<InterviewQuestionDTO> interviewList = applicationService.getInterviewQuestion(key);
+			model.addAttribute("interviewList", interviewList);
+			List<RecruitVO> recruitList = teamService.getRecruitInfo(key);
+			model.addAttribute("recruitList", recruitList);
+			List<RequireSkillVO> requireSkillList = new ArrayList<RequireSkillVO>();
+
+			for (RecruitVO recruitVO : recruitList) {
+				String recruitId = recruitVO.getRecruitId();
+				RequireSkillVO requireSkillVO = teamService.getRequireSkillsKyu(recruitId);
+				requireSkillList.add(requireSkillVO);
+			}
+			model.addAttribute("requireSkillList", requireSkillList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "teambuilding/jsp/teamUpdate";
+	}
+	
+	@RequestMapping(value = "/edit/{teamId}", method = RequestMethod.POST)
+	public String updateTeam(HttpSession session, @PathVariable("teamId") String teamId, TeamDetailVO teamInfo,
+			String role1, String role2, String role3, String[] faqQuestions, String[] faqAnswers,
+			String[] interviewQuestionContents, String[] skill1, String[] skill2, String[] skill3,
+			String[] recruitPreferences, String[] recruitExplains, String[] recruitPeopleNum,String[] faqIds,String[] recruitIds,
+			MultipartFile teamPicFile) {
+		String key = "team-" + teamId;
+		System.out.println(teamInfo);
+		String path = session.getServletContext().getRealPath("/") + "resources\\image\\team\\";
+		try {
+			teamInfo.setTeamId(key);
+			teamService.updateTeam(teamInfo, teamPicFile.getBytes(), path);
+			List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
+			for (String interview : interviewQuestionContents) {
+				InterviewVO interviewQuestion = new InterviewVO();
+				interviewQuestion.setInterviewQuestionContent(interview);
+				interviewQuestion.setTeamId(key);
+				interviewList.add(interviewQuestion);
+			}			
+			//인터뷰 수정 ? (삭제후 추가인가..?)
+			
+			List<FaqVO> faqList = new ArrayList<FaqVO>();
+			for (int i = 0; i < faqQuestions.length; i++) {
+				System.out.println(faqQuestions[i]);
+				FaqVO faq = new FaqVO();
+				faq.setFaqQuestion(faqQuestions[i]);
+				faq.setFaqAnswer(faqAnswers[i]);
+				faq.setTeamId(key);
+				faq.setFaqId(faqIds[i]);
+				faqList.add(faq);
+			}
+			teamService.updateFaq(faqList);
+			
+			List<RecruitVO> recruitList=new ArrayList<RecruitVO>();
+			
+			for (int i = 0; i < recruitPeopleNum.length; i++) {
+				RecruitVO recruit = new RecruitVO();
+				recruit.setRecruitPreference(recruitPreferences[i]);
+				recruit.setRecruitExplain(recruitExplains[i]);
+				recruit.setRecruitPeopleNum(recruitPeopleNum[i]);
+				recruit.setRecruitId(recruitIds[i]);
+				recruit.setTeamId(key);
+				String role = null;
+				switch (i) {
+				case 0:
+					role = role1;
+					break;
+				case 1:
+					role = role2;
+					break;
+				case 2:
+					role = role3;
+					break;
+				default:
+					break;
+				}
+				if (role != null) {
+					recruit.setRoleId(role);
+				}
+				recruitList.add(recruit);
+			}
+			List<String> recruitIdList = teamService.updateRecruit(recruitList);
+			for (int i = 0; i < recruitIdList.size(); i++) {
+				RequireSkillVO requireSkill = new RequireSkillVO ();
+				requireSkill.setRecruitId(recruitIdList.get(i));
+				List<String> skillList = new ArrayList<String>();
+				String[] skills = null;
+				switch (i) {
+				case 0:
+					skills = skill1;
+					break;
+				case 1:
+					skills = skill2;
+					break;
+				case 2:
+					skills = skill3;
+					break;
+				default:
+					break;
+				}
+				for (String skill : skills) {
+					skillList.add(skill);
+				}
+				requireSkill.setSkillIds(skillList);
+				teamService.updateRequireSkill(requireSkill);
+			}
+			
+			
+			
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return "teambuilding/jsp/teamUpdate";
+
+		return "redirect:/teamSearch/" + teamId;
 	}
-	
-	
+
 }
