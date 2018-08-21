@@ -315,12 +315,18 @@ public class TeamService {
 
 	public List<String> updateRecruit(List<RecruitVO> recruit) throws Exception {
 		List<String> result = new ArrayList<String>();
-
-		for (RecruitVO obj : recruit) {
-			recruitDAO.updateRecruit(obj.toDTO());
-			result.add(obj.getRecruitId());
+		
+		if(recruit!=null&&!recruit.isEmpty()) {
+			String teamId=recruit.get(0).getTeamId();
+			recruitDAO.removeRecruitByTeamId(teamId);
+			for (RecruitVO obj : recruit) {
+				String generatedId = generateId(recruitDAO.getId(), "team");
+				obj.setRecruitId(generatedId);
+				System.out.println(obj.toDTO());
+				recruitDAO.addRecruit(obj.toDTO());
+				result.add(obj.getRecruitId());
+			}
 		}
-
 		return result;
 	}
 

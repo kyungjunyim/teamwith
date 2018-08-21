@@ -282,33 +282,33 @@
 			<div>
 				<hr class="team_regist_hr">
 				<div class="row team_regist_row">
-			<div class="col-xs-6 team_regist_form_col team_regist_form_text">간단
-				면접 질문</div>
-			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
-				<input name="interviewQuestionContents" type="text"
-					class="form-control team_regist_form_inputbox"
-					<c:if test="${fn:length(interviewList) ge 2}">value="${interviewList[1].interviewQuestionContent }"</c:if>>
-				<button type="button" class="btn btn-md team_regist_btn_color"
-					id="btn_remove_interview" onclick="remove_interview(this)">삭제하기</button>
+					<div class="col-xs-6 team_regist_form_col team_regist_form_text">간단
+						면접 질문</div>
+					<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+						<input name="interviewQuestionContents" type="text"
+							class="form-control team_regist_form_inputbox"
+							<c:if test="${fn:length(interviewList) ge 2}">value="${interviewList[1].interviewQuestionContent }"</c:if>>
+						<button type="button" class="btn btn-md team_regist_btn_color"
+							id="btn_remove_interview" onclick="remove_interview(this)">삭제하기</button>
+					</div>
+				</div>
 			</div>
-		</div>
-			</div>		
 		</c:if>
 		<c:if test="${fn:length(interviewList) ge 3 }">
 			<div>
 				<hr class="team_regist_hr">
 				<div class="row team_regist_row">
-			<div class="col-xs-6 team_regist_form_col team_regist_form_text">간단
-				면접 질문</div>
-			<div class="col-xs-6 team_regist_form_col team_regist_form_input">
-				<input name="interviewQuestionContents" type="text"
-					class="form-control team_regist_form_inputbox"
-					<c:if test="${fn:length(interviewList) ge 3}">value="${interviewList[2].interviewQuestionContent }"</c:if>>
-				<button type="button" class="btn btn-md team_regist_btn_color"
-					id="btn_remove_interview" onclick="remove_interview(this)">삭제하기</button>
+					<div class="col-xs-6 team_regist_form_col team_regist_form_text">간단
+						면접 질문</div>
+					<div class="col-xs-6 team_regist_form_col team_regist_form_input">
+						<input name="interviewQuestionContents" type="text"
+							class="form-control team_regist_form_inputbox"
+							<c:if test="${fn:length(interviewList) ge 3}">value="${interviewList[2].interviewQuestionContent }"</c:if>>
+						<button type="button" class="btn btn-md team_regist_btn_color"
+							id="btn_remove_interview" onclick="remove_interview(this)">삭제하기</button>
+					</div>
+				</div>
 			</div>
-		</div>
-			</div>		
 		</c:if>
 	</div>
 	<div class="row team_regist_row">
@@ -405,7 +405,9 @@
 						<div class="col" style="margin-left: 20px;">
 							<input type="checkbox" class="form-check-input modal_check_box"
 								name="skill1" id="${skills.key }" value="${skills.value }"
-								<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								<c:forEach items="${requireSkillList[0].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 						</div>
 						<c:if test="${status.index % 3 == 2 }">
 				</div>
@@ -434,8 +436,10 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								name="skill1" id="${skills.key }" value="${skills.value }"
+								<c:forEach items="${requireSkillList[0].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -464,8 +468,10 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								name="skill1" id="${skills.key }" value="${skills.value }"
+								<c:forEach items="${requireSkillList[0].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -494,8 +500,10 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill1" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[0].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								name="skill1" id="${skills.key }" value="${skills.value }"
+								<c:forEach items="${requireSkillList[0].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -623,7 +631,9 @@
 						<div class="col" style="margin-left: 20px;">
 							<input type="checkbox" class="form-check-input modal_check_box"
 								name="skill2" id="${skills.key }" value="${skills.value }"
-								<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								<c:forEach items="${requireSkillList[1].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 						</div>
 						<c:if test="${status.index % 3 == 2 }">
 				</div>
@@ -653,7 +663,9 @@
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
 					name="skill2" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+					<c:forEach items="${requireSkillList[1].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -683,7 +695,9 @@
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
 					name="skill2" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+					<c:forEach items="${requireSkillList[1].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -712,8 +726,10 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill2" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[1].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								name="skill2" id="${skills.key }" value="${skills.value }"
+								<c:forEach items="${requireSkillList[1].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -838,7 +854,9 @@
 						<div class="col" style="margin-left: 20px;">
 							<input type="checkbox" class="form-check-input modal_check_box"
 								name="skill3" id="${skills.key }" value="${skills.value }"
-								<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								<c:forEach items="${requireSkillList[2].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 						</div>
 						<c:if test="${status.index % 3 == 2 }">
 				</div>
@@ -867,8 +885,10 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill3" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								name="skill3" id="${skills.key }" value="${skills.value }"
+								<c:forEach items="${requireSkillList[2].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -897,8 +917,10 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill3" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								name="skill3" id="${skills.key }" value="${skills.value }"
+								<c:forEach items="${requireSkillList[2].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -927,8 +949,10 @@
 			</c:if>
 			<div class="col" style="margin-left: 20px;">
 				<input type="checkbox" class="form-check-input modal_check_box"
-					name="skill3" id="${skills.key }" value="${skills.value }"
-					<c:if test="${fn:contains(requireSkillList[2].skillIds,skills.key) }">checked="checked"</c:if>>${skills.value }
+								name="skill3" id="${skills.key }" value="${skills.value }"
+								<c:forEach items="${requireSkillList[2].skillIds }" var="skill">
+								<c:if test="${skill eq skills.key }">checked="checked"</c:if>
+								</c:forEach>>${skills.value }
 			</div>
 			<c:if test="${status.index % 3 == 2 }">
 	</div>
@@ -1007,9 +1031,7 @@
 			recruitNum = recruitNum + 1;
 			var div = document.createElement('div');
 			div.setAttribute("name", "recruitDIV");
-			div
-					.setAttribute("class", "skill"
-							+ $("#addRole").children().length);
+			div.setAttribute("class", "skill"+ $("#addRole").children().length);
 			div.innerHTML = '<hr class="team_regist_hr">'
 					+ '<div class="row team_regist_row">	<div class="col-xs-6 team_regist_form_col team_regist_form_text">모집 분야</div>'
 					+ '<div class="col-xs-6 team_regist_form_col"> <button type="button" class="btn btn-md team_regist_btn_color" data-toggle="modal" data-target="#recruitCategoryModal'
@@ -1037,7 +1059,7 @@
 						.attr("name", "skill2");
 				$(
 						'#addRole > div > div[name=recruitCategoryModal] input[type=radio]')
-						.attr("name", "role2");
+						.attr("name", "role2");//원본이 복사되는 순간 이름이 같은 라디오 버튼에 체크가 두개가 되면서 앞에 체크된게 사라진다.
 			} else if ($("#addRole").children().length == 2) {
 				$(
 						'#addRole > div:nth-child(2) >div[name=selectSkill] input[type=checkbox]')

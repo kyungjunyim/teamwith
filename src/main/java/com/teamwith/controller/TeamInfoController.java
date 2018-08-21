@@ -182,6 +182,11 @@ public class TeamInfoController {
 				requireSkillList.add(requireSkillVO);
 			}
 			model.addAttribute("requireSkillList", requireSkillList);
+			for(RequireSkillVO vo : requireSkillList) {
+				for(String skill : vo.getSkillIds()) {
+					System.out.println(skill);
+				}
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,7 +201,6 @@ public class TeamInfoController {
 			String[] recruitPreferences, String[] recruitExplains, String[] recruitPeopleNum,String[] faqIds,String[] recruitIds,
 			MultipartFile teamPicFile) {
 		String key = "team-" + teamId;
-		System.out.println(teamInfo);
 		String path = session.getServletContext().getRealPath("/") + "resources\\image\\team\\";
 		try {
 			teamInfo.setTeamId(key);
@@ -229,7 +233,6 @@ public class TeamInfoController {
 				recruit.setRecruitPreference(recruitPreferences[i]);
 				recruit.setRecruitExplain(recruitExplains[i]);
 				recruit.setRecruitPeopleNum(recruitPeopleNum[i]);
-				recruit.setRecruitId(recruitIds[i]);
 				recruit.setTeamId(key);
 				String role = null;
 				switch (i) {
