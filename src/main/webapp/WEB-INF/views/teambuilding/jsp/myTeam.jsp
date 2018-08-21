@@ -60,8 +60,8 @@
 												정말로 삭제하시겠습니까?<br />
 											</div>
 											<div class="modal-footer">
-												<form action="myTeam.do" method="post" id="form${myTeam.teamId }">
-													<input type="hidden" name="job" value="deleteTeam">
+												<form action="/team/remove/${fn:substringAfter(myTeam.teamId, 'team-') }" method="post" id="form${myTeam.teamId }">
+													<input type="hidden" name="where" value="myTeam">
 													<input type="hidden" name="teamId" value="${myTeam.teamId }">
 													<button type="button" class="btn btn-md btn_color_small btn_team_delete" data-dismiss="modal" value="${myTeam.teamId }">확인</button>
 													<button type="button" class="btn btn-md btn_color_small" data-dismiss="modal">취소</button>

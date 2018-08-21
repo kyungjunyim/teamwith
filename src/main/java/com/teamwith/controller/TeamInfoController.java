@@ -1,7 +1,6 @@
 //Writer : HWANG KYU JIN
 package com.teamwith.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.teamwith.dto.InterviewQuestionDTO;
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.TeamService;
 import com.teamwith.vo.ApplicantVO;
@@ -161,4 +160,28 @@ public class TeamInfoController {
 
 		return "teambuilding/jsp/myApplicant";
 	}
+	@RequestMapping(value="/edit/{teamId}",method=RequestMethod.GET)
+	public String updateTeamView(@PathVariable("teamId") String teamId, Model model) {
+		String key = "team-" + teamId;
+		
+		try {
+			TeamDetailVO teamInfo=teamService.getTeamInfo(key);
+			model.addAttribute("teamInfo",teamInfo);
+			List<FaqVO> faqList=teamService.getFaq(key);
+			model.addAttribute("faqList",faqList);
+			List<InterviewQuestionDTO> interviewList=applicationService.getInterviewQuestion(key);
+			model.addAttribute("interviewList",interviewList);
+			List<RecruitVO> recruitList=teamService.getRecruitInfo(key);
+			System.out.println(recruitList.get(0));
+			model.addAttribute("recruitList",recruitList);
+			System.out.println(recruitList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "teambuilding/jsp/teamUpdate";
+	}
+	
+	
 }

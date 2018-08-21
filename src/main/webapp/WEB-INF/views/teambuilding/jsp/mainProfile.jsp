@@ -37,7 +37,7 @@
 				<button type="submit" id="my_application" class="btn btn-md btn_profile" onclick="location = '/application/myApplication'">${myApplicationCnt }</button>
 		</div>
 		<div class="col-xs-4 profile_col">
-			<form action="myTeam.do" method="post">
+			<form action="/team/myTeam" method="get">
 				<input type="hidden" name="job" value="myTeam">
 				<input type="hidden" name="memberId" value="${sessionScope.memberSimpleVO.memberId }">
 				<button type="submit" class="btn btn-md btn_profile">

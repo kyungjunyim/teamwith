@@ -4,6 +4,7 @@ package com.teamwith.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -26,19 +27,20 @@ public class TeamController {
 	private TeamService teamService;
 	
 	@RequestMapping(value="/remove/{teamId}",method=RequestMethod.GET)
-	public String removeTeam(HttpSession session,@PathVariable("teamId") String teamId ) {
+	public String removeTeam(HttpSession session,@PathVariable("teamId") String teamId,String where) {
 		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
-		//�꼫媛� ���옣�씠�땲? 瑜� 寃��궗�빐�빞�븳�떎. �뙆�씪誘명꽣濡� ���옣 �븘�씠�뵒瑜� �꽆寃⑥＜硫� 醫뗪쿋�떎.
+		
 		teamId="team-"+teamId;
 		try {
 			teamService.removeTeam(teamId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		if(where!=null&&where.equals("myTeam")) {
+			return "redirect:/team/myTeam";
+		}
 		return "redirect:/";
 	}
-	
 	@RequestMapping(value="/close/{teamId}",method=RequestMethod.GET)
 	public String closeTeam(@PathVariable("teamId") String teamId,RedirectAttributes rttr) {
 		String key="team-"+teamId;
@@ -48,7 +50,7 @@ public class TeamController {
 			e.printStackTrace();
 			rttr.addFlashAttribute("msg","error");
 		}
-		return "redirect:teamSearch/"+teamId;
+		return "redirect:/teamSearch/"+teamId;
 	}
 	
 	@RequestMapping(value="/myTeam",method=RequestMethod.GET)
