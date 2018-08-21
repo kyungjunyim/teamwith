@@ -155,7 +155,7 @@ text-decoration:none;
 </style>
 
 </head>
-<body>
+<body id="pBody">
 
 	<!-- Wrapper -->
 	<div id="wrapper">
@@ -190,5 +190,12 @@ text-decoration:none;
 
 
 </body>
-
+<script>
+	$(document).ready(function() {
+					console.log(document.getElementById('pBody').style.background = "${pologVO.pologBgColor}");
+						var str = '${pologVO.pologBgPic}';
+						console.log(str);
+						console.log(document.getElementById('pBody').style.backgroundImage = "url('${pologVO.pologBgPic}')");
+					})
+</script>
 </html>

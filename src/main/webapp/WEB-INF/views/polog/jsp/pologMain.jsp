@@ -30,6 +30,9 @@
 
 
 <style type="text/css">
+#pbody {
+	background-image: url('\resources\image\polog\jo.png')
+}
 </style>
 </head>
 <body id="pBody">
@@ -70,9 +73,13 @@
 
 </body>
 <script>
+document.getElementById('pBody').style.background = "${pologVO.pologBgColor}";
 	$(document).ready(function() {
-		console.log(document.getElementById('pBody').style.background="${pologVO.pologBgColor}");
-	})
+					console.log();
+						var str = '${pologVO.pologBgPic}';
+						console.log(str);
+						console.log(document.getElementById('pBody').style.backgroundImage = "url('${pologVO.pologBgPic}')");
+					})
 </script>
 
 </html>

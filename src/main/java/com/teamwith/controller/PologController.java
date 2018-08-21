@@ -35,8 +35,8 @@ public class PologController {
 	public String pologEditView(@PathVariable(value = "memId") String memberId, Model model) {
 		model.addAttribute("pologVO", pologService.getPologInfo(memberId));
 		if (memberId != null) {
-			logger.info(pologService.getPologInfo(memberId).getPologIntro());
-		}else {
+			// logger.info(pologService.getPologInfo(memberId).getPologIntro());
+		} else {
 			logger.info("mem null^^");
 		}
 		return jspPath + "pologEdit";
@@ -47,7 +47,7 @@ public class PologController {
 			Model model, HttpSession session) {
 		logger.info(vo.getPologTitle() + vo.getPologIntro() + vo.getPologBgColor());
 		String rootPath = session.getServletContext().getRealPath("/");
-		String attachPath = "resources\\image\\polog\\" + memId;
+		String attachPath = "resources\\\\image\\\\polog\\\\" + memId;
 		String filename = pologBgPicFile.getOriginalFilename();
 		String newFilename = null;
 		try {
@@ -58,20 +58,21 @@ public class PologController {
 		logger.info(newFilename);
 		vo.setPologBgPic(newFilename);
 		pologService.updatePolog(vo);
-		return jspPath + "pologMain";
+		return "redirect:/polog/" + memId;
 	}
 
 	private String uploadFile(String uploadPath, String attachPath, String originalName, byte[] fileData)
 			throws Exception {
 		String newFilename = attachPath + getNewFilename(originalName);
-
+		String[] str = attachPath.split("\\\\");
+		String memId = str[str.length-1];
 		File dir = new File(uploadPath);
 		if (!dir.exists()) {
 			dir.mkdirs(); // 존재하지 않는 모든 폴더 생성
 		}
 		File target = new File(uploadPath, newFilename);
 		FileCopyUtils.copy(fileData, target);
-		return "\\" + newFilename;
+		return "/resources/image/polog/" + memId + getNewFilename(originalName);
 	}
 
 	private String getNewFilename(String filename) {
