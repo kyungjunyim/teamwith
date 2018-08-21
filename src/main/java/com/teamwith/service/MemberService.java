@@ -41,6 +41,8 @@ public class MemberService {
 	private MemberService() {
 	}
 
+	
+	
 	public MainProfileVO getMainProfile(String memberId) throws Exception {
 		MainProfileVO result = mainProfileDAO.searchMainProfile(memberId);
 		return result;

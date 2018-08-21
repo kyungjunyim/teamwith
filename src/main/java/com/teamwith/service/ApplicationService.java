@@ -126,13 +126,12 @@ public class ApplicationService {
 
 	public String applyTeam(ApplicationVO application) {
 		ApplicationDTO applicationDTO = null;
-		int result = 0;
 		String id=null;
 		try {
 			applicationDTO = application.toDTO();
 			id = generateId(applicationDAO.getApplicationId(), "application");
 			applicationDTO.setApplicationId(id);
-			result = applicationDAO.addApplication(applicationDTO);
+			applicationDAO.addApplication(applicationDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 			id=null;

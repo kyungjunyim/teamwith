@@ -30,9 +30,9 @@
 		INSERT INTO
 		member_tb(member_id, member_name,
 		member_password, member_email,
-		member_birth, member_phone,
+		member_birth, member_phone, member_pic,
 		member_public,member_register_date, member_auth)
-		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},0,SYSDATE,0)
+		VALUES(#{memberId},#{memberName},ENCRYPTION_AES.ENC_AES(#{memberPassword}),#{memberEmail},#{memberBirth},#{memberPhone},#{memberPic},0,SYSDATE,0)
 	</insert>
 
 	<insert id="addAdminMember" parameterType="MemberDTO">
