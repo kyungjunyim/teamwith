@@ -38,11 +38,9 @@ public class MemberService {
 	@Inject
 	private MemberSkillDAO memberSkillDAO;
 
-	private MemberService() {
+	public MemberService() {
 	}
 
-	
-	
 	public MainProfileVO getMainProfile(String memberId) throws Exception {
 		MainProfileVO result = mainProfileDAO.searchMainProfile(memberId);
 		return result;
@@ -186,13 +184,15 @@ public class MemberService {
 		if (memberProjectCategory == null) {
 			return -1;
 		}
-		int result = memberProjectCategoryDAO
-				.removeMemberProjectCategoryByMemberId(memberProjectCategory.getMemberId());
+		if (memberProjectCategory != null) {
+			int result = memberProjectCategoryDAO
+					.removeMemberProjectCategoryByMemberId(memberProjectCategory.getMemberId());
 
-		for (MemberProjectCategoryDTO m : memberProjectCategory.toDTO()) {
-			memberProjectCategoryDAO.addMemberProjectCategory(m);
+			for (MemberProjectCategoryDTO m : memberProjectCategory.toDTO()) {
+				memberProjectCategoryDAO.addMemberProjectCategory(m);
+			}
 		}
-		return result;
+		return 0;
 	}
 
 	public int removeMemberSkill(String memberId) throws Exception {
@@ -220,7 +220,7 @@ public class MemberService {
 		if (praise == null || praise.isEmpty()) {
 			return -1;
 		}
-		
+
 		int result = memberPraiseDAO.removeMemberPraise(praise.get(0).toDTO());
 		for (MemberPraiseVO m : praise) {
 			result = memberPraiseDAO.addMemberPraise(m.toDTO());
@@ -231,7 +231,7 @@ public class MemberService {
 
 		return result;
 	}
-	
+
 	public void removeMemberPraise(String actor, String target) throws Exception {
 		memberPraiseDAO.removeMemberPraise(new MemberPraiseDTO(actor, target, null));
 	}

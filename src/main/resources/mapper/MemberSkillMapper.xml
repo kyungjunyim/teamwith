@@ -11,7 +11,7 @@
 	<insert id="addMemberSkill" parameterType="MemberSkillDTO">
 		INSERT INTO
 		member_skill_tb
-		VALUES(#{memberId},#{skillId},1)
+		VALUES(#{memberId},#{skillId})
 	</insert>
 
 	<delete id="reomveMemberSkill" parameterType="MemberSkillDTO">

@@ -67,32 +67,47 @@ public class ApplicationController {
 
 		return "redirect:/teamInfo/applicant/" + teamId;
 	}
-	
-	@RequestMapping(value="/apply/{teamId}", method=RequestMethod.POST)
-	public String apply(@PathVariable("teamId") String teamId, HttpSession session, String[] interviewAnswer, String[] interviewQuestionId, String applicationFreewriting, String roleId) {
+
+	@RequestMapping(value = "/apply/{teamId}", method = RequestMethod.POST)
+	public String apply(@PathVariable("teamId") String teamId, HttpSession session, String[] interviewAnswer,
+			String[] interviewQuestionId, String applicationFreewriting, String roleId) {
 		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		teamId = "team-" + teamId;
-		
+
 		ApplicationVO applicationVO = new ApplicationVO();
 		applicationVO.setMemberId(memberSimpleVO.getMemberId());
 		applicationVO.setApplicationStatus("0");
 		applicationVO.setApplicationFreewriting(applicationFreewriting);
 		applicationVO.setTeamId(teamId);
 		applicationVO.setRoleId(roleId);
-		String applicationId = applicationService.applyTeam(applicationVO);
-		
+
 		List<InterviewVO> interviewAnswerList = new ArrayList<InterviewVO>();
-		for(int i = 0; i < interviewAnswer.length; i++) {
-			InterviewVO interviewVO = new InterviewVO();
-			interviewVO.setTeamId(teamId);
-			interviewVO.setInterviewAnswerContent(interviewAnswer[i]);
-			interviewVO.setApplicationId(applicationId);
-			interviewVO.setInterviewQuestionId(interviewQuestionId[i]);
-			interviewAnswerList.add(interviewVO);
+		if (interviewAnswer != null) {
+			for (int i = 0; i < interviewAnswer.length; i++) {
+				InterviewVO interviewVO = new InterviewVO();
+				interviewVO.setTeamId(teamId);
+				interviewVO.setInterviewAnswerContent(interviewAnswer[i]);
+				interviewVO.setInterviewQuestionId(interviewQuestionId[i]);
+				interviewAnswerList.add(interviewVO);
+			}
 		}
-		
-		applicationService.applyTeam(interviewAnswerList);
-		
+
+		applicationService.applyTeam(applicationVO, interviewAnswerList);
+
+		/*
+		 * String applicationId = applicationService.applyTeam(applicationVO);
+		 * 
+		 * List<InterviewVO> interviewAnswerList = new ArrayList<InterviewVO>(); for(int
+		 * i = 0; i < interviewAnswer.length; i++) { InterviewVO interviewVO = new
+		 * InterviewVO(); interviewVO.setTeamId(teamId);
+		 * interviewVO.setInterviewAnswerContent(interviewAnswer[i]);
+		 * interviewVO.setApplicationId(applicationId);
+		 * interviewVO.setInterviewQuestionId(interviewQuestionId[i]);
+		 * interviewAnswerList.add(interviewVO); }
+		 * 
+		 * applicationService.applyTeam(interviewAnswerList);
+		 */
+
 		return "redirect:/application/myApplication";
 	}
 
