@@ -7,11 +7,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+import com.teamwith.vo.MemberTendencyVO;
 import com.teamwith.vo.MemberVO;
 import com.teamwith.vo.MyApplicationVO;
 
+@Service
 public class AccountService {
-	private static AccountService accountService;
 
 	@Inject
 	private MemberService memberService;
@@ -22,11 +25,12 @@ public class AccountService {
 	@Inject
 	private ApplicationService applicationService;
 
-	static {
-		accountService = new AccountService();
+	private AccountService() {
 	}
 
-	private AccountService() {
+	public boolean isDuple(String memberId, String memberEmail) {
+		return false;
+
 	}
 
 	public int updatePassword(String memberId, String memberPassword, String newPassword) throws Exception {
@@ -58,9 +62,10 @@ public class AccountService {
 		return findAccount(null, memberBirth, memberEmail);
 	}
 
-	public void registerMember(MemberVO member) {
+	public void registerMember(MemberVO member) throws Exception {
 		profileService.registerMember(member);
 		pologService.createPolog(member.getMemberId());
+		profileService.initTendency(member.getMemberId());
 	}
 
 	public void hideMember(String memberId) {

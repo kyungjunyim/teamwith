@@ -82,7 +82,7 @@ public class ProfileController {
 				updateMemberInfo.setMemberPic(newFilename);
 			}
 			/* memberInfo */
-			profileService.updateMemberInfo(updateMemberInfo, null);
+			profileService.updateMemberInfo(updateMemberInfo);
 
 			MemberProjectCategoryVO pcVO = new MemberProjectCategoryVO(memberId, categoryId);
 			memberService.updateMemberProjectCategory(pcVO);

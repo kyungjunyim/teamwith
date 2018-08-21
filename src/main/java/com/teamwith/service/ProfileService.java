@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.Part;
 
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ import com.teamwith.dto.MemberDTO;
 import com.teamwith.dto.MemberTendencyDTO;
 import com.teamwith.util.CodeGenerator;
 import com.teamwith.util.MailUtil;
-import com.teamwith.util.UploadFileUtils;
 import com.teamwith.vo.CareerVO;
 import com.teamwith.vo.LicenseVO;
 import com.teamwith.vo.MemberTendencyVO;
@@ -194,17 +192,18 @@ public class ProfileService {
 		return result;
 	}
 
-	public int updateMemberInfo(MemberVO member, Part memberPic) throws Exception {
+	public int updateMemberInfo(MemberVO member) throws Exception {
 		if (member == null) {
 			return -1;
 		}
-		int result = -1;
-		if (memberPic != null) {
-			String picSavedName = UploadFileUtils.uploadFile(memberPicPath, member.getMemberId(), memberPic);
-			member.setMemberPic(picSavedName);
-		}
-		result = memberDAO.updateMember(member.toDTO());
-		return result;
+		
+		ProfileService profileService;
+		//profileService.addMemberLicense(null);
+		
+		memberDAO.updateMember(member.toDTO());
+		return 0;
+		
+		
 	}
 
 	public int updateMemberTendency(MemberTendencyVO memberTendency) throws Exception {
@@ -249,6 +248,7 @@ public class ProfileService {
 		if (member == null) {
 			return null;
 		}
+		member.setMemberPic("/resources/image/member/member.png");
 		int result = -1;
 		try {
 			result = memberDAO.addMember(member.toDTO());
