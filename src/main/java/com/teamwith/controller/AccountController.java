@@ -30,9 +30,25 @@ public class AccountController {
 		}
 		return "redirect:/";
 	}
+	
 	@RequestMapping(value="/isDuple", method = RequestMethod.POST)
 	public String isDuple(Model model, String memberId, String memberEmail) {
 
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/findId", method=RequestMethod.POST)
+	public String findId(Model model, String memberBirth, String memberEmail) throws Exception {
+		
+		model.addAttribute("msg", accountService.findAccount(memberBirth, memberEmail));
+		
+		return "teambuilding/jsp/findResult";
+	}
+	
+	@RequestMapping(value="/findPwd", method=RequestMethod.POST)
+	public String findPwd(Model model, String memberId, String memberBirth, String memberEmail) throws Exception {
+		model.addAttribute("msg", accountService.findAccount(memberId, memberBirth, memberEmail));
+		
+		return "teambuilding/jsp/findResult";
 	}
 }
