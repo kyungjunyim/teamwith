@@ -159,3 +159,6 @@
 	border: 2px solid #ff9479;
 	background-color: #ffffff;
 }
+.member_search_pagination li {
+	margin: 0 10px;
+}

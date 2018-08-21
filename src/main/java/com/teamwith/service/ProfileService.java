@@ -45,19 +45,19 @@ public class ProfileService {
 	public String searchMemberAccount(Map<String, String> map) throws Exception {
 		String memId = memberDAO.searchMemberAccount(map);
 
-		String result = "��ġ�ϴ� ������ �����ϴ�.";
+		String result = "일치하는 정보가 없습니다.";
 
-		// ���̵� ������ ���� ��� -> ���̵� ã��
-		if (map.get("memberID") == null || map.get("memberId").trim().equals("")) {
+		// 아이디 정보가 없는 경우 -> 아이디 찾기
+		if (map.get("memberId") == null || map.get("memberId").trim().equals("")) {
 			if (memId != null) {
-				result = "�ش� ������ ���̵�� " + memId.substring(0, memId.length() - 2) + "** �Դϴ�.";
+				result = "해당 정보의 아이디는 " + memId.substring(0, memId.length() - 2) + "** 입니다.";
 			}
 		}
-		// ���̵� ������ �ִ� ��� -> ��й�ȣ ã��
+		// 아이디 정보가 있는 경우 -> 비밀번호 찾기
 		else {
-			String memberId = map.get("memberID");
+			String memberId = map.get("memberId");
 			if (memberId.equals(memId)) {
-				// �̸��� �߼�
+				// 이메일 발송
 				String tempKey = CodeGenerator.generate();
 
 				Map<String, String> newPassword = new HashMap<String, String>();
@@ -65,9 +65,9 @@ public class ProfileService {
 				newPassword.put("newMemberPassword", tempKey);
 				memberDAO.updateTempPassword(newPassword);
 
-				MailUtil.send(map.get("memberEmail"), "teamwith�� �ӽú�й�ȣ�� �߱޵Ǿ����ϴ�. ",
-						"�ӽú�й�ȣ�� " + tempKey + " �Դϴ�. " + "�α��� �� ��й�ȣ�� �� �ٲپ� �ּ���. ");
-				result = "�ش� �̸��Ϸ� �ӽ� ��й�ȣ�� �߱��Ͽ����ϴ�.";
+				MailUtil.send(map.get("memberEmail"), "teamwith의 임시비밀번호가 발급되었습니다. ",
+						"임시비밀번호는 " + tempKey + " 입니다. " + "로그인 후 비밀번호를 꼭 바꾸어 주세요. ");
+				result = "해당 이메일로 임시 비밀번호를 발급하였습니다.";
 			}
 		}
 
@@ -197,10 +197,8 @@ public class ProfileService {
 		if (member == null) {
 			return -1;
 		}
-
 		memberDAO.updateMember(member.toDTO());
 		return 0;
-
 	}
 
 	@Transactional
