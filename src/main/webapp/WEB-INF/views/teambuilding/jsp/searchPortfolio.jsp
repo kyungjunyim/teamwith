@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>팀 상세보기</title>
+<title>포트폴리오 상세보기</title>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/teambuilding/css/frame.css">
 <link rel="stylesheet"
@@ -17,19 +17,23 @@
 	<div class="home_container">
 		<div class="row row_whole">
 			<div class="col-xs-6 main_container" style="min-height: 752px;">
-				<div class="row main_row">
+			<div class="row main_row">
 					<jsp:include page="portfolioSearchBar.jsp" />
 				</div>
-				<c:if test="${result eq 'noSearch' }">
-					<div class="row main_row">
-						<jsp:include page="searchRecentPortfolio.jsp" />
-					</div>
-				</c:if>
-				<c:if test="${result eq 'search' }">
-					<div class="row main_row">
-						<jsp:include page="portfolioSearchResult.jsp" />
-					</div>
-				</c:if>
+				<c:choose>
+					<c:when test="${result eq 'search' }">
+						<div class="row main_row">
+							<jsp:include page="portfolioSearchResult.jsp" />
+						</div>
+					</c:when>
+					
+					<c:otherwise>
+						<div class="row main_row">
+							<jsp:include page="searchRecentPortfolio.jsp" />
+						</div>
+					</c:otherwise>
+
+				</c:choose>
 			</div>
 			<div class="col-xs-6 side_container">
 				<c:if test="${empty sessionScope.memberSimpleVO }">

@@ -17,7 +17,7 @@
 					<a class="nav-link menu_link" href="/teamSearch">팀</a>
 				</li>
 				<li class="nav_menu"><a class="nav-link menu_link" href="/member">회원</a></li>
-				<li class="nav_menu"><a class="nav-link menu_link" href="/portfolio">포트폴리오</a></li>
+				<li class="nav_menu"><a class="nav-link menu_link" href="/portfolios">포트폴리오</a></li>
 				<li class="nav_menu"><a class="nav-link menu_link commingSoon">공모전</a></li>
 			</ul>
 		</div>

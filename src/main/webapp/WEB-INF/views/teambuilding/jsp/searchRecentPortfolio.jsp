@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style>
+.portfolio_search_content_row:hover {
+	background: #fff7f4;
+	
+}
+</style>
+
+
 <body>
 	<div class="row portfolio_search_title">
 		<div class="col">
@@ -18,13 +27,13 @@
 		<c:if test="${(i.index mod 2) eq 0  }">
 			<div class="row portfolio_search_row_whole">
 		</c:if>
-		<form action="#" method="post" id="">
-			<input type="hidden" name="portfolioId"
-				value="${portfolio.portfolioId }">
-			<div class="col-xs-6 portfolio_search_content_row">
+		<form action="/portfolio/${fn:split(portfolio.portfolioId,'-')[1]}" method="get"
+			id="${portfolio.portfolioId }">
+			<div class="col-xs-6 portfolio_search_content_row" id="${portfolio.portfolioId }_box" onclick="$('#${portfolio.portfolioId }').submit()">
 				<div class="row portfolio_search_content">
 					<div class="col-xs-6 portfolio_search_image_col">
-						<img src="/resources/image/portfolio/${portfolio.portfolioId }.jpg"
+						<img
+							src="/resources/image/portfolio/${portfolio.portfolioId }.jpg"
 							class="portfolio_search_image">
 					</div>
 					<div class="col-xs-6 portfolio_search_content_text">
@@ -48,6 +57,6 @@
 			</div>
 		</c:if>
 	</c:forEach>
-	
+
 
 </body>

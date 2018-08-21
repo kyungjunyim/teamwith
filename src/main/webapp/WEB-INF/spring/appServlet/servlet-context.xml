@@ -49,7 +49,7 @@
 			<mapping path="/application/*" />
 			<mapping path="/login" />
 			<mapping path="/member" />
-			<mapping path="/portfolio" />
+			<mapping path="/portfolios" />
 			<mapping path="/account" />
 			<beans:ref bean="teamServiceInterceptor" />
 		</interceptor>
