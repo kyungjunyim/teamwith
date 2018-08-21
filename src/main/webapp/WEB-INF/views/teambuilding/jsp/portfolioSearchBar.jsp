@@ -7,21 +7,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-	$(document).ready(function(e) {
-		$('#portfolioSearch').change(function(e) {
-			categoryCnt = $('input:checkbox[name="projectCategoryId"]:checked').length;
-			$('#categoryBtn').text('카테고리   ' + categoryCnt);
-		});
-		$('#search_btn').click(function(e) {
-		//검색 버튼을 클릭하면 form 데이터를 post방식으로 서버에 전송한다.
-		});
-	});
+	$(document)
+			.ready(
+					function(e) {
+						$('#portfolioSearch')
+								.change(
+										function(e) {
+											categoryCnt = $('input:checkbox[name="projectCategoryId"]:checked').length;
+											$('#categoryBtn').text(
+													'카테고리   ' + categoryCnt);
+										});
+						$('#search_btn').click(function(e) {
+							//검색 버튼을 클릭하면 form 데이터를 post방식으로 서버에 전송한다.
+						});
+					});
 </script>
 </head>
 <body>
-	<form action="/searchPortfolio.do" method="post" id="portfolioSearch">
-	<input type="hidden" name="page" value="1">
-	<input type="hidden" name="perPageNum" value="4">
+	<form action="/portfolios" method="post" id="portfolioSearch">
+		<input type="hidden" name="page" value="1"> <input
+			type="hidden" name="perPageNum" value="4">
 		<div class="row portfolio_search_layout ">
 			<div class="row portfolio_search_bar_position">
 				<div class="col">
@@ -48,22 +53,22 @@
 								</div>
 								</c:if>
 								</c:forEach>
-									<div class="row">
-										<button type="button"
-											class="btn search_portfolio_btn btn-mid search_portfolio_btn_submit portfolio_search_big_modal_btn_position"
-											data-dismiss="modal">확인</button>
-									</div>
+								<div class="row">
+									<button type="button"
+										class="btn search_portfolio_btn btn-mid search_portfolio_btn_submit portfolio_search_big_modal_btn_position"
+										data-dismiss="modal">확인</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<input type="text" name="title" class="search_portfolio_input">
-				<button type="submit" id="search_btn">검색</button>
-
-
 			</div>
+			<input type="text" name="title" class="search_portfolio_input">
+			<button type="submit" id="search_btn">검색</button>
+
+
 		</div>
+
 	</form>
 </body>
 </html>

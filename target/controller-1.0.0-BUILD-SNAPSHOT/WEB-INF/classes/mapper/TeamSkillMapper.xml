@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 작성자 : 황규진 -->
+<mapper namespace="com.teamwith.dao.TeamSkillDAO">
+	<resultMap type="TeamSkillVO" id="teamSkillView">
+		<id property="teamId" column="team_id" />
+		<id property="roleId" column="role_id" />
+		<id property="skillId" column="skill_id" />
+	</resultMap>
+	<resultMap type="TeamSkillDTO" id="teamSkillDto">
+		<id property="teamId" column="team_id" />
+		<id property="roleId" column="role_id" />
+		<id property="skillId" column="skill_id" />
+	</resultMap>	
+	<!-- 팀에 해당하는 모든 모집의 요구 기술 정보 가져오기 -->
+	<select id="searchTeamSkillByTeamId" parameterType="string" resultMap="teamSkillView">
+		select * from require_skill_team_view where team_id=#{teamId}
+	</select>
+	<!-- 특정 모집의 요구 기술 정보 가져오기 -->
+	<select id="searchTeamSkillByRecruitId" parameterType="string" resultMap="teamSkillView">
+		select * from require_skill_team_view where recruit_id=#{recruitId}
+	</select>
+	<!-- require_skill_team_view의 모든 레코드 불러오기 -->
+	<select id="searchTeamSkillAll" resultMap="teamSkillView">
+		select * from require_skill_team_view
+	</select>
+	
+	<select id="searchTeamByRoleSkill" parameterType="Criteria"  resultMap="teamSkillView">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM team_skill_view
+		]]> WHERE 1 = 1
+		<if test="criteria.roleList != null">
+			AND role_id IN 
+			<foreach item="roleId" collection="criteria.roleList" index="index" open="(" separator="," close=")">
+			#{roleId}
+			</foreach>
+		</if>		
+		<if test="criteria.skillList != null">
+			AND skill_id IN 
+			<foreach item="skillId" collection="criteria.skillList" index="index" open="(" separator="," close=")">
+			#{skillId}
+			</foreach>			
+		</if>
+		<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+	
+	<select id="searchTeamDTOByRoleSkill" parameterType="Criteria"  resultMap="teamSkillDto">
+		<![CDATA[
+		SELECT * FROM (
+		SELECT ROWNUM AS RNUM, Z.* FROM (
+		SELECT * FROM team_skill_view
+		]]> WHERE 1 = 1
+		<if test="criteria.roleList != null">
+			AND role_id IN 
+			<foreach item="roleId" collection="criteria.roleList" index="index" open="(" separator="," close=")">
+			#{roleId}
+			</foreach>
+		</if>		
+		<if test="criteria.skillList != null">
+			AND skill_id IN 
+			<foreach item="skillId" collection="criteria.skillList" index="index" open="(" separator="," close=")">
+			#{skillId}
+			</foreach>			
+		</if>
+		<![CDATA[
+		) Z WHERE ROWNUM < #{page}+#{perPageNum}
+		) WHERE RNUM >= #{page}
+		]]>
+	</select>
+</mapper>

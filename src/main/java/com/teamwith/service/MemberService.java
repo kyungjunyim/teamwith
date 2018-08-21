@@ -38,7 +38,7 @@ public class MemberService {
 	@Inject
 	private MemberSkillDAO memberSkillDAO;
 
-	private MemberService() {
+	public MemberService() {
 	}
 
 	public MainProfileVO getMainProfile(String memberId) throws Exception {
@@ -98,7 +98,46 @@ public class MemberService {
 		}
 		return result;
 	}
-
+	
+	public List<String> getMemberIdByRegionList(Criteria cri) throws Exception {
+		if(cri == null) {
+			return null;
+		}
+		List<MemberSearchVO> temp = memberSearchDAO.searchMemberIdByRegionList(cri);
+		List<String> result = new ArrayList<String>();
+		
+		for(MemberSearchVO memberSearchVO : temp) {
+			result.add(memberSearchVO.getMemberId());
+		}
+		return result;
+	}
+	
+	public List<String> getMemberIdByRoleList(Criteria cri) throws Exception {
+		if(cri == null) {
+			return null;
+		}
+		List<MemberSearchVO> temp = memberSearchDAO.searchMemberIdByRoleList(cri);
+		List<String> result = new ArrayList<String>();
+		
+		for(MemberSearchVO memberSearchVO : temp) {
+			result.add(memberSearchVO.getMemberId());
+		}
+		return result;
+	}
+	
+	public List<String> getMemberIdByCondition(Criteria cri) throws Exception {
+		if(cri == null) {
+			return null;
+		}
+		List<MemberSearchVO> temp = memberSearchDAO.searchMember(cri);
+		List<String> result = new ArrayList<String>();
+		
+		for(MemberSearchVO memberSearchVO : temp) {
+			result.add(memberSearchVO.getMemberId());
+		}
+		return result;
+	}
+	
 	public List<String> getMemberBySkillId(List<String> skillId) throws Exception {
 		if (skillId == null) {
 			return null;
@@ -184,13 +223,15 @@ public class MemberService {
 		if (memberProjectCategory == null) {
 			return -1;
 		}
-		int result = memberProjectCategoryDAO
-				.removeMemberProjectCategoryByMemberId(memberProjectCategory.getMemberId());
+		if (memberProjectCategory != null) {
+			int result = memberProjectCategoryDAO
+					.removeMemberProjectCategoryByMemberId(memberProjectCategory.getMemberId());
 
-		for (MemberProjectCategoryDTO m : memberProjectCategory.toDTO()) {
-			memberProjectCategoryDAO.addMemberProjectCategory(m);
+			for (MemberProjectCategoryDTO m : memberProjectCategory.toDTO()) {
+				memberProjectCategoryDAO.addMemberProjectCategory(m);
+			}
 		}
-		return result;
+		return 0;
 	}
 
 	public int removeMemberSkill(String memberId) throws Exception {
@@ -218,7 +259,7 @@ public class MemberService {
 		if (praise == null || praise.isEmpty()) {
 			return -1;
 		}
-		
+
 		int result = memberPraiseDAO.removeMemberPraise(praise.get(0).toDTO());
 		for (MemberPraiseVO m : praise) {
 			result = memberPraiseDAO.addMemberPraise(m.toDTO());
@@ -229,7 +270,7 @@ public class MemberService {
 
 		return result;
 	}
-	
+
 	public void removeMemberPraise(String actor, String target) throws Exception {
 		memberPraiseDAO.removeMemberPraise(new MemberPraiseDTO(actor, target, null));
 	}

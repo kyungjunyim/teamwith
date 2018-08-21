@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamwith.dao.PologDAO;
@@ -103,6 +104,7 @@ public class PologService {
 	}
 
 	/** 포폴컨텐츠랑 포폴 한방에 등록 */
+	@Transactional
 	public String registerPortfolioAndContent(Map<Object, MultipartFile> portfolioAndContent, String rootPath) {
 		if (portfolioAndContent == null) {
 			return null;

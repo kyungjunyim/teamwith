@@ -7,11 +7,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.teamwith.vo.MemberVO;
 import com.teamwith.vo.MyApplicationVO;
 
+@Service
 public class AccountService {
-	private static AccountService accountService;
 
 	@Inject
 	private MemberService memberService;
@@ -22,11 +25,12 @@ public class AccountService {
 	@Inject
 	private ApplicationService applicationService;
 
-	static {
-		accountService = new AccountService();
+	public AccountService() {
 	}
 
-	private AccountService() {
+	public boolean isDuple(String memberId, String memberEmail) {
+		return false;
+
 	}
 
 	public int updatePassword(String memberId, String memberPassword, String newPassword) throws Exception {
@@ -37,7 +41,7 @@ public class AccountService {
 		Map<String, String> loginInfo = new HashMap<String, String>();
 		loginInfo.put("memberId", memberId);
 		loginInfo.put("memberPassword", memberPassword);
-		loginInfo.put("newPassword", newPassword);
+		loginInfo.put("newMemberPassword", newPassword);
 		return profileService.updatePassword(loginInfo);
 	}
 
@@ -57,12 +61,15 @@ public class AccountService {
 	public String findAccount(String memberBirth, String memberEmail) throws Exception {
 		return findAccount(null, memberBirth, memberEmail);
 	}
-
-	public void registerMember(MemberVO member) {
+	
+	@Transactional
+	public void registerMember(MemberVO member) throws Exception {
 		profileService.registerMember(member);
 		pologService.createPolog(member.getMemberId());
+		profileService.initTendency(member.getMemberId());
 	}
-
+	
+	@Transactional
 	public void hideMember(String memberId) {
 		profileService.hideMember(memberId);
 		List<MyApplicationVO> myApp = applicationService.getMyApplication(memberId);
@@ -77,6 +84,7 @@ public class AccountService {
 		}
 	}
 
+	@Transactional
 	public void removeMember(String memberId) throws Exception {
 		memberService.removeMemberAllPraise(memberId);
 		memberService.removeMemberProjectCategory(memberId);
