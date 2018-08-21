@@ -145,6 +145,12 @@
 	border-color: #002b5a;
 }
 
+.best_member_row_whole {
+	width: 840px;
+	margin: 10px 60px 20px 60px;
+	padding: 0;
+}
+
 .btn_color_small:hover {
 	color: #ff4111;
 	background-color: #f7e7e3;
@@ -161,4 +167,10 @@
 }
 .member_search_pagination li {
 	margin: 0 10px;
+}
+
+
+.member_search_pagination{
+	margin:auto;
+	font-size: 18px;
 }
