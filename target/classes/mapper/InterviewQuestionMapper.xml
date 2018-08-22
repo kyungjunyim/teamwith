@@ -15,6 +15,10 @@
 	<delete id="removeInterviewQuestion" parameterType="string">
 		DELETE FROM interview_question_tb WHERE interview_question_id=#{interviewQuestionId}
 	</delete>
+	<!-- 해당 팀에 존재하는 모든 간단 면접 질문 삭제 -->
+	<delete id="removeInterviewQuestionByTeamId">
+		delete from interview_question_tb where team_id=#{teamId}
+	</delete>
 	<!-- interview_question_content만 수정 -->
 	<update id="updateInterviewQuestion" parameterType="InterviewQuestionDTO">
 		UPDATE interview_question_tb SET interview_question_content=#{interviewQuestionContent} WHERE interview_question_id=#{interviewQuestionId}
