@@ -43,6 +43,8 @@ public class TeamInfoController {
 		return "teambuilding/jsp/teamRegister";
 	}
 
+	// 팀 등록시 모집을 등록할 개수만큼 먼저 추가하고 데이터를 입력해야합니다. 먼저 데이터 입력하고 추가하기를 누르면 첫 번재 모집 분야가
+	// 사라집니다.
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerTeam(HttpSession session, TeamDetailVO teamInfo, String role1, String role2, String role3,
 			String[] faqQuestions, String[] faqAnswers, String[] interviewQuestionContents, String[] skill1,
@@ -51,86 +53,82 @@ public class TeamInfoController {
 		String teamId = null;
 		MemberSimpleVO login = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		String memberId = login.getMemberId();
+		teamInfo.setMemberId(memberId);
+
+		List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
+		for (String interview : interviewQuestionContents) {
+			InterviewVO interviewQuestion = new InterviewVO();
+			interviewQuestion.setInterviewQuestionContent(interview);
+			interviewList.add(interviewQuestion);
+		}
+
+		List<FaqVO> faqList = new ArrayList<FaqVO>();
+		for (int i = 0; i < faqQuestions.length; i++) {
+			FaqVO faq = new FaqVO();
+			faq.setFaqQuestion(faqQuestions[i]);
+			faq.setFaqAnswer(faqAnswers[i]);
+			faqList.add(faq);
+		}
+
+		List<RecruitVO> recruitList = new ArrayList<RecruitVO>();
+		for (int i = 0; i < recruitPeopleNum.length; i++) {
+			RecruitVO recruit = new RecruitVO();
+			recruit.setRecruitPreference(recruitPreferences[i]);
+			recruit.setRecruitExplain(recruitExplains[i]);
+			recruit.setRecruitPeopleNum(recruitPeopleNum[i]);
+			String role = null;
+			switch (i) {
+			case 0:
+				role = role1;
+				break;
+			case 1:
+				role = role2;
+				break;
+			case 2:
+				role = role3;
+				break;
+			default:
+				break;
+			}
+			if (role != null) {
+				recruit.setRoleId(role);
+			}
+			recruitList.add(recruit);
+		}
+
+		List<RequireSkillVO> requireSkillList = new ArrayList<RequireSkillVO>();
+
+		for (int i = 0; i < recruitPeopleNum.length; i++) {
+			RequireSkillVO requireSkill = new RequireSkillVO();
+			List<String> skillList = new ArrayList<String>();
+			String[] skills = null;
+			switch (i) {
+			case 0:
+				skills = skill1;
+				break;
+			case 1:
+				skills = skill2;
+				break;
+			case 2:
+				skills = skill3;
+				break;
+			default:
+				break;
+			}
+			for (String skill : skills) {
+				skillList.add(skill);
+			}
+			requireSkill.setSkillIds(skillList);
+			requireSkillList.add(requireSkill);
+		}
+		String path = session.getServletContext().getRealPath("/") + "resources\\image\\team\\";
 		try {
-			teamInfo.setMemberId(memberId);
-
-			String path = session.getServletContext().getRealPath("/") + "resources\\image\\team\\";
-			teamId = teamService.registerTeam(teamInfo, teamPicFile.getBytes(), path);
-
-			List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
-			for (String interview : interviewQuestionContents) {
-				InterviewVO interviewQuestion = new InterviewVO();
-				interviewQuestion.setInterviewQuestionContent(interview);
-				interviewQuestion.setTeamId(teamId);
-				interviewList.add(interviewQuestion);
-			}
-			applicationService.registerInteviewQuestion(interviewList);
-
-			List<FaqVO> faqList = new ArrayList<FaqVO>();
-			for (int i = 0; i < faqQuestions.length; i++) {
-				FaqVO faq = new FaqVO();
-				faq.setFaqQuestion(faqQuestions[i]);
-				faq.setFaqAnswer(faqAnswers[i]);
-				faq.setTeamId(teamId);
-				faqList.add(faq);
-			}
-			teamService.registerFaq(faqList);
-
-			List<RecruitVO> recruitList = new ArrayList<RecruitVO>();
-			for (int i = 0; i < recruitPeopleNum.length; i++) {
-				RecruitVO recruit = new RecruitVO();
-				recruit.setRecruitPreference(recruitPreferences[i]);
-				recruit.setRecruitExplain(recruitExplains[i]);
-				recruit.setRecruitPeopleNum(recruitPeopleNum[i]);
-				recruit.setTeamId(teamId);
-				String role = null;
-				switch (i) {
-				case 0:
-					role = role1;
-					break;
-				case 1:
-					role = role2;
-					break;
-				case 2:
-					role = role3;
-					break;
-				default:
-					break;
-				}
-				if (role != null) {
-					recruit.setRoleId(role);
-				}
-				recruitList.add(recruit);
-			}
-			List<String> recruitIds = teamService.registerRecruit(recruitList);
-
-			for (int i = 0; i < recruitIds.size(); i++) {
-				RequireSkillVO requireSkill = new RequireSkillVO();
-				requireSkill.setRecruitId(recruitIds.get(i));
-				List<String> skillList = new ArrayList<String>();
-				String[] skills = null;
-				switch (i) {
-				case 0:
-					skills = skill1;
-					break;
-				case 1:
-					skills = skill2;
-					break;
-				case 2:
-					skills = skill3;
-					break;
-				default:
-					break;
-				}
-				for (String skill : skills) {
-					skillList.add(skill);
-				}
-				requireSkill.setSkillIds(skillList);
-				teamService.registerRequireSkill(requireSkill);
-			}
+			teamId = teamService.registerTeam(applicationService, teamInfo, teamPicFile.getBytes(), path, interviewList,
+					faqList, recruitList, requireSkillList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return "redirect:/teamSearch/" + teamId.substring(5);
 	}
 
@@ -147,7 +145,6 @@ public class TeamInfoController {
 						applicationService.getMyInterview(applicant.getApplicationId()));
 			}
 		}
-
 		TeamSimpleVO teamInfo = null;
 		try {
 			teamInfo = teamService.getTeamSimple(key);
@@ -182,107 +179,95 @@ public class TeamInfoController {
 				requireSkillList.add(requireSkillVO);
 			}
 			model.addAttribute("requireSkillList", requireSkillList);
-			for(RequireSkillVO vo : requireSkillList) {
-				for(String skill : vo.getSkillIds()) {
-					System.out.println(skill);
-				}
-			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "teambuilding/jsp/teamUpdate";
 	}
-	
+
 	@RequestMapping(value = "/edit/{teamId}", method = RequestMethod.POST)
 	public String updateTeam(HttpSession session, @PathVariable("teamId") String teamId, TeamDetailVO teamInfo,
 			String role1, String role2, String role3, String[] faqQuestions, String[] faqAnswers,
 			String[] interviewQuestionContents, String[] skill1, String[] skill2, String[] skill3,
-			String[] recruitPreferences, String[] recruitExplains, String[] recruitPeopleNum,String[] faqIds,String[] recruitIds,
-			MultipartFile teamPicFile) {
+			String[] recruitPreferences, String[] recruitExplains, String[] recruitPeopleNum, String[] faqIds,
+			String[] recruitIds, MultipartFile teamPicFile) {
 		String key = "team-" + teamId;
 		String path = session.getServletContext().getRealPath("/") + "resources\\image\\team\\";
+
+		List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
+		for (String interview : interviewQuestionContents) {
+			InterviewVO interviewQuestion = new InterviewVO();
+			interviewQuestion.setInterviewQuestionContent(interview);
+			interviewQuestion.setTeamId(key);
+			interviewList.add(interviewQuestion);
+		}
+
+		List<FaqVO> faqList = new ArrayList<FaqVO>();
+		for (int i = 0; i < faqQuestions.length; i++) {
+			FaqVO faq = new FaqVO();
+			faq.setFaqQuestion(faqQuestions[i]);
+			faq.setFaqAnswer(faqAnswers[i]);
+			faq.setTeamId(key);
+			faq.setFaqId(faqIds[i]);
+			faqList.add(faq);
+		}
+
+		List<RecruitVO> recruitList = new ArrayList<RecruitVO>();
+		for (int i = 0; i < recruitPeopleNum.length; i++) {
+			RecruitVO recruit = new RecruitVO();
+			recruit.setRecruitPreference(recruitPreferences[i]);
+			recruit.setRecruitExplain(recruitExplains[i]);
+			recruit.setRecruitPeopleNum(recruitPeopleNum[i]);
+			recruit.setTeamId(key);
+			String role = null;
+			switch (i) {
+			case 0:
+				role = role1;
+				break;
+			case 1:
+				role = role2;
+				break;
+			case 2:
+				role = role3;
+				break;
+			default:
+				break;
+			}
+			if (role != null) {
+				recruit.setRoleId(role);
+			}
+			recruitList.add(recruit);
+		}
+
+		List<RequireSkillVO> requireSkillList = new ArrayList<RequireSkillVO>();
+
+		for (int i = 0; i < recruitPeopleNum.length; i++) {
+			RequireSkillVO requireSkill = new RequireSkillVO();
+			List<String> skillList = new ArrayList<String>();
+			String[] skills = null;
+			switch (i) {
+			case 0:
+				skills = skill1;
+				break;
+			case 1:
+				skills = skill2;
+				break;
+			case 2:
+				skills = skill3;
+				break;
+			default:
+				break;
+			}
+			for (String skill : skills) {
+				skillList.add(skill);
+			}
+			requireSkill.setSkillIds(skillList);
+			requireSkillList.add(requireSkill);
+		}
+		teamInfo.setTeamId(key);
 		try {
-			teamInfo.setTeamId(key);
-			teamService.updateTeam(teamInfo, teamPicFile.getBytes(), path);
-			List<InterviewVO> interviewList = new ArrayList<InterviewVO>();
-			for (String interview : interviewQuestionContents) {
-				InterviewVO interviewQuestion = new InterviewVO();
-				interviewQuestion.setInterviewQuestionContent(interview);
-				interviewQuestion.setTeamId(key);
-				interviewList.add(interviewQuestion);
-			}			
-			//인터뷰 수정 ? (삭제후 추가인가..?)
-			
-			List<FaqVO> faqList = new ArrayList<FaqVO>();
-			for (int i = 0; i < faqQuestions.length; i++) {
-				System.out.println(faqQuestions[i]);
-				FaqVO faq = new FaqVO();
-				faq.setFaqQuestion(faqQuestions[i]);
-				faq.setFaqAnswer(faqAnswers[i]);
-				faq.setTeamId(key);
-				faq.setFaqId(faqIds[i]);
-				faqList.add(faq);
-			}
-			teamService.updateFaq(faqList);
-			
-			List<RecruitVO> recruitList=new ArrayList<RecruitVO>();
-			
-			for (int i = 0; i < recruitPeopleNum.length; i++) {
-				RecruitVO recruit = new RecruitVO();
-				recruit.setRecruitPreference(recruitPreferences[i]);
-				recruit.setRecruitExplain(recruitExplains[i]);
-				recruit.setRecruitPeopleNum(recruitPeopleNum[i]);
-				recruit.setTeamId(key);
-				String role = null;
-				switch (i) {
-				case 0:
-					role = role1;
-					break;
-				case 1:
-					role = role2;
-					break;
-				case 2:
-					role = role3;
-					break;
-				default:
-					break;
-				}
-				if (role != null) {
-					recruit.setRoleId(role);
-				}
-				recruitList.add(recruit);
-			}
-			List<String> recruitIdList = teamService.updateRecruit(recruitList);
-			for (int i = 0; i < recruitIdList.size(); i++) {
-				RequireSkillVO requireSkill = new RequireSkillVO ();
-				requireSkill.setRecruitId(recruitIdList.get(i));
-				List<String> skillList = new ArrayList<String>();
-				String[] skills = null;
-				switch (i) {
-				case 0:
-					skills = skill1;
-					break;
-				case 1:
-					skills = skill2;
-					break;
-				case 2:
-					skills = skill3;
-					break;
-				default:
-					break;
-				}
-				for (String skill : skills) {
-					skillList.add(skill);
-				}
-				requireSkill.setSkillIds(skillList);
-				teamService.updateRequireSkill(requireSkill);
-			}
-			
-			
-			
-			
-			
+			teamService.updateTeam(applicationService, teamInfo, teamPicFile.getBytes(), path, interviewList, faqList,
+					recruitList, requireSkillList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

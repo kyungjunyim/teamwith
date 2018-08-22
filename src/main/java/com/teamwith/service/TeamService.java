@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.Part;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.teamwith.dao.CommentDAO;
 import com.teamwith.dao.FaqDAO;
@@ -29,6 +29,7 @@ import com.teamwith.util.Criteria;
 import com.teamwith.util.UploadFileUtils;
 import com.teamwith.vo.CommentVO;
 import com.teamwith.vo.FaqVO;
+import com.teamwith.vo.InterviewVO;
 import com.teamwith.vo.RecruitVO;
 import com.teamwith.vo.RequireSkillVO;
 import com.teamwith.vo.TeamDetailVO;
@@ -257,7 +258,10 @@ public class TeamService {
 		return result;
 	}
 
-	public String registerTeam(TeamDetailVO teamInfo, byte[] file, String path) throws Exception {
+	@Transactional
+	public String registerTeam(ApplicationService applicationService, TeamDetailVO teamInfo, byte[] file, String path,
+			List<InterviewVO> interviewList, List<FaqVO> faqList, List<RecruitVO> recruitList,
+			List<RequireSkillVO> requireSkillList) throws Exception {
 		List<String> teamId = teamDAO.getId();
 		String generatedId = generateId(teamId, "team");
 
@@ -277,12 +281,30 @@ public class TeamService {
 
 		String teamPicPath = UploadFileUtils.uploadFile2(path, generatedId + ".jpg", file);
 
-//		team.setTeamPic(path+generatedId+".jpg");
 		team.setTeamPic("/resources/image/team/" + generatedId + ".jpg");
 
-		System.out.println(team);
 		teamDAO.addTeam(team);
 
+		for (InterviewVO interview : interviewList) {
+			interview.setTeamId(generatedId);
+		}
+		applicationService.registerInteviewQuestion(interviewList);
+
+		for (FaqVO faq : faqList) {
+			faq.setTeamId(generatedId);
+		}
+		registerFaq(faqList);
+
+		for (RecruitVO recruit : recruitList) {
+			recruit.setTeamId(generatedId);
+		}
+		List<String> recruitIds = registerRecruit(recruitList);
+
+		for (int i = 0; i < requireSkillList.size(); i++) {
+			RequireSkillVO requireSkillVO = requireSkillList.get(i);
+			requireSkillVO.setRecruitId(recruitIds.get(i));
+			registerRequireSkill(requireSkillVO);
+		}
 		return generatedId;
 	}
 
@@ -300,8 +322,8 @@ public class TeamService {
 
 	public int updateFaq(List<FaqVO> faq) throws Exception {
 		int result = 0;
-		
-		if(faq!=null&&!faq.isEmpty()) {
+
+		if (faq != null && !faq.isEmpty()) {
 			faqDAO.removeFaqByTeamId(faq.get(0).getTeamId());
 			for (FaqVO obj : faq) {
 				List<String> faqId = faqDAO.getId();
@@ -315,14 +337,13 @@ public class TeamService {
 
 	public List<String> updateRecruit(List<RecruitVO> recruit) throws Exception {
 		List<String> result = new ArrayList<String>();
-		
-		if(recruit!=null&&!recruit.isEmpty()) {
-			String teamId=recruit.get(0).getTeamId();
+
+		if (recruit != null && !recruit.isEmpty()) {
+			String teamId = recruit.get(0).getTeamId();
 			recruitDAO.removeRecruitByTeamId(teamId);
 			for (RecruitVO obj : recruit) {
 				String generatedId = generateId(recruitDAO.getId(), "team");
 				obj.setRecruitId(generatedId);
-				System.out.println(obj.toDTO());
 				recruitDAO.addRecruit(obj.toDTO());
 				result.add(obj.getRecruitId());
 			}
@@ -344,8 +365,10 @@ public class TeamService {
 	public int updateRequireSkill(RequireSkillVO requireSkill) throws Exception {
 		return registerRequireSkill(requireSkill);
 	}
-
-	public String updateTeam(TeamDetailVO teamInfo, byte[] file, String path) throws Exception {
+	@Transactional
+	public String updateTeam(ApplicationService applicationService,TeamDetailVO teamInfo, byte[] file, String path, List<InterviewVO> interviewList,
+			List<FaqVO> faqList, List<RecruitVO> recruitList, List<RequireSkillVO> requireSkillList) throws Exception {
+		
 		TeamDTO team = new TeamDTO();
 
 		team.setTeamId(teamInfo.getTeamId());
@@ -365,8 +388,16 @@ public class TeamService {
 			String teamPicPath = UploadFileUtils.uploadFile2(path, team.getTeamId() + ".jpg", file);
 			team.setTeamPic("/resources/image/team/" + team.getTeamId() + ".jpg");
 		}
+		
 		teamDAO.updateTeam(team);
-
+		applicationService.updateInterviewQuestion(interviewList);
+		updateFaq(faqList);
+		List<String> recruitIds=updateRecruit(recruitList);
+		for(int i=0;i<requireSkillList.size();i++) {
+			RequireSkillVO requireSkill=requireSkillList.get(i);
+			requireSkill.setRecruitId(recruitIds.get(i));
+			updateRequireSkill(requireSkill);
+		}
 		return team.getTeamId();
 	}
 

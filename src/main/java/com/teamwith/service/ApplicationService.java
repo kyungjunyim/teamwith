@@ -92,6 +92,27 @@ public class ApplicationService {
 		}
 		return result;
 	}
+	public boolean updateInterviewQuestion(List<InterviewVO> interviewList){
+		boolean result=true;
+		if(interviewList!=null&&!interviewList.isEmpty()) {
+			String teamId=interviewList.get(0).getTeamId();
+			try {
+				interviewQuestionDAO.removeInterviewQuestionByTeamId(teamId);
+				for(InterviewVO interviewVO:interviewList) {
+					InterviewQuestionDTO interviewQuestionDTO=new InterviewQuestionDTO();
+					interviewQuestionDTO.setTeamId(teamId);
+					interviewQuestionDTO.setInterviewQuestionContent(interviewVO.getInterviewQuestionContent());
+					String generateId=generateId(interviewQuestionDAO.getInterviewQuestionId(), "interview_question");
+					interviewQuestionDTO.setInterviewQuestionId(generateId);
+					interviewQuestionDAO.addInterviewQuestion(interviewQuestionDTO);
+				}
+			} catch (Exception e) {
+				result=false;
+				e.printStackTrace();
+			}	
+		}
+		return result;
+	}
 
 	public int changeApplicationStatus(int status, String applicationId) {
 		ApplicationDTO application = new ApplicationDTO();

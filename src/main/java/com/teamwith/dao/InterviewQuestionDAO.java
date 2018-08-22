@@ -20,4 +20,5 @@ public interface InterviewQuestionDAO {
 	public List<InterviewQuestionDTO> searchInterviewQuestionByTeamId(String teamId) throws Exception;
 	/** ���� ���� ������ ��� Ű�� �������� */
 	public List<String> getInterviewQuestionId() throws Exception;
+	public int removeInterviewQuestionByTeamId(String teamId) throws Exception;
 }
