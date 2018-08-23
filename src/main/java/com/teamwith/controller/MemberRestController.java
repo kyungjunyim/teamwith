@@ -5,42 +5,40 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.MemberService;
 import com.teamwith.util.Criteria;
 import com.teamwith.vo.MemberSearchVO;
 import com.teamwith.vo.TeamSimpleVO;
 
-@RequestMapping("/member")
-@Controller
-public class MemberController {
+@RequestMapping("/api/member")
+@RestController
+public class MemberRestController {
 	@Inject
 	private MemberService memberService;
-
+	
+	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String member(Model model) throws Exception {
-		List<MemberSearchVO> bestMemberList = memberService.getBestMember(new Criteria());
-		model.addAttribute("bestMemberList", bestMemberList);
-
-		List<MemberSearchVO> recentMemberList = memberService.getRecentMember(new Criteria(1, 8));
-		model.addAttribute("recentMemberList", recentMemberList);
-
-		return "teambuilding/jsp/searchMember";
-	}
-
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String member(Model model, String[] region, String[] project, String[] role, String[] skill,
+	public List<MemberSearchVO> member(Criteria cri, String[] region, String[] project, String[] role, String[] skill,
 			String textCondition, String keyword) throws Exception {
-		if (region == null && project == null && role == null && skill == null
-				&& (keyword == null || keyword.trim().equals(""))) {
-			return member(model);
-		} else {
-			model.addAttribute("recentTeamList", null);
-			model.addAttribute("recommendedTeamList", null);
+		System.out.println("api member access");
+		if (cri == null) {
+			cri = new Criteria();
+		}
+
+		if (region == null && project == null && role == null && skill == null && (keyword==null||keyword.trim().equals(""))) {
+
+			return memberService.getRecentMember(cri);
+		}
+
+		else {
 			List<String> resultIdList = null;
 			List<MemberSearchVO> resultMemberList = new ArrayList<MemberSearchVO>();
 			List<String> memberIdListByRegion = null;
@@ -193,9 +191,7 @@ public class MemberController {
 					resultMemberList.add(memberSearchVO);
 				}
 			}
-
-			model.addAttribute("resultMemberList", resultMemberList);
-			return "teambuilding/jsp/searchMember";
+			return resultMemberList;
 		}
 	}
 }
