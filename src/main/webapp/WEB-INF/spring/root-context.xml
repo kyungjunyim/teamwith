@@ -232,5 +232,4 @@
 		base-package="com.teamwith.vo"></context:component-scan>
 	<context:component-scan
 		base-package="com.teamwith.service"></context:component-scan>
-
 </beans>
