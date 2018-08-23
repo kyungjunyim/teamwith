@@ -95,5 +95,4 @@ public class TeamSearchRestController {
 
 		return result;
 	}
-
 }
