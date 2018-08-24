@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.TeamService;
@@ -24,13 +25,13 @@ public class TeamRestController {
 	private TeamService teamService;
 	
 	@RequestMapping(value="myTeam",method=RequestMethod.GET)
-	public HashMap<String,Object> myTeqam(HttpSession session,Model model) {
+	public HashMap<String,Object> myTeqam(@RequestParam("cri") Criteria cri, HttpSession session,Model model) {
 		List<TeamSimpleVO> myTeamList = null;
 		HashMap<String,Object> result=new HashMap<String,Object>();
 		
-		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
+		//MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
 		try {
-			myTeamList = teamService.getMyTeam(new Criteria(1, 100), login.getMemberId());
+			myTeamList = teamService.getMyTeam(cri, "jo");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
