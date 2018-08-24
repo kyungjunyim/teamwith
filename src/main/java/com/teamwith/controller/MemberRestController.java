@@ -23,7 +23,7 @@ import com.teamwith.vo.TeamSimpleVO;
 public class MemberRestController {
 	@Inject
 	private MemberService memberService;
-	
+
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<MemberSearchVO> member(Criteria cri, String[] region, String[] project, String[] role, String[] skill,
@@ -33,7 +33,8 @@ public class MemberRestController {
 			cri = new Criteria();
 		}
 
-		if (region == null && project == null && role == null && skill == null && (keyword==null||keyword.trim().equals(""))) {
+		if (region == null && project == null && role == null && skill == null
+				&& (keyword == null || keyword.trim().equals(""))) {
 
 			return memberService.getRecentMember(cri);
 		}
@@ -155,30 +156,31 @@ public class MemberRestController {
 					}
 				}
 			}
+			if (keyword != null) {
+				if (!keyword.trim().equals("")) {
+					Criteria textCri = new Criteria();
+					textCri.addCriteria("memberName", keyword.trim());
+					memberIdListByKeyword = memberService.getMemberIdByCondition(textCri);
 
-			if (!keyword.trim().equals("")) {
-				Criteria textCri = new Criteria();
-				textCri.addCriteria("memberName", keyword.trim());
-				memberIdListByKeyword = memberService.getMemberIdByCondition(textCri);
-
-				if (memberIdListByKeyword != null) {
-					if (resultIdList == null) {
-						resultIdList = new ArrayList<String>();
-						for (String teamId : memberIdListByKeyword) {
-							if (!resultIdList.contains(teamId)) {
-								resultIdList.add(teamId);
-							}
-						}
-					} else {
-						for (int i = 0; i < resultIdList.size(); i++) {
-							boolean flag = false;
-							for (int j = 0; j < memberIdListByKeyword.size(); j++) {
-								if (resultIdList.get(i).equals(memberIdListByKeyword.get(j))) {
-									flag = true;
+					if (memberIdListByKeyword != null) {
+						if (resultIdList == null) {
+							resultIdList = new ArrayList<String>();
+							for (String teamId : memberIdListByKeyword) {
+								if (!resultIdList.contains(teamId)) {
+									resultIdList.add(teamId);
 								}
 							}
-							if (flag == false) {
-								resultIdList.set(i, "empty");
+						} else {
+							for (int i = 0; i < resultIdList.size(); i++) {
+								boolean flag = false;
+								for (int j = 0; j < memberIdListByKeyword.size(); j++) {
+									if (resultIdList.get(i).equals(memberIdListByKeyword.get(j))) {
+										flag = true;
+									}
+								}
+								if (flag == false) {
+									resultIdList.set(i, "empty");
+								}
 							}
 						}
 					}
