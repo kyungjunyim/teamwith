@@ -28,9 +28,7 @@ public class TeamRestController {
 		List<TeamSimpleVO> myTeamList = null;
 		HashMap<String,Object> result=new HashMap<String,Object>();
 		
-//		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
-		MemberSimpleVO login=new MemberSimpleVO();
-		login.setMemberId("jo");
+		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
 		try {
 			myTeamList = teamService.getMyTeam(new Criteria(1, 100), login.getMemberId());
 		} catch (Exception e) {
