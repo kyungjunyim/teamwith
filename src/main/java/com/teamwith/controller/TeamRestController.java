@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.TeamService;
 import com.teamwith.util.Criteria;
-import com.teamwith.vo.InterviewVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MyApplicationVO;
 import com.teamwith.vo.TeamSimpleVO;
@@ -35,9 +33,10 @@ public class TeamRestController {
 		List<TeamSimpleVO> myTeamList = null;
 		HashMap<String, Object> result = new HashMap<String, Object>();
 
-		// MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
+		MemberSimpleVO login=(MemberSimpleVO)session.getAttribute("memberSimpleVO");
+		
 		try {
-			myTeamList = teamService.getMyTeam(cri, "jo");
+			myTeamList = teamService.getMyTeam(cri, login.getMemberId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,11 +46,11 @@ public class TeamRestController {
 	
 	public Map<String, Object> joinedTeam(HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		//MemberSimpleVO login = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
-		//String loginId = login.getMemberId();
+		MemberSimpleVO login = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		String loginId = login.getMemberId();
 		List<TeamSimpleVO> result = new ArrayList<TeamSimpleVO>();
 		try {
-			List<String> teamIdList = applicationService.getJoinedTeamId("jo");
+			List<String> teamIdList = applicationService.getJoinedTeamId(loginId);
 			for (String teamId : teamIdList) {
 				TeamSimpleVO teamSimpleVO = teamService.getTeamSimple(teamId);
 				result.add(teamSimpleVO);
@@ -65,11 +64,11 @@ public class TeamRestController {
 	
 	public Map<String, Object> myApplicationList(HttpSession session) {
 		Map<String, Object> myApplicationList = new HashMap<String, Object>();
-		//memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
-		//String memberId = memberSimpleVO.getMemberId();
+		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		String memberId = memberSimpleVO.getMemberId();
 		
 		// 나의 지원 목록 가져오기
-		List<MyApplicationVO> myApplication = applicationService.getMyApplication("jo");
+		List<MyApplicationVO> myApplication = applicationService.getMyApplication(memberId);
 		
 		myApplicationList.put("myApplicationList", myApplication);
 
