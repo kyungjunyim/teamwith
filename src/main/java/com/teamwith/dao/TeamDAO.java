@@ -16,6 +16,7 @@ public interface TeamDAO {
 	public int updateTeam(TeamDTO team) throws Exception;
 	public List<TeamDTO> searchTeamByStatus(int teamStatus) throws Exception;
 	public List<TeamDTO> searchTeamByCondition(Criteria cri) throws Exception;
+	public List<TeamDTO> searchTeamByKeyword(Criteria cri) throws Exception;
 	public List<TeamDTO> searchTeamAll() throws Exception;
 	public List<String> getId() throws Exception;
 }

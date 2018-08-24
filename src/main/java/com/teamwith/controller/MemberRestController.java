@@ -190,7 +190,9 @@ public class MemberRestController {
 			for (String resultId : resultIdList) {
 				if (!resultId.equals("empty")) {
 					MemberSearchVO memberSearchVO = memberService.getMemberSearchInfo(resultId);
-					resultMemberList.add(memberSearchVO);
+					if (memberSearchVO != null) {
+						resultMemberList.add(memberSearchVO);
+					}
 				}
 			}
 			return resultMemberList;
