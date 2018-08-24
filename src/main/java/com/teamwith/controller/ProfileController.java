@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.teamwith.service.MemberService;
 import com.teamwith.service.ProfileService;
 import com.teamwith.vo.MemberProjectCategoryVO;
+import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberSkillVO;
 import com.teamwith.vo.MemberTendencyVO;
 import com.teamwith.vo.MemberVO;
@@ -42,8 +44,9 @@ public class ProfileController {
 	MemberService memberService;
 
 	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.GET)
-	public String profileEditView(@PathVariable(value = "memId") String memberId, Model model) {
+	public String profileEditView(HttpServletRequest req, @PathVariable(value = "memId") String memberId, Model model) {
 		try {
+		
 			MemberVO mem = profileService.getMyInfo(memberId);
 
 			List<String> projectCategory = memberService.getMemberProjectCategory(memberId);
@@ -81,14 +84,14 @@ public class ProfileController {
 				updateMemberInfo.setMemberPic(newFilename);
 			}
 			/* memberInfo */
-			
-	//		profileService.updateMemberInfo(updateMemberInfo);
+
+			// profileService.updateMemberInfo(updateMemberInfo);
 
 			MemberProjectCategoryVO pcVO = new MemberProjectCategoryVO(memberId, categoryId);
 			logger.info(pcVO.toString());
-	//		memberService.updateMemberProjectCategory(pcVO);
+			// memberService.updateMemberProjectCategory(pcVO);
 
-	//		memberService.updateMemberSkill(new MemberSkillVO(memberId, skill));
+			// memberService.updateMemberSkill(new MemberSkillVO(memberId, skill));
 
 			Map<String, String> tdMap = new HashMap<String, String>();
 			tdMap.put("tendency-1", tendency.getTendency1());
@@ -98,10 +101,10 @@ public class ProfileController {
 			tdMap.put("tendency-5", tendency.getTendency5());
 
 			MemberTendencyVO memberTendency = new MemberTendencyVO(memberId, tdMap);
-	//		profileService.updateMemberTendency(memberTendency);
-			
-			profileService.updateMemberAllInfo(memberService,updateMemberInfo,pcVO,new MemberSkillVO(memberId, skill),memberTendency);
-			
+			// profileService.updateMemberTendency(memberTendency);
+
+			profileService.updateMemberAllInfo(memberService, updateMemberInfo, pcVO,
+					new MemberSkillVO(memberId, skill), memberTendency);
 
 		} catch (Exception e) {
 			e.printStackTrace();

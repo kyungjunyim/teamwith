@@ -4,25 +4,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.core.env.SystemEnvironmentPropertySource;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.MemberService;
+import com.teamwith.service.ProfileService;
 import com.teamwith.util.Criteria;
 import com.teamwith.vo.MemberSearchVO;
-import com.teamwith.vo.TeamSimpleVO;
+import com.teamwith.vo.MemberSimpleVO;
+import com.teamwith.vo.MemberVO;
 
 @RequestMapping("/api/member")
 @RestController
 public class MemberRestController {
 	@Inject
 	private MemberService memberService;
+
+	@Inject
+	private ProfileService profileService;
+
+	@ResponseBody
+	@RequestMapping(value = "/getEditInfo/{memberId}", method = RequestMethod.GET)
+	public MemberVO memberEditInfo(@PathVariable("memberId") String memberId, HttpServletRequest req) {
+		try {
+
+			MemberSimpleVO memSession = (MemberSimpleVO) req.getSession().getAttribute("memberSimpleVO");
+			System.out.println("sessionID: " + memSession.getMemberId());
+			return profileService.getMyInfo(memberId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/editInfo/{memberId}", method = RequestMethod.GET)
+	public int memberEditInfoProcess(@PathVariable("memberId") String memberId, String roleId, String regionId1,
+			String regionId2, String memberIntro, HttpServletRequest req) {
+
+		MemberSimpleVO memSession = (MemberSimpleVO) req.getSession().getAttribute("memberSimpleVO");
+		System.out.println("session MemberID: " + memSession.getMemberId());
+		MemberVO member = new MemberVO();
+		member.setMemberId(memberId);
+		member.setRoleId(roleId);
+		member.setRegionId1(regionId1);
+		member.setRegionId2(regionId2);
+		member.setMemberIntro(memberIntro);
+		try {
+			return profileService.updateMemberInfo(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.GET)

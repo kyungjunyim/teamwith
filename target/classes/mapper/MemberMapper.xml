@@ -66,12 +66,17 @@
 			member_pic=
 			#{memberPic},
 		</if>
-		member_phone=#{memberPhone},
-		member_public=#{memberPublic},
-		member_intro=#{memberIntro},
-		role_id=#{roleId}, region_id_1 =
-		#{regionId1},
-		region_id_2=#{regionId2} WHERE member_id=#{memberId}
+		<if test="memberPhone!=null">
+		member_phone = #{memberPhone},
+		</if>
+		<if test="memberPublic!=null">
+		member_public = #{memberPublic},
+		</if>
+		member_intro = #{memberIntro},
+		role_id = #{roleId}, 
+		region_id_1 = #{regionId1},
+		region_id_2 = #{regionId2} 
+		WHERE member_id = #{memberId}
 	</update>
 
 	<update id="updatePassword" parameterType="map">

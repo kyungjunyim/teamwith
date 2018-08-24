@@ -198,7 +198,7 @@ public class ProfileService {
 			return -1;
 		}
 		memberDAO.updateMember(member.toDTO());
-		return 0;
+		return 1;
 	}
 
 	@Transactional
