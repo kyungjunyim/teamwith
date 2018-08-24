@@ -40,7 +40,7 @@ public class TeamSearchRestController {
 			throws Exception {
 		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		teamId = "team-" + teamId;
-		HashMap result = new HashMap<String, Object>();
+		HashMap<String, Object> result = new HashMap<String, Object>();
 
 		boolean canApply = true;
 		TeamDetailVO teamInfo = teamService.getTeamInfo(teamId);
