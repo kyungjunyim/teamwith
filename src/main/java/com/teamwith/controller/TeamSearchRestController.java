@@ -246,7 +246,7 @@ public class TeamSearchRestController {
 		}
 		result.put("requireSkills", requireSkills);
 
-		if (teamMembers != null) {
+		if (teamMembers != null&&memberSimpleVO!=null) {
 			for (MemberSearchVO teamMember : teamMembers) {
 				if (teamMember.getMemberId().equals(memberSimpleVO.getMemberId())) {
 					canApply = false;
