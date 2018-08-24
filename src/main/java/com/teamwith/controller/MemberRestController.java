@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +30,12 @@ public class MemberRestController {
 	private ProfileService profileService;
 
 	@ResponseBody
-	@RequestMapping(value = "/getEditInfo/{memberId}", method = RequestMethod.GET)
-	public MemberVO memberEditInfo(@PathVariable("memberId") String memberId, HttpServletRequest req) {
+	@RequestMapping(value = "/getEditInfo", method = RequestMethod.GET)
+	public MemberVO memberEditInfo(HttpSession session, HttpServletRequest req) {
+		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		System.out.println(memberSimpleVO);
 		try {
-
-			return profileService.getMyInfo(memberId);
+			return profileService.getMyInfo(memberSimpleVO.getMemberId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
