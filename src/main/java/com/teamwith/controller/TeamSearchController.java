@@ -68,7 +68,8 @@ public class TeamSearchController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String teamSearch(HttpSession session, Model model, String[] region, String[] project, String[] role,
 			String[] skill, String textCondition, String keyword) throws Exception {
-		if (region == null && project == null && role == null && skill == null && keyword.trim().equals("")) {
+		if (region == null && project == null && role == null && skill == null
+				&& (keyword == null || keyword.trim().equals(""))) {
 			return teamSearch(session, model);
 		} else {
 			model.addAttribute("recentTeamList", null);
@@ -191,7 +192,7 @@ public class TeamSearchController {
 				}
 			}
 
-			if (!keyword.trim().equals("")) {
+			if (keyword != null && !keyword.trim().equals("")) {
 				Criteria textCri = new Criteria();
 				switch (textCondition) {
 				case "teamName":

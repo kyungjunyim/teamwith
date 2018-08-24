@@ -186,6 +186,18 @@ public class TeamService {
 
 		return result;
 	}
+	
+	public List<String> searchTeamByKeyword(Criteria cri) throws Exception {
+		List<String> result = new ArrayList<String>();
+
+		List<TeamDTO> list = teamDAO.searchTeamByKeyword(cri);
+
+		for (TeamDTO obj : list) {
+			result.add(obj.getTeamId());
+		}
+
+		return result;
+	}
 
 	public List<String> searchTeamByRoleSkill(Criteria cri) throws Exception {
 		List<String> result = new ArrayList<String>();
