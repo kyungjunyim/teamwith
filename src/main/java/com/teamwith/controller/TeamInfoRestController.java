@@ -18,7 +18,7 @@ import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.TeamSimpleVO;
 
 @RestController
-@RequestMapping("/api/teamInfo")
+@RequestMapping(value="/api/teamInfo")
 public class TeamInfoRestController {
 	@Inject
 	private TeamService teamService;
