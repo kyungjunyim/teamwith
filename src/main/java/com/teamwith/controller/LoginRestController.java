@@ -26,11 +26,11 @@ public class LoginRestController {
 	public Map<String, Object> login(@RequestBody Map<String, String> param, HttpSession session) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
 		memberSimpleVO = loginService.login(param.get("memberId"), param.get("memberPassword"));
-		session.setAttribute("memberSimpleVO", memberSimpleVO);
 		
 		if(memberSimpleVO == null) {
 			result.put("result", "false");
 		} else {
+			session.setAttribute("memberSimpleVO", memberSimpleVO);
 			result.put("result", "true");
 			result.put("memberSimpleVO", memberSimpleVO);
 		}
