@@ -165,6 +165,7 @@ public class PortfolioController {
 			String [] portfolioContentId,String [] deleteContent,
 			@ModelAttribute PortfolioVO portfolioVO,Model model,HttpSession session) {
 		portfolioVO.setPortfolioPic(oldPortfolioPic);
+
 		if(deleteContent!=null) {
 			for(String s:deleteContent) {
 				System.out.println("삭제 포폴컨텐츠 : "+s);
@@ -240,7 +241,7 @@ public class PortfolioController {
 						if(portfolioContentId!=null) {
 							if(i<portfolioContentId.length) {
 								portfolioContent.setPortfolioContentId(portfolioContentId[i]);
-								if(portfolioFile[fileIndex]!=null&&portfolioFile[fileIndex].getSize()!=0) {
+								if(portfolioFile[i]!=null&&portfolioFile[i].getSize()!=0) {
 									portfolioContent.setPortfolioContentValue(oldContentPpt[pptIndex]);
 									pptIndex++;
 								}
@@ -265,9 +266,9 @@ public class PortfolioController {
 					if(portfolioContent.getPortfolioContentId().equals("")) {
 						//새로등록
 						if((portfolioContent.getPortfolioContentName().equals("ppt")||portfolioContent.getPortfolioContentName().equals("image"))&&
-								portfolioFile.length>fileIndex&&portfolioFile[fileIndex]!=null&&portfolioFile[fileIndex].getSize()!=0) {
-							pologService.registerPortfolioContent(portfolioContent, portfolioFile[fileIndex], rootPath);
-							fileIndex=fileIndex+1;
+								portfolioFile.length>i&&portfolioFile[i]!=null&&portfolioFile[i].getSize()!=0) {
+							pologService.registerPortfolioContent(portfolioContent, portfolioFile[i], rootPath);
+//							fileIndex=fileIndex+1;
 						}else {
 							pologService.registerPortfolioContent(portfolioContent, null, rootPath);
 						}
@@ -279,7 +280,7 @@ public class PortfolioController {
 						if((portfolioContent.getPortfolioContentName().equals("ppt")||portfolioContent.getPortfolioContentName().equals("image"))&&
 								portfolioFile.length>fileIndex&&portfolioFile[fileIndex]!=null&&portfolioFile[fileIndex].getSize()!=0) {
 							pologService.updatePortfolioContent(portfolioContent,portfolioFile[fileIndex],rootPath);
-							fileIndex=fileIndex+1;
+//							fileIndex=fileIndex+1;
 						}else {
 							pologService.updatePortfolioContent(portfolioContent,null,rootPath);
 						}
