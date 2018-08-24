@@ -46,5 +46,14 @@ public class PortfolioSearchRestController {
 		
 		return map;
 	}
+	@ResponseBody
+	@RequestMapping(value="/member/{memberId}",method=RequestMethod.GET,produces = "application/json")
+	public Map<String,Object> searchMemberProtfolioList(@PathVariable String memberId,Model model) throws Exception{
+		Map<String, Object> map=new HashMap<String, Object>();
+		List<PortfolioSimpleVO> portfolioList=pologService.getPortfolioList(memberId,false);
+		map.put("portfolioList", portfolioList);
+		
+		return map;
+	}
 	
 }
