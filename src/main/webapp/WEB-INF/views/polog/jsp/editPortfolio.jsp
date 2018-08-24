@@ -140,7 +140,7 @@ $(function(){
 				+'<input type="hidden" name="portfolioContentName" value="ppt"/>'
 				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}
-		order=order+1;
+		order=parseInt(order+1);
 		if(index>-1&&index<4){
 			
 			var $layout=$('<li></li>');
