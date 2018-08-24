@@ -31,11 +31,12 @@ public class MemberRestController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getEditInfo", method = RequestMethod.GET)
-	public MemberVO memberEditInfo(HttpSession session, HttpServletRequest req) {
-		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
-		System.out.println(memberSimpleVO);
+
+	public MemberVO memberEditInfo(HttpSession session) {
 		try {
-			return profileService.getMyInfo(memberSimpleVO.getMemberId());
+			MemberSimpleVO member = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+			return profileService.getMyInfo(member.getMemberId());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -47,8 +48,6 @@ public class MemberRestController {
 	public int memberEditInfoProcess(@PathVariable("memberId") String memberId, String roleId, String regionId1,
 			String regionId2, String memberIntro, HttpServletRequest req) {
 
-		MemberSimpleVO memSession = (MemberSimpleVO) req.getSession().getAttribute("memberSimpleVO");
-		System.out.println("session MemberID: " + memSession.getMemberId());
 		MemberVO member = new MemberVO();
 		member.setMemberId(memberId);
 		member.setRoleId(roleId);
