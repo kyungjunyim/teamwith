@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.LoginService;
@@ -23,9 +23,10 @@ public class LoginRestController {
 	private MemberSimpleVO memberSimpleVO;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Map<String, Object> login(@RequestBody Map<String, String> param) throws Exception {
+	public Map<String, Object> login(@RequestBody Map<String, String> param, HttpSession session) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
 		memberSimpleVO = loginService.login(param.get("memberId"), param.get("memberPassword"));
+		session.setAttribute("memberSimpleVO", memberSimpleVO);
 		
 		if(memberSimpleVO == null) {
 			result.put("result", "false");
