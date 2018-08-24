@@ -33,8 +33,6 @@ public class MemberRestController {
 	public MemberVO memberEditInfo(@PathVariable("memberId") String memberId, HttpServletRequest req) {
 		try {
 
-			MemberSimpleVO memSession = (MemberSimpleVO) req.getSession().getAttribute("memberSimpleVO");
-			System.out.println("sessionID: " + memSession.getMemberId());
 			return profileService.getMyInfo(memberId);
 		} catch (Exception e) {
 			e.printStackTrace();
