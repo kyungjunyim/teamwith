@@ -31,10 +31,12 @@ public class MemberRestController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getEditInfo", method = RequestMethod.GET)
+
 	public MemberVO memberEditInfo(HttpSession session) {
 		try {
 			MemberSimpleVO member = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 			return profileService.getMyInfo(member.getMemberId());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
