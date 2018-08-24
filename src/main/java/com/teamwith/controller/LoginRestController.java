@@ -24,6 +24,8 @@ public class LoginRestController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Map<String, Object> login(@RequestBody Map<String, String> param, HttpSession session) throws Exception {
+		String sessionId = session.getId();
+		System.out.println(sessionId);
 		Map<String, Object> result = new HashMap<String, Object>();
 		memberSimpleVO = loginService.login(param.get("memberId"), param.get("memberPassword"));
 		
