@@ -28,6 +28,7 @@ import com.teamwith.service.MemberService;
 import com.teamwith.service.TeamService;
 import com.teamwith.util.Criteria;
 import com.teamwith.vo.FaqVO;
+import com.teamwith.vo.MemberRateVO;
 import com.teamwith.vo.MemberSearchVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberSkillVO;
@@ -261,8 +262,11 @@ public class TeamSearchController {
 
 		List<MemberSearchVO> teamMembers = applicationService.getTeamMember(teamId);
 		model.addAttribute("teamMembers", teamMembers);
-		
-		
+
+		// =================================================
+		List<MemberRateVO> recommendedMemberList = getRecommendedMember(teamId);
+		model.addAttribute("recommendedMemberList", recommendedMemberList);
+		// =================================================
 
 		List<RequireSkillVO> requireSkills = new ArrayList<RequireSkillVO>();
 		if (recruitInfo != null) {
@@ -274,7 +278,7 @@ public class TeamSearchController {
 
 		if (teamMembers != null) {
 			for (MemberSearchVO teamMember : teamMembers) {
-				if (teamMember.getMemberId().equals(memberSimpleVO.getMemberId())) {
+				if (memberSimpleVO == null || teamMember.getMemberId().equals(memberSimpleVO.getMemberId())) {
 					canApply = false;
 				}
 			}
@@ -304,6 +308,113 @@ public class TeamSearchController {
 		model.addAttribute("dDay", dDay);
 
 		return "teambuilding/jsp/teamDetail";
+	}
+
+	private List<MemberRateVO> getRecommendedMember(String teamId) throws Exception {
+		int skillCnt = 0;
+		List<String> teamRegionIdList = new ArrayList<String>();
+		List<String> teamCategoryIdList = new ArrayList<String>();
+		List<String> teamRoleIdList = new ArrayList<String>();
+		List<String> teamSkillIdList = new ArrayList<String>();
+		Map<String, Double> unsortedMemberList = new HashMap<String, Double>();
+		Map<String, Double> sortedMemberList = new HashMap<String, Double>();
+		List<MemberRateVO> recommendedMemberList = new ArrayList<MemberRateVO>();
+
+		// 팀 정보들을 불러오기
+		TeamDetailVO teamDetailVO = teamService.getTeamInfo(teamId);
+		List<RecruitVO> recruitVOs = teamService.getRecruitInfo(teamId);
+		teamRegionIdList.add(teamDetailVO.getRegionId());
+		teamCategoryIdList.add(teamDetailVO.getProjectCategoryId());
+		for (RecruitVO recruitVO : recruitVOs) {
+			if (!teamRoleIdList.contains(recruitVO.getRoleId())) {
+				teamRoleIdList.add(recruitVO.getRoleId());
+			}
+			List<RequireSkillVO> requireSkillVOs = teamService.getRequireSkills(recruitVO.getRecruitId());
+			for (RequireSkillVO requireSkillVO : requireSkillVOs) {
+				for (String skillId : requireSkillVO.getSkillIds()) {
+					if (!teamSkillIdList.contains(skillId)) {
+						teamSkillIdList.add(skillId);
+					}
+				}
+			}
+		}
+		skillCnt = teamSkillIdList.size();
+
+		// 지역을 기준으로 멤버 찾기
+		Criteria regionCri = new Criteria(1, 100);
+		regionCri.addCriteria("regionList", teamRegionIdList);
+		List<MemberSimpleVO> memberSimpleVOs = memberService.getMemberByRoleRegion(regionCri);
+		for (MemberSimpleVO memberSimpleVO : memberSimpleVOs) {
+			if (!unsortedMemberList.containsKey(memberSimpleVO.getMemberId())) {
+				unsortedMemberList.put(memberSimpleVO.getMemberId(), 1.0);
+			}
+		}
+
+		// 카테고리를 기준으로 멤버 찾기
+		List<String> memberIdListByCategory = memberService.getMemberByProjectCategoryId(teamCategoryIdList);
+		for (String memberId : memberIdListByCategory) {
+			if (unsortedMemberList.containsKey(memberId)) {
+				Double temp = unsortedMemberList.get(memberId);
+				unsortedMemberList.put(memberId, temp + 1.0);
+			}
+		}
+
+		// 역할을 기준으로 멤버 찾기
+		Criteria roleCri = new Criteria(1, 100);
+		roleCri.addCriteria("roleList", teamRoleIdList);
+		memberSimpleVOs.clear();
+		memberSimpleVOs = memberService.getMemberByRoleRegion(roleCri);
+		for (MemberSimpleVO memberSimpleVO : memberSimpleVOs) {
+			if (unsortedMemberList.containsKey(memberSimpleVO.getMemberId())) {
+				Double temp = unsortedMemberList.get(memberSimpleVO.getMemberId());
+				unsortedMemberList.put(memberSimpleVO.getMemberId(), temp + 1.0);
+			}
+		}
+		
+		// 기술을 기준으로 멤버 찾기
+		List<String> memberIdListBySkill = memberService.getMemberBySkillId(teamSkillIdList);
+		Map<String, Double> tempSkillMap = new HashMap<String, Double>();
+		for (String memberId : memberIdListBySkill) {
+			if (tempSkillMap.containsKey(memberId)) {
+				Double temp = tempSkillMap.get(memberId);
+				tempSkillMap.put(memberId, temp + 1.0);
+			} else {
+				tempSkillMap.put(memberId, 1.0);
+			}
+		}
+		Iterator<String> skillIterator = tempSkillMap.keySet().iterator();
+		while(skillIterator.hasNext()) {
+			String memberId = skillIterator.next();
+			if(unsortedMemberList.containsKey(memberId)) {
+				Double temp = unsortedMemberList.get(memberId);
+				temp = temp + (tempSkillMap.get(memberId) / skillCnt);
+				unsortedMemberList.put(memberId, temp);
+			}
+		}
+		
+		// 일치율을 기준으로 정렬하기
+		sortedMemberList = sortByComparator(unsortedMemberList);
+		
+		// 회원 정보를 저장하기
+		Iterator<String> sortIterator = sortedMemberList.keySet().iterator();
+		int iteratorCnt = 0;
+		while(sortIterator.hasNext()) {
+			if(iteratorCnt >= 5) break;
+			iteratorCnt++;
+			String memberId = sortIterator.next();
+			MemberSearchVO memberSearchVO = memberService.getMemberSearchInfo(memberId);
+			MemberRateVO memberRateVO = new MemberRateVO();
+			
+			memberRateVO.setMemberId(memberSearchVO.getMemberId());
+			memberRateVO.setMemberName(memberSearchVO.getMemberName());
+			memberRateVO.setRoleId(memberSearchVO.getRoleId());
+			memberRateVO.setMemberPic(memberSearchVO.getMemberPic());
+			memberRateVO.setRate(sortedMemberList.get(memberId) / 4 * 100);
+			
+			recommendedMemberList.add(memberRateVO);
+		}
+		
+		return recommendedMemberList;
 	}
 
 	private List<TeamSimpleVO> setRecentTeam() throws Exception {

@@ -26,14 +26,11 @@
 		</c:if>
 		<div class="row coworker_row">
 		<c:forEach items="${teamMembers }" var="member">
-			<form action="polog.do" method="post" id="${member.memberId }">
-				<input type="hidden" name="memberId" value="${member.memberId }">
-				<div id="teamMember" class="coworker_col" onclick="$('#${member.memberId}').submit()">
+				<div id="teamMember" class="coworker_col" onclick="location = '/polog/${member.memberId }'">
 					<div><img src="${member.memberPic }" class="team_detail_img_sm"></div>
 					<div><label class="coworker_text">${member.memberName }님</label></div>
 					<div><label class="coworker_text text_orange" style="font-size: 14px;">${applicationScope.roleList[member.roleId] }</label></div>
 				</div>
-			</form>
 		</c:forEach>
 		</div>
 	</div>
