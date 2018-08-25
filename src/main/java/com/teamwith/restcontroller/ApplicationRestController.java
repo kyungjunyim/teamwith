@@ -21,7 +21,6 @@ import com.teamwith.vo.InterviewVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MyApplicationVO;
 
-
 @RestController
 @RequestMapping("/api/application")
 public class ApplicationRestController {
@@ -35,8 +34,6 @@ public class ApplicationRestController {
 	public Map<String, Object> myApplication(HttpSession session) {
 		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		String memberId = memberSimpleVO.getMemberId();
-		System.out.println(memberId);
-		// String memberId = "yim";
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		// 나의 지원 목록 가져오기
@@ -55,8 +52,24 @@ public class ApplicationRestController {
 
 	}
 
+	@RequestMapping(value = "/cancel/{applicationId}", method = RequestMethod.GET)
+	public String cancel(@PathVariable("applicationId") String applicationId, HttpSession session) {
+		System.out.println("취소하러 왓냐");
+		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		String memberId = memberSimpleVO.getMemberId();
+		for (MyApplicationVO a : applicationService.getMyApplication(memberId)) {
+			if (a.getApplicationId().equals(applicationId)) {
+				applicationService.changeApplicationStatus(3, applicationId);
+				return "\"result\":\"true\"";
+			}
+		}
+
+		return "\"result\":\"false\"";
+	}
+
 	@RequestMapping(value = "/apply/{teamId}", method = RequestMethod.POST)
-	public Boolean apply(@PathVariable("teamId") String teamId, @RequestBody Map<String, Object> param, HttpSession session) {
+	public Boolean apply(@PathVariable("teamId") String teamId, @RequestBody Map<String, Object> param,
+			HttpSession session) {
 		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		String roleId = (String) param.get("roleId");
 		String applicationFreewriting = (String) param.get("applicationFreewriting");
