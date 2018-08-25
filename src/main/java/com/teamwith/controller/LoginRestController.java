@@ -37,6 +37,12 @@ public class LoginRestController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public void logout(HttpSession session) {
+		// 세션 무효화
+		session.invalidate();
+	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public void logout(HttpSession session) {
