@@ -1,4 +1,4 @@
-package com.teamwith.controller;
+package com.teamwith.restcontroller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +39,6 @@ public class LoginRestController {
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public void logout(HttpSession session) {
-		// 세션 무효화
-		session.invalidate();
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public void logout(HttpSession session) {
 		// 세션 무효화
 		session.invalidate();

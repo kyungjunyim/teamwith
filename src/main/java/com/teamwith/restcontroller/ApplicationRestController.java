@@ -1,6 +1,7 @@
-package com.teamwith.controller;
+package com.teamwith.restcontroller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,16 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.ApplicationService;
 import com.teamwith.vo.ApplicationVO;
 import com.teamwith.vo.InterviewVO;
 import com.teamwith.vo.MemberSimpleVO;
-
 import com.teamwith.vo.MyApplicationVO;
 
 

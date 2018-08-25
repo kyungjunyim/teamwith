@@ -1,4 +1,4 @@
-package com.teamwith.controller;
+package com.teamwith.restcontroller;
 
 import java.util.ArrayList;
 import java.util.List;
