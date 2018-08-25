@@ -19,41 +19,61 @@ import com.teamwith.vo.PortfolioSimpleVO;
 import com.teamwith.vo.PortfolioVO;
 
 @RestController
-@RequestMapping(value="/api/portfolioSearch")
+@RequestMapping(value = "/api/portfolioSearch")
 public class PortfolioSearchRestController {
-	
+
 	@Inject
 	PologService pologService;
-	
+
 	@ResponseBody
-	@RequestMapping(value="/{portfolioId}",  method=RequestMethod.GET,produces = "application/json")
-	public Map<String,Object> searchPortfolio(@PathVariable("portfolioId") String portfolioId,Model model)
-	 						throws Exception{
-		portfolioId="portfolio-"+portfolioId;
-		Map<String,Object> result=new HashMap<String,Object>();
-		PortfolioVO portfolio=pologService.getPortfolio(portfolioId);
-		
+	@RequestMapping(value = "/{portfolioId}", method = RequestMethod.GET, produces = "application/json")
+	public Map<String, Object> searchPortfolio(@PathVariable("portfolioId") String portfolioId) throws Exception {
+		portfolioId = "portfolio-" + portfolioId;
+		Map<String, Object> result = new HashMap<String, Object>();
+		PortfolioVO portfolio = pologService.getPortfolio(portfolioId);
+
 		result.put("portfolio", portfolio);
 		return result;
 	}
+
 	@ResponseBody
-	@RequestMapping(value="/",method=RequestMethod.GET,produces = "application/json")
-	public Map<String,Object> searchProtfolioList(Model model) throws Exception{
-		Criteria cri=new Criteria();
-		Map<String, Object> map=new HashMap<String, Object>();
-		List<PortfolioSimpleVO> portfolioList=pologService.getRecentPortfolio(cri);
+	@RequestMapping(value = "/recent", method = RequestMethod.GET, produces = "application/json")
+	public Map<String, Object> searchProtfolioRecentList(Criteria cri) throws Exception {
+		if (cri == null) {
+			cri = new Criteria();
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<PortfolioSimpleVO> portfolioList = pologService.getRecentPortfolio(cri);
 		map.put("portfolioList", portfolioList);
-		
+
 		return map;
 	}
+
 	@ResponseBody
-	@RequestMapping(value="/member/{memberId}",method=RequestMethod.GET,produces = "application/json")
-	public Map<String,Object> searchMemberProtfolioList(@PathVariable String memberId,Model model) throws Exception{
-		Map<String, Object> map=new HashMap<String, Object>();
-		List<PortfolioSimpleVO> portfolioList=pologService.getPortfolioList(memberId,false);
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+	public Map<String, Object> searchProtfolioList(Criteria cri, String[] project, String keyword) throws Exception {
+		if (cri == null) {
+			cri = new Criteria();
+		}
+		cri.addCriteria("projectCategory", project);
+		if (keyword != null && !keyword.trim().equals("")) {
+			cri.addCriteria("portfolioTitle", keyword);
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<PortfolioSimpleVO> portfolioList = pologService.searchPortfolio(cri);
 		map.put("portfolioList", portfolioList);
-		
+
 		return map;
 	}
-	
+
+	@ResponseBody
+	@RequestMapping(value = "/member/{memberId}", method = RequestMethod.GET, produces = "application/json")
+	public Map<String, Object> searchMemberProtfolioList(@PathVariable String memberId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<PortfolioSimpleVO> portfolioList = pologService.getPortfolioList(memberId, false);
+		map.put("portfolioList", portfolioList);
+
+		return map;
+	}
+
 }

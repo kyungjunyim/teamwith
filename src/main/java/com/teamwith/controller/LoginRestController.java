@@ -21,15 +21,14 @@ public class LoginRestController {
 	private LoginService loginService;
 	@Inject
 	private MemberSimpleVO memberSimpleVO;
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Map<String, Object> login(@RequestBody Map<String, String> param, HttpSession session) throws Exception {
 		String sessionId = session.getId();
-		System.out.println(sessionId);
 		Map<String, Object> result = new HashMap<String, Object>();
 		memberSimpleVO = loginService.login(param.get("memberId"), param.get("memberPassword"));
-		
-		if(memberSimpleVO == null) {
+
+		if (memberSimpleVO == null) {
 			result.put("result", "false");
 		} else {
 			session.setAttribute("memberSimpleVO", memberSimpleVO);
@@ -40,6 +39,12 @@ public class LoginRestController {
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public void logout(HttpSession session) {
+		// 세션 무효화
+		session.invalidate();
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public void logout(HttpSession session) {
 		// 세션 무효화
 		session.invalidate();
