@@ -203,6 +203,7 @@ public class ApplicationService {
 					teamMember.setMemberId(applicant.getMemberId());
 					teamMember.setMemberName(applicant.getMemberName());
 					teamMember.setMemberPic(applicant.getMemberPic());
+					teamMember.setRoleId(applicant.getRoleId());
 					result.add(teamMember);
 				}
 			}

@@ -261,6 +261,8 @@ public class TeamSearchController {
 
 		List<MemberSearchVO> teamMembers = applicationService.getTeamMember(teamId);
 		model.addAttribute("teamMembers", teamMembers);
+		
+		
 
 		List<RequireSkillVO> requireSkills = new ArrayList<RequireSkillVO>();
 		if (recruitInfo != null) {
