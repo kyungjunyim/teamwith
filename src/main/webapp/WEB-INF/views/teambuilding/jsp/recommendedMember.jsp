@@ -17,19 +17,45 @@
 </head>
 <body>
 	<div class="team_detail_row team_detail_content_interval">
-		<div class="row team_detail_row_title team_detail_title_content_font">추천 팀원</div>
-		<form action="polog.do" method="post" id="teamMember1">
-			<input type="hidden" name="memberId" value="hwang">				
-		<div id="teamMember" class="row team_detail_row_detail team_detail_row_text team_detail_hover_opacity team_detail_content_interval team_detail_leader_effect" onclick="$('#teamMember1').submit()">
-			<img src="/resources/image/member/hwang.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">조란 기획자 </label><label class="text_orange team_detail_img_small_text">일치율: 89%</label>
+		<div class="team_detail_row_title team_detail_title_content_font">추천 팀원</div>
+		<div class="row coworker_row">
+			<form action="polog.do" method="post" id="hwang">
+				<input type="hidden" name="memberId" value="hwang">
+				<div id="teamMember" class="coworker_col" onclick="$('#${member.memberId}').submit()">
+					<div><img src="/resources/image/member/hwang.jpg" class="team_detail_img_sm"></div>
+					<div><label class="coworker_text">황규진님</label></div>
+					<div><label class="coworker_text text_orange">일치율 89%</label></div>
+					<div><label class="coworker_text" style="font-size: 14px;">개발자</label></div>
+				</div>
+			</form>
+			<form action="polog.do" method="post" id="hwang">
+				<input type="hidden" name="memberId" value="hwang">
+				<div id="teamMember" class="coworker_col" onclick="$('#${member.memberId}').submit()">
+					<div><img src="/resources/image/member/hwang.jpg" class="team_detail_img_sm"></div>
+					<div><label class="coworker_text">황규진님</label></div>
+					<div><label class="coworker_text text_orange">일치율 89%</label></div>
+					<div><label class="coworker_text" style="font-size: 14px;">개발자</label></div>
+				</div>
+			</form>
+			<form action="polog.do" method="post" id="hwang">
+				<input type="hidden" name="memberId" value="hwang">
+				<div id="teamMember" class="coworker_col" onclick="$('#${member.memberId}').submit()">
+					<div><img src="/resources/image/member/hwang.jpg" class="team_detail_img_sm"></div>
+					<div><label class="coworker_text">황규진님</label></div>
+					<div><label class="coworker_text text_orange">일치율 89%</label></div>
+					<div><label class="coworker_text" style="font-size: 14px;">개발자</label></div>
+				</div>
+			</form>
+			<form action="polog.do" method="post" id="hwang">
+				<input type="hidden" name="memberId" value="hwang">
+				<div id="teamMember" class="coworker_col" onclick="$('#${member.memberId}').submit()">
+					<div><img src="/resources/image/member/hwang.jpg" class="team_detail_img_sm"></div>
+					<div><label class="coworker_text">황규진님</label></div>
+					<div><label class="coworker_text text_orange">일치율 89%</label></div>
+					<div><label class="coworker_text" style="font-size: 14px;">개발자</label></div>
+				</div>
+			</form>									
 		</div>
-		</form>
-		<form action="/teamwith/polog/jsp/polog.do" method="post" id="teamMember2">
-			<input type="hidden" name="memberId" value="kim">
-		<div class="row team_detail_row_detail team_detail_row_text team_detail_hover_opacity team_detail_content_interval team_detail_leader_effect" onclick="$('#teamMember2').submit()">
-			<img src="/resources/image/member/kim.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">임경준 디자이너 </label><label class="text_orange team_detail_img_small_text">일치율: 13%</label>
-		</div>
-		</form>
 	</div>
 </body>
 </html>

@@ -9,250 +9,234 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 	$('document').ready(function(e){
-		$('#deleteBtn').click(function(e){
-			location.href="/team/remove/${fn:substringAfter(teamInfo.teamId, 'team-')}";
-		});
 		$('#updateBtn').click(function(e){
 			location.href="/teamInfo/edit/${fn:substringAfter(teamInfo.teamId, 'team-')}";
 		});
+		$(".overlap_recruit").click(function(e) {
+			var id = this.id.substring(11);
+			$("#applyTry" + id).click();
+		})
 	});
 </script>
 </head>
 <body>
+	<!-- 팀 상세 정보 페이지 시작 -->
 	<div class="col-xs-6 col_content team_detail_text_font">
-		<div
-			class="row team_detail_row team_detail_row_content team_detail_box_content team_detail_main">
-			<div class="team_detail_interval row team_detail_row ">
+		<div class="row team_detail_row team_detail_row_content team_detail_box_content team_detail_main">
+			<!-- 팀 간략 정보 시작 -->
+			<div class="row team_detail_interval team_detail_row">
+				<!-- 팀 사진 시작 -->
 				<div class="col">
 					<img class="team_detail_img_big" src="${teamInfo.teamPic }">
 				</div>
+				<!-- 팀 사진 끝 -->
+				<!-- 팀 정보(팀명, 분야 등) 시작 -->
 				<div class="col team_detail_main_text">
+					<div>
+						<label class="teamDetail">[ ${applicationScope.projectList[teamInfo.projectCategoryId] } </label> &nbsp;&nbsp;/&nbsp;
+						<label class="teamDetail">${applicationScope.regionList[teamInfo.regionId] } ]</label>
+					</div>				
 					<div>
 						<label class="teamDetail">${teamInfo.teamProjectName }</label>
 					</div>
 					<div>
-						<label>${teamInfo.teamName } 팀</label>
+						<label class="teamDetail text_orange" >${teamInfo.teamName } 팀</label>
+					</div>
+					<div style="line-height: 30px; margin-top: 11px; text-align: center">
+						<c:if test="${teamInfo.teamStatus eq 0 || dDay > 0}">
+							<label class="label_dDay_text text_blue">모집 중</label>&nbsp;&nbsp;<label class="label_dDay">D-${dDay}</label>
+						</c:if>
+						<c:if test="${teamInfo.teamStatus eq 1 || dDay < 0 }">
+							<label class="label_dDay_text">모집 완료</label>
+						</c:if>
 					</div>
 				</div>
-				<c:if
-					test="${sessionScope.memberSimpleVO.memberId eq requestScope.teamInfo.memberId }">
+				<!-- 팀 정보(팀명, 분야 등) 끝 -->
+				<c:if test="${sessionScope.memberSimpleVO.memberId eq requestScope.teamInfo.memberId }">
 					<div class="col team_detail_button_height">
 						<div>
-							<button type="button"
-								class="btn team_detail_btn btn-md team_detail_btn_color" id="updateBtn">정보
-								수정</button>
-							<button type="button"
-								class="btn team_detail_btn btn-md team_detail_btn_color"
-								data-toggle="modal" data-target="#deleteModal"
-								style="color: red;">팀 삭제</button>
-							<!-- 팀 삭제 모달 -->
-							<div class="modal team_detail_modal_font" id="deleteModal">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header team_detail_modal_title">주의</div>
-										<!-- Modal body -->
-										<div class="modal-body">
-											<div class="row team_detail_row_text">팀 삭제시 되돌릴 수 없습니다.</div>
-											<div
-												class="row team_detail_row_text team_detail_text_color_red">정말
-												삭제하시겠습니까?</div>
-											<div class="row">
-												<button type="button"
-													class="btn team_detail_btn btn-mid team_detail_btn_submit team_detail_modal_btn_position"
-													data-dismiss="modal">취소</button>
-												<button id="deleteBtn" type="button"
-													class="btn team_detail_btn btn-mid team_detail_btn_submit team_detail_modal_btn_position">확인</button>
+							<button type="button" class="btn team_detail_btn btn-md team_detail_btn_color btn_apply_member" id="myApplicants" onclick="location='/teamInfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }'">지원자 보기</button>
+							<button type="button" class="btn team_detail_btn btn-md team_detail_btn_color" id="updateBtn">정보 수정</button>
+						</div>
+						<div>
+							<c:if test="${sessionScope.memberSimpleVO.memberId eq requestScope.teamInfo.memberId }">
+								<c:if test="${teamInfo.teamStatus eq 0 }">
+									<button type="button" class="btn team_detail_btn btn-md team_detail_btn_color" data-toggle="modal" data-target="#closeModal">모집 완료</button>
+									<div class="modal fade bd-example-modal-sm"	id="closeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+										<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title text_orange"	id="exampleModalLongTitle">
+														<img src="/resources/image/logo/logoText.png" class="title_logo_text">
+													</h5>
+												</div>
+												<div class="modal-body modal_text">
+													모집 완료시 되돌릴 수 없습니다.<br />
+													정말 모집을 완료하시겠습니까?
+												</div>
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-md btn_color_small btn_apply_join" onclick="location='/team/close/${fn:substringAfter(teamInfo.teamId, 'team-') }'">확인</button>
+													<button type="button" class="btn btn-md btn_color_small" data-dismiss="modal">취소</button>
+												</div>
 											</div>
+										</div>
+									</div>								
+								</c:if>
+								<c:if test="${teamInfo.teamStatus eq 1 }">
+									<button type="button" class="btn btn-md team_detail_btn_disable" disabled>모집 완료</button>
+								</c:if>
+							</c:if>
+							<button type="button" class="btn team_detail_btn btn-md team_detail_btn_color" data-toggle="modal" data-target="#deleteModal" style="color: red;">팀 삭제</button>
+							<div class="modal fade bd-example-modal-sm"	id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title text_orange"	id="exampleModalLongTitle">
+												<img src="/resources/image/logo/logoText.png" class="title_logo_text">
+											</h5>
+										</div>
+										<div class="modal-body modal_text">
+											팀 삭제시 되돌릴 수 없습니다.<br />
+											정말 삭제하시겠습니까?
+										</div>
+										<div class="modal-footer">
+											<button type="submit" class="btn btn-md btn_color_small btn_apply_join" onclick="location = '/team/remove/${fn:substringAfter(teamInfo.teamId, 'team-') }'">확인</button>
+											<button type="button" class="btn btn-md btn_color_small" data-dismiss="modal">취소</button>
 										</div>
 									</div>
 								</div>
-							</div>
-							<!-- 팀 삭제 모달 끝 -->
+							</div>		
 						</div>
-						<!-- 지원자 보기 버튼 -->
+					</div>
+				</c:if>
+				<c:if test="${sessionScope.memberSimpleVO.memberId ne requestScope.teamInfo.memberId }">
+				<div class="team_leader_info">
+					<div class="col">
+						<img src="${teamInfo.memberPic }" class="team_detail_img_mid">
+					</div>
+					<div style="line-height: 25px;">
 						<div>
-							<button type="button"
-								class="btn team_detail_btn btn-md team_detail_btn_color btn_apply_member"
-								id="myApplicants"
-								onclick="location='/teamInfo/applicant/${fn:substringAfter(teamInfo.teamId, 'team-') }'">지원자보기</button>
+							<label class="label_team_leader text_orange">팀장</label><label class="label_team_leader text_blue">&nbsp;${teamInfo.memberName }님</label>
 						</div>
-						<!-- 지원자 보기 버튼 끝 -->
-					</div>
-				</c:if>
-			</div>
-			<!-- 팀에 대한 정보 -->
-			<div class="row team_detail_row team_detail_leader">
-				<div class="team_detail_opacity_height team_detail_hover_opacity" onclick="/polog/${teamInfo.memberId }">
-					
-					<div class="col team_detail_leader_effect">
-						<div class="row team_detail_leader_width" id="leader">
-							<div class="col">
-								<img src="${teamInfo.memberPic }" class="team_detail_img_mid">
-							</div>
-							<div class="col team_detail_button_height">
-								<div>
-									<label class="text_orange">팀장</label> ${teamInfo.memberName } 님
-								</div>
-								<div>${applicationScope.roleList[teamInfo.roleId] }</div>
-							</div>
+						<div>
+							<label class="label_team_leader text_blue">${applicationScope.roleList[teamInfo.roleId] }</label>
 						</div>
 					</div>
 				</div>
-				<div class="col team_detail_sub">
-					<div style="margin-top: 10px">
-						<div>${applicationScope.projectList[teamInfo.projectCategoryId] }</div>
-						<div>${applicationScope.regionList[teamInfo.regionId] }
-							&nbsp;&nbsp;&nbsp;
-							<c:if test="${teamInfo.teamStatus eq 0 }">모집 중 &nbsp;&nbsp;&nbsp;D${dDay}</c:if>
-							<c:if test="${teamInfo.teamStatus eq 1 }">모집 완료</c:if>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 팀에 대한 정보 끝 -->
-
-			<!-- 지원하기, 모집완료 버튼! -->
-			<div class="row team_detail_row team_detail_interval">
-				<c:if
-					test="${sessionScope.memberSimpleVO.memberId eq requestScope.teamInfo.memberId }">
-					<c:if test="${teamInfo.teamStatus eq 0 }">
-						<button id="closeBtn" type="button"
-							class="btn team_detail_btn btn-md team_detail_btn_submit team_detail_btn_center"
-							onclick="location='/team/close/${fn:substringAfter(teamInfo.teamId, 'team-') }'">모집
-							완료</button>
-					</c:if>
 				</c:if>
 			</div>
-			<!-- 지원하기, 모집완료 버튼 끝 -->
-
+			<!-- 팀 간략 정보 끝 -->
+			
 			<div class="team_detail_row team_detail_content_interval">
-				<div
-					class="row team_detail_row_title team_detail_title_content_font">팀
-					개요</div>
-				<div class="row team_detail_row_text">${teamInfo.teamSummary }</div>
+				<div class="team_detail_row_title team_detail_title_content_font">팀 개요</div>
+				<div class="team_detail_row_text">${teamInfo.teamSummary }</div>
 			</div>
 			<div class="team_detail_row team_detail_content_interval">
-				<div
-					class="row team_detail_row_title team_detail_title_content_font">팀
-					소개</div>
-				<div class="row team_detail_row_text">${teamInfo.teamContent }</div>
+				<div class="team_detail_row_title team_detail_title_content_font">팀 소개</div>
+				<div class="team_detail_row_text">${teamInfo.teamContent }</div>
 			</div>
 			<hr class="team_detail_my_hr">
+			
 			<c:if test="${not empty recruitInfo }">
-				<div class="team_detail_row team_detail_content_interval">
-					<div
-						class="row team_detail_row_title team_detail_title_content_font">모집
-						팀원</div>
+				<div class="team_detail_row team_deail_content_interval" style="margin-bottom: 0px;">
+					<div class="team_detail_row_title team_detail_title_content_font">모집 팀원</div>
 				</div>
 				<c:forEach items="${recruitInfo}" var="recruit">
-					<div class="team_detail_row team_detail_content_interval">
-						<div class="row team_detail_row_text">모집 역할 :
-							${applicationScope.roleList[recruit.roleId]}</div>
-						<div class="row team_detail_row_text">모집 인원 :
-							${recruit.recruitPeopleNum }</div>
+				<c:choose>
+					<c:when test="${sessionScope.memberSimpleVO.memberId ne requestScope.teamInfo.memberId && canApply == true }">
+						<div class="team_detail_row team_detail_content_interval team_detail_recruit_effect">
+							<div class="overlap_recruit" id="recruit_div${recruit.recruitId }">
+								<div class="overlap_text">지원하기</div>
+							</div>
+							<button type="button" data-toggle="modal" data-target="#applyModal${recruit.recruitId }" id="applyTry${recruit.recruitId }" style="display: none;"></button>
+								<!-- 지원하기 모달 -->
+							<div class="modal fade bd-example-modal-sm" id="applyModal${recruit.recruitId }" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+									<div class="modal-content">
+										<form action="/application/apply/${fn:substringAfter(teamInfo.teamId, 'team-') }" method="post">
+											<input type="hidden" name="recruitId" value="${recruit.recruitId}">
+											<input type="hidden" name="roleId" value="${recruit.roleId}">				
+											<div class="modal-header">
+												<h5 class="modal-title text_orange" id="exampleModalLongTitle">지원하기</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<label class="recruit_label">지원 분야 : ${applicationScope.roleList[recruit.roleId] }</label>
+											</div>
+											<c:if test="${not empty interviewInfo }">
+											<div class="modal-header">
+												<h5 class="modal-title text_orange" id="exampleModalLongTitle">간단 면접</h5>
+											</div>
+											<div class="modal-body">
+												<c:forEach items="${interviewInfo }" var="interview">
+													<input type="hidden" name="interviewQuestionId" value="${interview.interviewQuestionId }">
+													<div class="recruit_label">Q: ${interview.interviewQuestionContent }</div>
+													<textarea class="recruit_input" id="interviewAnswer" name="interviewAnswer" rows="3"></textarea><br>
+												</c:forEach>
+											</div>				
+											</c:if>
+											<div class="modal-header">
+												<h5 class="modal-title text_orange" id="exampleModalLongTitle">하고 싶은 말</h5>
+											</div>					
+											<div class="modal-body">
+												<div class="recruit_label">팀장에게 하고 싶은 말을 입력하세요</div>
+												<textarea class="recruit_input" id="freewriting" name="applicationFreewriting" rows="3"></textarea><br>
+											</div>					
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-md btn_submit"	style="margin: auto;">지원하기</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>								
+					</c:when>
+					<c:otherwise>
+						<div class="team_detail_row team_detail_content_interval team_detail_recruit">
+					</c:otherwise>
+				</c:choose>
+						<div class="team_detail_row_text team_recruit_text">모집 역할 : ${applicationScope.roleList[recruit.roleId]}</div>			
+						<div class="team_detail_row_text team_recruit_text">모집 인원 : ${recruit.recruitPeopleNum }</div>
 						<c:if test="${not empty recruit.recruitPreference }">
-							<div class="row team_detail_row_text">우대 조건 :
-								${recruit.recruitPreference }</div>
+							<div class="team_detail_row_text team_recruit_text">우대 조건 : ${recruit.recruitPreference }</div>
 						</c:if>
 						<c:if test="${not empty recruit.recruitExplain }">
-							<div class="row team_detail_row_text">역할 설명 :
-								${recruit.recruitExplain }</div>
+							<div class="team_detail_row_text team_recruit_text">역할 설명 : ${recruit.recruitExplain }</div>
 						</c:if>
 						<c:if test="${not empty requireSkills }">
-							<div class="row team_detail_row_text">
+							<div class="team_detail_row_text team_recruit_text">
 								요구 기술 :
 								<c:forEach items="${requireSkills }" var="requireSkill">
 									<c:if test="${requireSkill.recruitId eq recruit.recruitId }">
 										<c:forEach items="${requireSkill.skillIds }" var="skillId">
-											<c:set value="${applicationScope.skillList[skillId] }"
-												var="skillName" />
-											${skillName[0] } &nbsp;
+											<c:set value="${applicationScope.skillList[skillId] }" var="skillName" />
+											<label class="label_dDay">${skillName[0] }</label> &nbsp;
 										</c:forEach>
 									</c:if>
 								</c:forEach>
 							</div>
 						</c:if>
-						<c:if
-							test="${sessionScope.memberSimpleVO.memberId ne requestScope.teamInfo.memberId }">
-							<c:if test="${canApply == true }">
-								<br>
-								<button type="button"
-									class="btn team_detail_btn btn-md team_detail_btn_submit team_detail_btn_center"
-									data-toggle="modal"
-									data-target="#applyModal${recruit.recruitId }" id="applyTry">지원하기</button>
-								<!-- 지원하기 모달 -->
-								<div class="modal team_detail_modal_font"
-									id="applyModal${recruit.recruitId }">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header team_detail_modal_title">지원하기</div>
-											<!-- Modal body -->
-											<div class="modal-body">
-												<form
-													action="/application/apply/${fn:substringAfter(teamInfo.teamId, 'team-') }"
-													method="post">
-													<input type="hidden" name="recruitId"
-														value="${recruit.recruitId}"> <input type="hidden"
-														name="roleId" value="${recruit.roleId}">
-													<div class="row team_detail_row_text">지원 분야 :
-														${applicationScope.roleList[recruit.roleId] }</div>
-													<c:if test="${not empty interviewInfo }">
-														<div class="row team_detail_row_text team_detail_interval">간단면접</div>
-														<c:forEach items="${interviewInfo }" var="interview">
-															<input type="hidden" name="interviewQuestionId"
-																value="${interview.interviewQuestionId }">
-															<div class="row team_detail_row_text team_detail_indent">Q:
-																${interview.interviewQuestionContent }</div>
-															<div class="row team_detail_row_text">
-																<textarea class="team_detail_textarea"
-																	id="interviewAnswer" name="interviewAnswer"></textarea>
-															</div>
-														</c:forEach>
-													</c:if>
-													<div
-														class="row team_detail_row_text team_detail_content_interval">하고싶은
-														말</div>
-													<div class="row team_detail_row_text">
-														<textarea class="team_detail_textarea" id="freewriting"
-															name="applicationFreewriting"></textarea>
-													</div>
-													<div class="row">
-														<button type="button"
-															class="btn btn-md team_detail_btn btn-mid team_detail_btn_submit team_detail_modal_btn_position"
-															data-dismiss="modal">취소</button>
-														<button type="submit" id="applyBtn"
-															class="btn btn-md team_detail_btn btn-mid team_detail_btn_submit team_detail_modal_btn_position">확인</button>
-													</div>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:if>
-						</c:if>
 					</div>
 				</c:forEach>
 			</c:if>
-			<hr class="team_detail_hr">
 			<div class="team_detail_row team_detail_content_interval">
 				<div
-					class="row team_detail_row_title team_detail_title_content_font">공모전
-					정보</div>
-				<div class="row team_detail_row_text">공모전 명
-					:${teamInfo.teamContestName }</div>
-				<div class="row team_detail_row_text">
-					공모전 url :&nbsp;&nbsp;<a href="${teamInfo.teamContestLink }">${teamInfo.teamContestLink }</a>
+					class="team_detail_row_title team_detail_title_content_font">공모전	정보</div>
+				<div class="team_detail_row_text">공모전 명 : ${teamInfo.teamContestName }</div>
+				<div class="team_detail_row_text">
+					공모전 url : <a href="${teamInfo.teamContestLink }">${teamInfo.teamContestLink }</a>
 				</div>
 			</div>
-			<hr class="team_detail_hr">
+			<hr class="team_detail_my_hr">
 			<jsp:include page="coworker.jsp" />
-			<hr class="team_detail_hr">
+			<hr class="team_detail_my_hr">
 			<jsp:include page="faq.jsp" />
-			<hr class="team_detail_hr">
+			<hr class="team_detail_my_hr">
 			<jsp:include page="recommendedMember.jsp" />
 		</div>
 	</div>
-	<!-- 내용끝 -->
+	<!-- 팀 상세 정보 페이지 끝 -->
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 </html>

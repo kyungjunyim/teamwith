@@ -3,8 +3,8 @@
 @font-face {
 	font-family: bmjua;
 	src: url(/resources/fonts/BMJUA.eot) format('embedded-opentype'),
-		url(/resources/fonts/BMJUA.woff) format('woff'), url(/resources/fonts/BMJUA.ttf)
-		format('truetype');
+		url(/resources/fonts/BMJUA.woff) format('woff'),
+		url(/resources/fonts/BMJUA.ttf) format('truetype');
 }
 
 @font-face {
@@ -17,7 +17,8 @@
 
 @font-face {
 	font-family: nanumSquareRound;
-	src: url(/resources/fonts/NanumSquareRoundEB.eot) format('embedded-opentype'),
+	src: url(/resources/fonts/NanumSquareRoundEB.eot)
+		format('embedded-opentype'),
 		url(/resources/fonts/NanumSquareRoundEB.woff) format('woff'),
 		url(/resources/fonts/NanumSquareRoundEB.ttf) format('truetype');
 	font-weight: bold;
@@ -105,8 +106,8 @@ body {
 }
 
 .footer_row {
-	width: 1100px; 
-	height: 100px; 
+	width: 1100px;
+	height: 100px;
 	margin: 0;
 }
 
@@ -125,6 +126,15 @@ body {
 
 .footer_logo_text {
 	height: 50px;
+}
+
+.label_footer {
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.label_footer:hover {
+	color: #ff4111;
 }
 
 .login_row {
@@ -181,15 +191,15 @@ body {
 }
 
 .login_col_register {
-	padding: 0; 
-	width: 109px; 
+	padding: 0;
+	width: 109px;
 	text-align: center;
 }
 
 .login_col_find {
-	 padding: 0; 
-	 width: 91px; 
-	 text-align: right;
+	padding: 0;
+	width: 91px;
+	text-align: right;
 }
 
 .login_col_link {
@@ -207,6 +217,7 @@ body {
 	font-size: 18px;
 	font-weight: bold;
 	margin: 10px;
+	margin-top: 20px;
 }
 
 .text_orange {
@@ -219,9 +230,7 @@ body {
 
 .side_container {
 	width: 230px;
-	position: fixed;
 	top: 110px;
-	margin-left: 870px;
 }
 
 .row_whole {
@@ -246,7 +255,7 @@ body {
 
 .main_container {
 	width: 860px;
-	margin-right: 10px;	
+	margin-right: 10px;
 }
 
 .main_portfolio_row_whole {
@@ -257,9 +266,9 @@ body {
 }
 
 .label_no_exist {
-	width: 740px; 
-	text-align: center; 
-	font-size: 18px; 
+	width: 740px;
+	text-align: center;
+	font-size: 18px;
 	color: #002b5a;
 }
 
@@ -267,7 +276,7 @@ body {
 	font-size: 12px;
 }
 
-.main_portfolio_col{
+.main_portfolio_col {
 	width: 105px;
 	margin: 0 5px;
 	padding: 10px;
@@ -322,7 +331,7 @@ body {
 	width: 85px;
 	text-align: center;
 	cursor: pointer;
-} 
+}
 
 .btn_more {
 	width: 140px;
@@ -361,17 +370,22 @@ body {
 	font-size: 16px;
 	margin: auto;
 	line-height: 40px;
-	text-align: center;	
+	text-align: center;
 }
 
 .btn_logout {
 	border-radius: 7px;
-	 border: 1px solid #002b5a; 
-	 background-color: white; 
-	 color: #002b5a; 
-	 cursor: pointer; 
-	 margin: 10px auto;
-	 font-size: 11px;
+	border: 1px solid #002b5a;
+	background-color: white;
+	color: #002b5a;
+	cursor: pointer;
+	margin: 10px auto;
+	font-size: 11px;
+}
+
+.btn_logout:hover {
+	color: #ffffff;
+	background-color: #002b5a;
 }
 
 .profile_row {
@@ -444,7 +458,7 @@ body {
 .register_input {
 	border-radius: 7px;
 	padding-left: 10px;
-	font-size: 18px;
+	font-size: 15px;
 	width: 270px;
 	color: #002b5a;
 }
