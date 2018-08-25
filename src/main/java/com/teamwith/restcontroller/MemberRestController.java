@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,9 +30,19 @@ public class MemberRestController {
 	@Inject
 	private ProfileService profileService;
 
+	
+	@ResponseBody
+	@RequestMapping(value="/bestMember",method=RequestMethod.GET)
+	public List<MemberSearchVO> getBestMember(Criteria cri) throws Exception{
+		System.out.println("bestMember");
+		List<MemberSearchVO> member=memberService.getBestMember(cri);
+		for(MemberSearchVO m:member)
+			System.out.println(m);
+		return member;
+	}
+	 
 	@ResponseBody
 	@RequestMapping(value = "/getEditInfo", method = RequestMethod.GET)
-
 	public MemberVO memberEditInfo(HttpSession session) {
 		try {
 			MemberSimpleVO member = (MemberSimpleVO) session.getAttribute("memberSimpleVO");

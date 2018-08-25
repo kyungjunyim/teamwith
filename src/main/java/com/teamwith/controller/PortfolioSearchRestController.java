@@ -1,5 +1,6 @@
 package com.teamwith.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +39,15 @@ public class PortfolioSearchRestController {
 
 	@ResponseBody
 	@RequestMapping(value = "/recent", method = RequestMethod.GET, produces = "application/json")
-	public Map<String, Object> searchProtfolioRecentList(Criteria cri) throws Exception {
+	public List<PortfolioSimpleVO> searchProtfolioRecentList(Criteria cri) throws Exception {
 		if (cri == null) {
 			cri = new Criteria();
 		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<PortfolioSimpleVO> portfolioList = pologService.getRecentPortfolio(cri);
-		map.put("portfolioList", portfolioList);
+		System.out.println("reccent");
+		List<PortfolioSimpleVO> list=pologService.getRecentPortfolio(cri);	
+		
 
-		return map;
+		return list;
 	}
 
 	@ResponseBody

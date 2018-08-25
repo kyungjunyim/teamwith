@@ -22,7 +22,7 @@
  		from (
  		select *
  		from portfolio_simple_view
- 		order by portfolio_update_date) A
+ 		order by portfolio_update_date desc) A
  		where rownum <![CDATA[<=]]>	${perPageNum*page}) B
  		where B.rnum <![CDATA[>=]]> ${((page-1)*10)+1}
 	</select>
