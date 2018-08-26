@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -97,6 +98,17 @@ public class ApplicationRestController {
 		applicationService.applyTeam(applicationVO, interviewAnswerList);
 
 		return true;
+	}
+
+	@RequestMapping(value = "/change/{applicationId}", method = RequestMethod.GET)
+	public Boolean change(@PathVariable("applicationId") String applicationId, @RequestParam("status") int status) {
+		applicationId = "application-" + applicationId;
+		int result = applicationService.changeApplicationStatus(status, applicationId);
+		if (result == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }
