@@ -9,9 +9,11 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.TeamService;
@@ -88,5 +90,17 @@ public class TeamRestController {
 		result.put("myApplicationList", myApplicationList.get("myApplicationList"));
 		
 		return result;
+	}
+	
+	@RequestMapping(value="/close/{teamId}",method=RequestMethod.GET)
+	public Boolean closeTeam(@PathVariable("teamId") String teamId,RedirectAttributes rttr) {
+		String key="team-"+teamId;
+		try {
+			teamService.changeTeamStatus(1, key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			rttr.addFlashAttribute("msg","error");
+		}
+		return true;
 	}
 }
