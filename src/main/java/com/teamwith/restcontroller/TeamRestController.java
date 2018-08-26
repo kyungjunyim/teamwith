@@ -32,13 +32,18 @@ public class TeamRestController {
 
 	@RequestMapping(value = "myTeam", method = RequestMethod.GET)
 	public HashMap<String, Object> myTeam(Criteria cri, HttpSession session) {
+
 		if (cri == null) {
 			cri = new Criteria();
 		}
 		List<TeamSimpleVO> myTeamList = null;
 		HashMap<String, Object> result = new HashMap<String, Object>();
-
 		MemberSimpleVO login = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		result.put("myTeamList", null);
+		if (login == null) {
+			return result;
+		}
+
 		System.out.println(login.getMemberId());
 		try {
 			myTeamList = teamService.getMyTeam(cri, login.getMemberId());
@@ -94,15 +99,15 @@ public class TeamRestController {
 
 		return result;
 	}
-	
-	@RequestMapping(value="/close/{teamId}",method=RequestMethod.GET)
-	public Boolean closeTeam(@PathVariable("teamId") String teamId,RedirectAttributes rttr) {
-		String key="team-"+teamId;
+
+	@RequestMapping(value = "/close/{teamId}", method = RequestMethod.GET)
+	public Boolean closeTeam(@PathVariable("teamId") String teamId, RedirectAttributes rttr) {
+		String key = "team-" + teamId;
 		try {
 			teamService.changeTeamStatus(1, key);
 		} catch (Exception e) {
 			e.printStackTrace();
-			rttr.addFlashAttribute("msg","error");
+			rttr.addFlashAttribute("msg", "error");
 		}
 		return true;
 	}
