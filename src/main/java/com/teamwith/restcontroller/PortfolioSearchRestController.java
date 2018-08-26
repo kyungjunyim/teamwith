@@ -39,15 +39,17 @@ public class PortfolioSearchRestController {
 
 	@ResponseBody
 	@RequestMapping(value = "/recent", method = RequestMethod.GET, produces = "application/json")
-	public List<PortfolioSimpleVO> searchProtfolioRecentList(Criteria cri) throws Exception {
+	public Map<String, Object> searchProtfolioRecentList(Criteria cri) throws Exception {
 		if (cri == null) {
 			cri = new Criteria();
 		}
-		System.out.println("reccent");
-		List<PortfolioSimpleVO> list=pologService.getRecentPortfolio(cri);	
+		System.out.println("recent");
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<PortfolioSimpleVO> list = pologService.getRecentPortfolio(cri);
+		map.put("portfolioList", list);
 
-		return list;
+		return map;
 	}
 
 	@ResponseBody
