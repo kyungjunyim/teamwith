@@ -32,21 +32,21 @@
 	</c:forEach>
 	</div>
 	</c:if>
-	
+	<!-- 페이징 처리 -->
 	<c:if test="${not empty resultMemberList }">
 		<div class="row best_member_row_whole">
-			<ul class="pagination member_search_pagination">
+			<ul class="pagination justify-content-center" style="margin: 0 auto;">
 				<c:choose>
 					<c:when test="${fn:length(resultMemberList) < 8 }">
-						<li><a href="#">1</a></li>
+						<li class="active page-item my_page_item"><a href="#" class="page-link my_page_link">1</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&raquo;</a></li>
+						<li class="active page-item my_page_item"><a href="#" class="page-link my_page_link">1</a></li>
+						<li class="page-item my_page_item"><a href="#" class="page-link my_page_link">2</a></li>
+						<li class="page-item my_page_item"><a href="#" class="page-link my_page_link">3</a></li>
+						<li class="page-item my_page_item"><a href="#" class="page-link my_page_link">4</a></li>
+						<li class="page-item my_page_item"><a href="#" class="page-link my_page_link">5</a></li>
+						<li class="page-item my_page_item"><a href="#" class="page-link my_page_link">&gt;&gt;</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
