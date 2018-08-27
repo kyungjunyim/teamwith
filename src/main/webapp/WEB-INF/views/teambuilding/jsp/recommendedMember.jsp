@@ -22,12 +22,14 @@
 		<div class="team_detail_row_title team_detail_title_content_font">추천 팀원</div>
 		<div class="row coworker_row">
 			<c:forEach items="${recommendedMemberList }" var="recommendedMember">
+				<c:if test="${teamInfo.memberId != recommendedMember.memberId }">
 				<div id="teamMember" class="coworker_col" onclick="location = '/polog/${recommendedMember.memberId }'">
 					<div><img src="${recommendedMember.memberPic }" class="team_detail_img_sm"></div>
 					<div><label class="coworker_text">${recommendedMember.memberName }님</label></div>
 					<div><label class="coworker_text text_orange">일치율 ${fn:substring(recommendedMember.rate, 0, 4) }%</label></div>
 					<div><label class="coworker_text" style="font-size: 14px;">${applicationScope.roleList[recommendedMember.roleId] }</label></div>
 				</div>
+				</c:if>
 			</c:forEach>
 		</div>
 	</div>
