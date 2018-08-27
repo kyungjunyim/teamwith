@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.PologService;
+import com.teamwith.service.ProfileService;
 import com.teamwith.util.Criteria;
+import com.teamwith.vo.MemberVO;
 import com.teamwith.vo.PortfolioContentVO;
 import com.teamwith.vo.PortfolioSimpleVO;
 import com.teamwith.vo.PortfolioVO;
@@ -24,6 +26,8 @@ public class PortfolioSearchRestController {
 
 	@Inject
 	PologService pologService;
+	@Inject
+	ProfileService profileService;
 
 	@ResponseBody
 	@RequestMapping(value = "/{portfolioId}", method = RequestMethod.GET, produces = "application/json")
@@ -35,6 +39,8 @@ public class PortfolioSearchRestController {
 		result.put("portfolio", portfolio);
 		List<PortfolioContentVO> portfolioContentList=pologService.getPortfolioContent(portfolioId);
 		result.put("portfolioContent",portfolioContentList);
+		MemberVO member=profileService.getMemberInfo(portfolio.getMemberId());
+		result.put("member", member);
 		return result;
 	}
 	
