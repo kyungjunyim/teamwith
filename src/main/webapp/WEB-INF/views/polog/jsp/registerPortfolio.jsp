@@ -593,7 +593,7 @@ font-size:50%;
    <jsp:include page="portfolioLayoutModal.jsp"/> 
 </div>
 <form action="/polog/${sessionScope.memberSimpleVO.memberId }">
-		<button type="submit" class="btn portfolioExitBtn bottom-btn">돌아가기</button>
+		<button type="submit" class="btn portfolioExitBtn bottom-btn">내 폴로그로</button>
 	</form>
 <div id="layout1" style="display:none">
 <jsp:include page="portfolioContentLayout1.jsp"/>
