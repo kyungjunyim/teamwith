@@ -26,23 +26,6 @@
 	background-color: #f7e7e3;
 	border-color: #ff4111;
 }
-.btn_color {
-	width: 140px;
-	padding: 0px 10px;
-	font-size: 23px;
-	color: #002b5a;
-	background-color: #ffffff;
-	border-color: #002b5a;
-	
-}
-.btn_color:hover {
-	 background-color: #f7e7e3; 
-	
-}
-</style>
-
-<style>
-
 </style>
 <div id="myModal" class="modal fade" role="dialog" >
   <div class="modal-dialog" style="margin:0 auto;margin-top:5%;max-width:50%">
@@ -79,18 +62,10 @@
         </div>
       </div>
       <div class="modal-footer">
-		<div class="like-content"><button type="button" class="btn btn-md btn_submit btn_color bb" data-dismiss="modal" id="okbtn">OK</button></div> 
+		<button type="button" class="btn btn-md btn_submit btn_color" data-dismiss="modal" id="okbtn">OK</button> 
         <button type="button" class="btn btn-md btn_cancel btn_color" data-dismiss="modal" id="closebtn">Cancel</button> 
       </div>
     </div>
 
   </div>
 </div>
-<script>
-$(function(){
-    $(document).one('click', '.bb', function(e) {
-        $(this).html('<i class="fa fa-heart" aria-hidden="true"></i> You liked this');
-        $(this).children('.fa-heart').addClass('animate-like');
-    });
-});
-</script>

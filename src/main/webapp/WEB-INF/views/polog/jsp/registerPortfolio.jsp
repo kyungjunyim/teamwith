@@ -13,6 +13,26 @@
 
 <title>Insert title here</title>
 <script>
+$(document).ready(function(){
+	var s=Math.floor(Math.random() * 5) + 1;
+	switch(s){
+	case 1:
+		$('.product_con').css('background',"url('/resources/image/배경1.jpg')");
+		break;
+	case 2:
+		$('.product_con').css('background',"url('/resources/image/배경2.jpg')");
+		break;
+	case 3:
+		$('.product_con').css('background',"url('/resources/image/배경4.jpg')");
+		break;
+	case 4:
+		$('.product_con').css('background',"url('/resources/image/배경5.jpg')");
+		break;
+	case 5:
+		$('.product_con').css('background',"url('/resources/image/배경6.jpg')");
+		break;
+	}
+});
 var index=-1;
 var order=1;
 
@@ -221,6 +241,10 @@ $(function(){
   font-style: normal;
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/materialicons/v39/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+  
+
+
+
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -248,11 +272,21 @@ $(function(){
 
 body {
 	font-family: nanumSquareRound;
+	color:white
 }
 *{ margin:0;padding:0;text-decoration:none}
 li{list-style:none}
 
-.product_con{ position:relative; width:100%; height:100vh;margin:0 auto;background-color: #ffecdf}
+.product_con{ position:relative; width:100%; height:100vh;margin:0 auto;
+background:url('/resources/image/배경5.jpg');
+background-size: 100% 100%;
+background-repeat:no-repeat;
+backgorund-position:center center;
+    
+
+
+
+}
 .product_con .product_list{overflow:hidden;position:relative;width:100%; height:97vh;}
 .product_con .product_list li{ width:100%;position:absolute;left:0;}
 .product_con .product_list li:nth-child(1){left:0px;}
@@ -315,20 +349,20 @@ font-size:80%;margin-left:11%;margin-top:2%
 	margin:0 auto;
 	margin-top:5%;
 	text-align:center;
-	background-color:#ffddc9;
+	border:2px solid white
 }
 .bottom_content{
 	width:55%;
 	height:38vh;
 	font-size:200%;
 	margin:0 auto;
-	
 }
 .pic_box{
 width:80%;
  height:73%;
 margin:0 auto;
-background-color: #ffddc9;
+/* background-color: #ffddc9; */
+border:2px solid white;
 }
 .registerPortfolioInput{
 	color:black;
@@ -517,7 +551,7 @@ font-size:50%;
 <input type="hidden" name="layoutId" value="layout-2"/>
 </div>
 <!-- 카테고리모달 -->
-	<div class="modal team_regist_modal_font" id="categoryModal">
+	<div class="modal team_regist_modal_font" id="categoryModal" style="color:black">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
 								<div class="modal-header team_regist_modal_title">분야 선택</div>
