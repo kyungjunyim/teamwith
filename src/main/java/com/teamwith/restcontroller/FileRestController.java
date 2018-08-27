@@ -1,4 +1,4 @@
-package com.teamwith.controller;
+package com.teamwith.restcontroller;
 
 import java.util.HashMap;
 import java.util.Map;
