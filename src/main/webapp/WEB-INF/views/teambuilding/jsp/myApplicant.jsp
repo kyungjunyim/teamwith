@@ -23,7 +23,7 @@
 					</div>
 				</div>
 				<div class="row table_whole">
-					<div class="row row_team">
+					<div class="row row_team" onclick="location = '/teamSearch/${fn:substringAfter(teamInfo.teamId, 'team-') }'">
 						<div class="team_pic_div"><img src="${teamInfo.teamPic }" class="team_pic"></div>
 						<div class="team_info">
 							<div class="team_info_text text_blue">${teamInfo.teamProjectName }</div>
@@ -193,6 +193,7 @@
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
+	<jsp:include page="modalSet.jsp" />
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

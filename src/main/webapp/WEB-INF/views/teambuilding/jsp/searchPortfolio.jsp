@@ -26,7 +26,7 @@
 					</div>
 					</c:when>
 					<c:otherwise>
-					<div class="row main_row">
+					<div class="row main_row" style="min-height: 579px">
 						<jsp:include page="searchRecentPortfolio.jsp" />
 					</div>
 					</c:otherwise>
@@ -52,6 +52,7 @@
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
+	<jsp:include page="modalSet.jsp" />
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

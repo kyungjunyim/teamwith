@@ -34,16 +34,13 @@
 						</tr>
 						<c:if test="${not empty myTeamList }">
 							<c:forEach items="${myTeamList }" var="myTeam">
-								<form action="teamDetail.do" method="post" id="detailForm${myTeam.teamId }">
-									<input type="hidden" name="teamId" value="${myTeam.teamId }">
-								</form>
 								<tr>
-									<td id="${myTeam.teamId }" onclick="javascript:clickTrEvent(this)"><img src="${myTeam.teamPic }"
+									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)"><img src="${myTeam.teamPic }"
 										class="rounded-circle team_image"></td>
-									<td id="${myTeam.teamId }" onclick="javascript:clickTrEvent(this)">${myTeam.teamName }</td>
-									<td id="${myTeam.teamId }" onclick="javascript:clickTrEvent(this)">${myTeam.teamProjectName }</td>
-									<td id="${myTeam.teamId }" onclick="javascript:clickTrEvent(this)">${applicationScope.projectList[myTeam.projectCategoryId] }</td>
-									<td id="${myTeam.teamId }" onclick="javascript:clickTrEvent(this)">${fn:substring(myTeam.teamEndDate, 0, 10) }</td>
+									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${myTeam.teamName }</td>
+									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${myTeam.teamProjectName }</td>
+									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${applicationScope.projectList[myTeam.projectCategoryId] }</td>
+									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${fn:substring(myTeam.teamEndDate, 0, 10) }</td>
 									<td class="btn_change_apply btn_cancel">
 										<button type="button" class="btn btn-md btn_submit_small" data-toggle="modal" data-target="#deleteModal${myTeam.teamId }" id="call_delete_modal${myTeam.teamId }">삭제</button>
 									</td>
@@ -105,6 +102,7 @@
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
+	<jsp:include page="modalSet.jsp" />
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

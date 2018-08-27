@@ -458,11 +458,12 @@ public class TeamSearchController {
 				}
 			}
 		}
-
+		
 		Criteria categoryCri = new Criteria();
-		categoryCri.addCriteria("projectCategoryList", memberProjectCategories);
-
-		teamIdListByCategory = teamService.searchTeam(categoryCri);
+		if(memberProjectCategories.size() != 0) {
+			categoryCri.addCriteria("projectCategoryList", memberProjectCategories);
+			teamIdListByCategory = teamService.searchTeam(categoryCri);
+		}
 
 		if (teamIdListByCategory != null) {
 			for (String teamId : teamIdListByCategory) {
