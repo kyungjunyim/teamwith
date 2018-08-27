@@ -17,19 +17,34 @@ $(document).ready(function(){
 		var s=Math.floor(Math.random() * 5) + 1;
 		switch(s){
 		case 1:
-			$('.product_con').css('background',"url('/resources/image/배경1.jpg')");
+			$('.product_con').css('background',"url('/resources/image/배경.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
 			break;
 		case 2:
 			$('.product_con').css('background',"url('/resources/image/배경2.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
 			break;
 		case 3:
 			$('.product_con').css('background',"url('/resources/image/배경4.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
 			break;
 		case 4:
 			$('.product_con').css('background',"url('/resources/image/배경5.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
 			break;
 		case 5:
 			$('.product_con').css('background',"url('/resources/image/배경6.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
 			break;
 		}
 	});
@@ -136,8 +151,9 @@ li{list-style:none}
 
 .product_con{ position:relative; width:100%; height:100vh;margin:0 auto; border:1px solid white;
 background:url('/resources/image/배경5.jpg');
-background-size: cover;
-
+background-size: 100% 100%;
+background-repeat:no-repeat;
+backgorund-position:center center;
 
 }
 .product_con .product_list{overflow:hidden;position:relative;width:100%; height:97vh;}
@@ -236,10 +252,34 @@ width:80%;
 margin:0 auto;
 border: 2px solid white;
 }
+.bottom-btn{
+	color:white;
+	background-color:#776e8c00;
+	border:1px solid white;
+}
+.bottom-btn:hover{
+	background-color:#776e8c;
+}
+.teamwith_logo {
+    
+    width: 40px;
+}
+.logo {
+    border: 0;
+    display: inline-block;
+    font-size: 0.8em;
+    position:fixed;
+    top:3%;
+    left:1%;
+    line-height: inherit;
+    padding: 0 1.5em;
+    background-color:none;
+}
 </style>
 </head>
 <body>
 <div class="product_con">
+<a href="/" class="logo"><img class="teamwith_logo"  src="/resources/image/logo/logoBox.png"> </a>
     <ul class="product_list">
    
         <li>
@@ -303,16 +343,16 @@ border: 2px solid white;
     <i class="btn_prev material-icons">arrow_left</i>
     <i class="btn_next material-icons">arrow_right</i>	
 	<form action="/polog/${portfolio.memberId }">
-		<button type="submit" class="btn portfolioExitBtn btn-warning">돌아가기</button>
+		<button type="submit" class="btn portfolioExitBtn bottom-btn">돌아가기</button>
 	</form>
 	<!-- controller에 지우고 여긴 memberSimpleVO 바꾸기 테스트용임-->
 	<c:if test="${portfolio.memberId eq sessionScope.memberSimpleVO.memberId }">
 	<form action="/portfolio/remove/${portfolio.portfolioId}" method="post">
 		<input type="hidden" name="memberId" value="${portfolio.memberId }">
-		<button type="submit" class="btn portfolioRemoveBtn btn-warning">삭제하기</button>
+		<button type="submit" class="btn portfolioRemoveBtn bottom-btn">삭제하기</button>
 	</form>
 	<form action="/portfolio/edit/${portfolio.portfolioId }" method="get">
-		<button type="submit" class="btn portfolioModifyBtn btn-warning">수정하기</button>
+		<button type="submit" class="btn portfolioModifyBtn bottom-btn">수정하기</button>
 	</form>
 	</c:if>
     

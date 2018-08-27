@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 조회 경우 -->
+<style>
+#l1picbox{
+	width:100%;
+	height:100%;
+	border:2px solid white;
+	
+}
+</style>
 <c:choose>
 <c:when test="${!empty requestScope.contentTemp or !empty requestScope.oldContent}">
 <%-- <c:forEach begin="0" end="1" step="1" varStatus="ii">
@@ -9,7 +17,7 @@
 	<c:set var="content" value="${portfolioContent[i.index+1] }"/>
 </c:if> --%>
 <div class="center_content" id="centercon" >
-	<div id="l1picbox" class="pic_box" style="width:100%;height:100%">
+	<div id="l1picbox" class="pic_box" style="width:100%;height:100%;border:2px solid white;">
 	<c:if test="${!empty requestScope.contentTemp }">
 	<c:choose>
 		<c:when test="${contentTemp.portfolioContentName=='image' }">
