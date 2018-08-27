@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <body>
 	<div class="row main_title">
 		<div class="col">
-			<span class="text_orange">최근</span> <span class="text_blue">회원</span>
+			<span class="text_orange">검색</span> <span class="text_blue">결과</span>
 		</div>
 	</div>
 	<c:if test="${empty resultMemberList }">
@@ -32,16 +33,23 @@
 	</div>
 	</c:if>
 	
-	<!-- 페이징 처리 -->
-	<div class="row best_member_row_whole">
-		<ul class="pagination member_search_pagination">
-			<li><a href="#">&laquo;</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">&raquo;</a></li>
-		</ul>
-	</div>
+	<c:if test="${not empty resultMemberList }">
+		<div class="row best_member_row_whole">
+			<ul class="pagination member_search_pagination">
+				<c:choose>
+					<c:when test="${fn:length(resultMemberList) < 8 }">
+						<li><a href="#">1</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">&raquo;</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</c:if>
 </body>

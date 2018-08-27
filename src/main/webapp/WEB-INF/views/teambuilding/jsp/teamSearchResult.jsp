@@ -15,13 +15,11 @@
 		</div>
 	</c:if>
 	<c:if test="${not empty resultTeamList }">
-		<c:forEach items="${resultTeamList }" var="resultTeam"
-			varStatus="status">
-			<c:if test="${status.index % 2 == 0 }">
-				<div class="row main_row_whole">
-			</c:if>
-			<div class="col-xs-6 main_content_row"
-				onclick="location = 'teamSearch/${fn:substringAfter(resultTeam.teamId, 'team-') }'">
+		<c:forEach items="${resultTeamList }" var="resultTeam" varStatus="status">
+		<c:if test="${status.index % 2 == 0 }">
+		<div class="row main_row_whole">
+		</c:if>
+			<div class="col-xs-6 main_content_row" onclick="location = 'teamSearch/${fn:substringAfter(resultTeam.teamId, 'team-') }'">
 				<div class="row main_content">
 					<div class="col-xs-6 main_image_col">
 						<img src="${resultTeam.teamPic }" class="main_image">
@@ -39,26 +37,34 @@
 					</div>
 				</div>
 			</div>
-			<c:if test="${status.index % 2 != 0 }">
-				</div>
-			</c:if>
-			<c:set var="lastIndex" value="${status.index }" />
+		<c:if test="${status.index % 2 != 0 }">
+		</div>
+		</c:if>
+		<c:set var="lastIndex" value="${status.index }" />
 		</c:forEach>
-		<c:if test="${lastIndex == 0 }">
+		<c:if test="${lastIndex % 2 == 0 }">
 			</div>
 		</c:if>
 	</c:if>
-</div>
+		
 	<!-- 페이징 처리 -->
-	<div class="row best_member_row_whole">
-		<ul class="pagination member_search_pagination">
-			<li><a href="#">&laquo;</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">&raquo;</a></li>
-		</ul>
-	</div>
+	<c:if test="${not empty resultTeamList }">
+		<div class="row best_member_row_whole">
+			<ul class="pagination member_search_pagination">
+				<c:choose>
+					<c:when test="${fn:length(resultTeamList) < 10 }">
+						<li><a href="#">1</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">&raquo;</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</c:if>
 </body>
