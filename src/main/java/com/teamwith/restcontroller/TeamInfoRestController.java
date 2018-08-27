@@ -22,7 +22,7 @@ import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.TeamSimpleVO;
 
 @RestController
-@RequestMapping(value="/api/teamInfo")
+@RequestMapping(value = "/api/teamInfo")
 public class TeamInfoRestController {
 	@Inject
 	private TeamService teamService;
@@ -33,6 +33,9 @@ public class TeamInfoRestController {
 	public Map<String, Object> joinedTeam(HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		MemberSimpleVO login = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		if (login == null) {
+			return resultMap;
+		}
 		String loginId = login.getMemberId();
 		List<TeamSimpleVO> result = new ArrayList<TeamSimpleVO>();
 		try {
@@ -47,13 +50,12 @@ public class TeamInfoRestController {
 		resultMap.put("joinedTeamList", result);
 		return resultMap;
 	}
-	
+
 	@RequestMapping(value = "/applicant/{teamId}", method = RequestMethod.GET)
-	public Map<String,Object> showApplicant(@PathVariable("teamId") String teamId) {
+	public Map<String, Object> showApplicant(@PathVariable("teamId") String teamId) {
 		String key = "team-" + teamId;
-		Map<String,Object> result=new HashMap<String,Object>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		List<ApplicantVO> applicantList = applicationService.getApplicant(key);
-		
 
 		Map<String, List<InterviewVO>> interviewMap = null;
 		if (applicantList != null) {
