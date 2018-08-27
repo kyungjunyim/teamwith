@@ -145,6 +145,11 @@
 	background-color: #ffffff;
 	border-color: #002b5a;
 }
+.btn_color_small:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
 
 .best_member_row_whole {
 	width: 840px;
@@ -152,11 +157,7 @@
 	padding: 0;
 }
 
-.btn_color_small:hover {
-	color: #ff4111;
-	background-color: #f7e7e3;
-	border-color: #ff4111;
-}
+
 
 .btn_info {
 	margin-left: 3px;

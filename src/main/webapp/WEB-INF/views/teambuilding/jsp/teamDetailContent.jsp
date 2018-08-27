@@ -44,7 +44,7 @@
 					</div>
 					<div style="line-height: 30px; margin-top: 11px; text-align: center">
 						<c:if test="${teamInfo.teamStatus eq 0 || dDay > 0}">
-							<label class="label_dDay_text text_blue">모집 중</label>&nbsp;&nbsp;<label class="label_dDay">D-${dDay}</label>
+							<label class="label_dDay_text text_blue">모집 중</label>&nbsp;&nbsp;<label class="label_dDay">D${dDay}</label>
 						</c:if>
 						<c:if test="${teamInfo.teamStatus eq 1 || dDay < 0 }">
 							<label class="label_dDay_text">모집 완료</label>

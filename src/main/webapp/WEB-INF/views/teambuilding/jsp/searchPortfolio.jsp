@@ -8,50 +8,47 @@
 <title>포트폴리오 상세보기</title>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/teambuilding/css/frame.css">
-<link rel="stylesheet"
-	href="/resources/teambuilding/css/searchPortfolio.css">
+<link rel="stylesheet" href="/resources/teambuilding/css/searchPortfolio.css">
 
 </head>
 <body>
-	<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp" />
 	<div class="home_container">
 		<div class="row row_whole">
-			<div class="col-xs-6 main_container" style="min-height: 752px;">
-			<div class="row main_row">
+			<div class="col-xs-6 main_container">
+				<div class="row main_row">
 					<jsp:include page="portfolioSearchBar.jsp" />
 				</div>
 				<c:choose>
 					<c:when test="${result eq 'search' }">
-						<div class="row main_row">
-							<jsp:include page="portfolioSearchResult.jsp" />
-						</div>
+					<div class="row main_row">
+						<jsp:include page="portfolioSearchResult.jsp" />
+					</div>
 					</c:when>
-					
 					<c:otherwise>
-						<div class="row main_row">
-							<jsp:include page="searchRecentPortfolio.jsp" />
-						</div>
+					<div class="row main_row">
+						<jsp:include page="searchRecentPortfolio.jsp" />
+					</div>
 					</c:otherwise>
-
 				</c:choose>
 			</div>
 			<div class="col-xs-6 side_container">
 				<c:if test="${empty sessionScope.memberSimpleVO }">
-					<div class="row side_row_whole">
-						<jsp:include page="mainLogin.jsp" />
-					</div>
+				<div class="row side_row_whole">
+					<jsp:include page="mainLogin.jsp" />
+				</div>
 				</c:if>
 				<c:if test="${not empty sessionScope.memberSimpleVO }">
-					<div class="row side_row_whole">
-						<jsp:include page="mainProfile.jsp" />
-					</div>
+				<div class="row side_row_whole">
+					<jsp:include page="mainProfile.jsp" />
+				</div>
 				</c:if>
 				<div class="row side_row_whole">
 					<jsp:include page="mainPortfolio.jsp" />
 				</div>
 			</div>
 		</div>
-		<div class="row row_whole">
+		<div class="row row_whole" style="margin-top: 0;">
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
