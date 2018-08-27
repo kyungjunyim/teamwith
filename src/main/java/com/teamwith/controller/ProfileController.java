@@ -46,7 +46,7 @@ public class ProfileController {
 	@RequestMapping(value = "/edit/{memId}", method = RequestMethod.GET)
 	public String profileEditView(HttpServletRequest req, @PathVariable(value = "memId") String memberId, Model model) {
 		try {
-		
+
 			MemberVO mem = profileService.getMyInfo(memberId);
 
 			List<String> projectCategory = memberService.getMemberProjectCategory(memberId);
@@ -117,13 +117,15 @@ public class ProfileController {
 			throws Exception {
 		String newFilename = attachPath + getNewFilename(originalName);
 
+		String[] str = attachPath.split("\\\\");
+		String memId = str[str.length - 1];
 		File dir = new File(uploadPath);
 		if (!dir.exists()) {
 			dir.mkdirs(); // 존재하지 않는 모든 폴더 생성
 		}
 		File target = new File(uploadPath, newFilename);
 		FileCopyUtils.copy(fileData, target);
-		return "\\" + newFilename;
+s		return "/resources/image/member/" + memId + getNewFilename(originalName);
 	}
 
 	private String getNewFilename(String filename) {
