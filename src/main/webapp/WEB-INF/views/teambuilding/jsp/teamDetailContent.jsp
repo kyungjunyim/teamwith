@@ -133,7 +133,7 @@
 			</div>
 			<div class="team_detail_row team_detail_content_interval">
 				<div class="team_detail_row_title team_detail_title_content_font">팀 소개</div>
-				<div class="team_detail_row_text">${teamInfo.teamContent }</div>
+				<div class="team_detail_row_text" style="padding-right:6%">${teamInfo.teamContent }</div>
 			</div>
 			<hr class="team_detail_my_hr">
 			
