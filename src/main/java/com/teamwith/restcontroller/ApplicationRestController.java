@@ -27,13 +27,11 @@ import com.teamwith.vo.MyApplicationVO;
 public class ApplicationRestController {
 	@Inject
 	private ApplicationService applicationService;
-	@Inject
-	private MemberSimpleVO memberSimpleVO;
 
 	@ResponseBody
 	@RequestMapping(value = "/myApplication", method = RequestMethod.GET)
 	public Map<String, Object> myApplication(HttpSession session) {
-		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		String memberId = memberSimpleVO.getMemberId();
 		Map<String, Object> result = new HashMap<String, Object>();
 
@@ -55,8 +53,7 @@ public class ApplicationRestController {
 
 	@RequestMapping(value = "/cancel/{applicationId}", method = RequestMethod.GET)
 	public String cancel(@PathVariable("applicationId") String applicationId, HttpSession session) {
-		System.out.println("취소하러 왓냐");
-		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		String memberId = memberSimpleVO.getMemberId();
 		for (MyApplicationVO a : applicationService.getMyApplication(memberId)) {
 			if (a.getApplicationId().equals(applicationId)) {
@@ -71,7 +68,7 @@ public class ApplicationRestController {
 	@RequestMapping(value = "/apply/{teamId}", method = RequestMethod.POST)
 	public Boolean apply(@PathVariable("teamId") String teamId, @RequestBody Map<String, Object> param,
 			HttpSession session) {
-		memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		MemberSimpleVO memberSimpleVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
 		String roleId = (String) param.get("roleId");
 		String applicationFreewriting = (String) param.get("applicationFreewriting");
 		List<String> interviewQuestionId = (List<String>) param.get("interviewQuestionId");
@@ -110,5 +107,4 @@ public class ApplicationRestController {
 			return true;
 		}
 	}
-
 }
