@@ -38,7 +38,7 @@
 				</div>
 			</c:forEach>
 		</div>
-		<button type="button" class="btn btn-md btn_more">더보기</button>
+		<button type="button" class="btn btn-md btn_more" onclick="location = '/portfolios'">더보기</button>
 	</c:if>
 </body>
 </html>

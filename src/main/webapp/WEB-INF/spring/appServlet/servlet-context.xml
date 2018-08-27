@@ -42,8 +42,12 @@
 		<interceptor>
 			<mapping path="/" />
 			<mapping path="/team/*" />
+			<mapping path="/team/myTeam" />
+			<mapping path="/team/close/*" />
 			<mapping path="/teamInfo/*" />
 			<mapping path="/teamInfo/applicant/*" />
+			<mapping path="/teamInfo/edit/*" />
+			<mapping path="/teamInfo/register" />
 			<mapping path="/teamSearch" />
 			<mapping path="/teamSearch/*" />
 			<mapping path="/application/*" />
@@ -54,6 +58,7 @@
 			<beans:ref bean="teamServiceInterceptor" />
 		</interceptor>
 		<interceptor>
+			<mapping path="/profile/edit/" />
 			<mapping path="/profile/edit/*" />
 			<mapping path="/polog/edit/*" />
 			<mapping path="/portfolio/register" />
@@ -65,10 +70,15 @@
 			<mapping path="/application/apply/*" />
 			<mapping path="/teamInfo/register" />
 			<mapping path="/teamInfo/applicant/*" />
+			<mapping path="/teamInfo/edit/*" />
 			<mapping path="/team/remove/*" />
 			<mapping path="/team/close/*" />
 			<mapping path="/team/myTeam" />
 			<mapping path="/logout" />
+			<mapping path="/account/remove" />
+			<mapping path="/praise/check" />
+			<mapping path="/praise/update" />
+			
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		<interceptor>

@@ -43,12 +43,22 @@
 						<label class="teamDetail text_orange" >${teamInfo.teamName } 팀</label>
 					</div>
 					<div style="line-height: 30px; margin-top: 11px; text-align: center">
-						<c:if test="${teamInfo.teamStatus eq 0 || dDay > 0}">
-							<label class="label_dDay_text text_blue">모집 중</label>&nbsp;&nbsp;<label class="label_dDay">D${dDay}</label>
-						</c:if>
-						<c:if test="${teamInfo.teamStatus eq 1 || dDay < 0 }">
+					<c:choose>
+						<c:when test="${teamInfo.teamStatus == 1 }">
 							<label class="label_dDay_text">모집 완료</label>
-						</c:if>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${dDay == 0 }">
+								<label class="label_dDay_text text_blue">모집 중</label>&nbsp;&nbsp;<label class="label_dDay">D-day</label>
+							</c:if>
+							<c:if test="${dDay < 0 }">
+								<label class="label_dDay_text text_blue">모집 중</label>&nbsp;&nbsp;<label class="label_dDay">D${dDay}</label>
+							</c:if>
+							<c:if test="${dDay > 0 }">
+								<label class="label_dDay_text">모집 완료</label>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 					</div>
 				</div>
 				<!-- 팀 정보(팀명, 분야 등) 끝 -->

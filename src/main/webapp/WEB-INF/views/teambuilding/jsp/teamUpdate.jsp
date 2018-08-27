@@ -40,6 +40,7 @@
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
+	<jsp:include page="modalSet.jsp" />
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

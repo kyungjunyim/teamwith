@@ -4,5 +4,5 @@ $(".btn_team_delete").on("click", function(e) {
 });
 
 function clickTrEvent(trObj) {
-	$("#detailForm" + trObj.id).submit();
+	location = "/teamSearch/" + trObj.id;
 }

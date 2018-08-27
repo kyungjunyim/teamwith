@@ -435,7 +435,7 @@ public class TeamService {
 				maxCnt = Integer.parseInt(str.split("-")[1]);
 			}
 		}
-
+		
 		return tableName + "-" + (maxCnt + 1);
 	}
 

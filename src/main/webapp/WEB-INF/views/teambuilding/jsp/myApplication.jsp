@@ -15,7 +15,7 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<div class="home_container">
-		<div class="row row_whole" style="min-height: 593px;">
+		<div class="row row_whole">
 			<div class="col-xs-6 col_container">
 				<div class="row main_title">
 					<div class="col">
@@ -153,6 +153,7 @@
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
+	<jsp:include page="modalSet.jsp" />
 </body>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
