@@ -31,6 +31,7 @@
 	font-size: 20px;
 	line-height: 60px;
 	padding: 10px;
+	width: 208px;
 }
 
 .member_info {
@@ -85,7 +86,6 @@
 #tendency_box {
 	width: 1000px;
 	font-size: 97%;
-	
 }
 
 #tendency_box td:first-child {
@@ -95,11 +95,12 @@
 #tendency_box td:last-child {
 	width: 150px;
 }
-#tendency_value{
-    text-align: center;
-    width: 100px;
-    margin: auto;
-	}
+
+#tendency_value {
+	text-align: center;
+	width: 100px;
+	margin: auto;
+}
 
 .profile .profile1 {
 	padding-top: 70px;
@@ -125,10 +126,9 @@
 }
 
 #profile {
-	    width: 1120px;
-	    margin: auto;
+	width: 1120px;
+	margin: auto;
 }
-
 
 input[type=checkbox] {
 	-webkit-appearance: checkbox !important;
@@ -137,6 +137,7 @@ input[type=checkbox] {
 	pointer-events: all !important;
 	margin: 10px -25px;
 }
+
 .team_regist_btn_color {
 	width: 75px !important;
 	padding: 0px 10px !important;
@@ -151,11 +152,13 @@ input[type=checkbox] {
 	background-color: #f7e7e3 !important;
 	border-color: #ff4111 !important;
 }
+
 .modal-header {
 	color: #ff4111;
 	text-align: center;
 	padding-left: 40px;
 }
-#role_name{
+
+#role_name {
 	color: #888;
 }
