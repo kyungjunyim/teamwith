@@ -462,3 +462,16 @@ body {
 	width: 270px;
 	color: #002b5a;
 }
+
+
+.my_page_link {
+	color: #000000;
+	border: none;	
+}
+
+.my_page_link:hover, .my_page_item.active .my_page_link {
+	border-radius: 7px;
+	background-color: #ff3502;
+	color: #ffffff;
+	opacity: 0.8;
+}
