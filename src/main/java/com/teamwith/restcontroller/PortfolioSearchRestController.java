@@ -1,13 +1,11 @@
 package com.teamwith.restcontroller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.PologService;
 import com.teamwith.util.Criteria;
+import com.teamwith.vo.PortfolioContentVO;
 import com.teamwith.vo.PortfolioSimpleVO;
 import com.teamwith.vo.PortfolioVO;
 
@@ -34,8 +33,11 @@ public class PortfolioSearchRestController {
 		PortfolioVO portfolio = pologService.getPortfolio(portfolioId);
 
 		result.put("portfolio", portfolio);
+		List<PortfolioContentVO> portfolioContentList=pologService.getPortfolioContent(portfolioId);
+		result.put("portfolioContent",portfolioContentList);
 		return result;
 	}
+	
 
 	@ResponseBody
 	@RequestMapping(value = "/recent", method = RequestMethod.GET, produces = "application/json")
