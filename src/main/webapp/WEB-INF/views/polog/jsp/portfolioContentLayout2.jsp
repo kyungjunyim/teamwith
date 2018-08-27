@@ -23,7 +23,7 @@
 									src="${contentTemp.portfolioContentValue }"></iframe>
 							</c:when>
 							<c:when test="${contentTemp.portfolioContentName=='ppt' }">
-								<iframe width="100%" height="95vh"
+								<iframe width="100%" height="100%"
 									src="${contentTemp.portfolioContentValue }#page=1&zoom=50"></iframe>
 							</c:when>
 						</c:choose>
