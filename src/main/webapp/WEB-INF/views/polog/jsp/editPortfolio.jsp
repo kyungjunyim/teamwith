@@ -493,6 +493,7 @@ font-size:50%;
     line-height: inherit;
     padding: 0 1.5em;
     background-color:none;
+    z-index:2;
 }
 </style>
 </head>
