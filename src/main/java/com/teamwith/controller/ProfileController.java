@@ -125,7 +125,7 @@ public class ProfileController {
 		}
 		File target = new File(uploadPath, newFilename);
 		FileCopyUtils.copy(fileData, target);
-s		return "/resources/image/member/" + memId + getNewFilename(originalName);
+		return "/resources/image/member/" + memId + getNewFilename(originalName);
 	}
 
 	private String getNewFilename(String filename) {
