@@ -47,8 +47,7 @@
 									<input type="hidden" name="memberId" value="${applicant.memberId }">
 								</form>
 								<tr>
-									<td id="${applicant.memberId }" onclick="javascript:clickTrEvent(this)"><img src="${applicant.memberPic }"
-										class="rounded-circle team_image"></td>
+									<td id="${applicant.memberId }" onclick="javascript:clickTrEvent(this)"><img src="${applicant.memberPic }" class="rounded-circle team_image"></td>
 									<td id="${applicant.memberId }" onclick="javascript:clickTrEvent(this)">${applicant.memberName }</td>
 									<td id="${applicant.memberId }" onclick="javascript:clickTrEvent(this)">${applicationScope.roleList[applicant.roleId] }</td>
 									<td id="${applicant.memberId }" onclick="javascript:clickTrEvent(this)">${fn:substring(applicant.applicationDate, 0, 10) }</td>

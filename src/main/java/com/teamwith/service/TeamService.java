@@ -422,6 +422,13 @@ public class TeamService {
 
 		return result;
 	}
+	
+	public List<String> getTeamId() throws Exception {
+		List<String> result = null;
+		result = teamDAO.getId();
+		
+		return result;
+	}
 
 	private String generateId(List<String> id, String tableName) {
 		if (id == null) {

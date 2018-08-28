@@ -9,12 +9,12 @@
 		</div>
 	</div>
 
-	<c:if test="${empty resultTeamList }">
+	<c:if test="${fn:length(resultTeamList) == 0 }">
 		<div class="row main_row_whole">
 			<label class="label_no_exist"> 일치하는 팀이 없습니다! </label>
 		</div>
 	</c:if>
-	<c:if test="${not empty resultTeamList }">
+	<c:if test="${fn:length(resultTeamList) != 0 }">
 		<c:forEach items="${resultTeamList }" var="resultTeam" varStatus="status">
 		<c:if test="${status.index % 2 == 0 }">
 		<div class="row main_row_whole">

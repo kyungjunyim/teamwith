@@ -1,3 +1,3 @@
 function clickTrEvent(trObj) {
-	location = "/teamSearch/" + trObj.id;
+	location = "/polog/" + trObj.id;
 }

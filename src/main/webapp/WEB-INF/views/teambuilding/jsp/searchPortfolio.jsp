@@ -21,12 +21,12 @@
 				</div>
 				<c:choose>
 					<c:when test="${result eq 'search' }">
-					<div class="row main_row">
+					<div class="row main_row" style="min-height: 586px;">
 						<jsp:include page="portfolioSearchResult.jsp" />
 					</div>
 					</c:when>
 					<c:otherwise>
-					<div class="row main_row" style="min-height: 579px">
+					<div class="row main_row">
 						<jsp:include page="searchRecentPortfolio.jsp" />
 					</div>
 					</c:otherwise>
