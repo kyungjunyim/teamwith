@@ -65,6 +65,11 @@ public class TeamService {
 		return faq;
 	}
 
+	public List<TeamSimpleVO> getMyTeam(String memberId) throws Exception {
+		List<TeamSimpleVO> result = teamSimpleDAO.searchMyTeamSimple(memberId);
+		return result;
+	}
+
 	public List<TeamSimpleVO> getMyTeam(Criteria cri, String memberId) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("memberId", memberId);
@@ -186,7 +191,7 @@ public class TeamService {
 
 		return result;
 	}
-	
+
 	public List<String> searchTeamByKeyword(Criteria cri) throws Exception {
 		List<String> result = new ArrayList<String>();
 
@@ -377,10 +382,12 @@ public class TeamService {
 	public int updateRequireSkill(RequireSkillVO requireSkill) throws Exception {
 		return registerRequireSkill(requireSkill);
 	}
+
 	@Transactional
-	public String updateTeam(ApplicationService applicationService,TeamDetailVO teamInfo, byte[] file, String path, List<InterviewVO> interviewList,
-			List<FaqVO> faqList, List<RecruitVO> recruitList, List<RequireSkillVO> requireSkillList) throws Exception {
-		
+	public String updateTeam(ApplicationService applicationService, TeamDetailVO teamInfo, byte[] file, String path,
+			List<InterviewVO> interviewList, List<FaqVO> faqList, List<RecruitVO> recruitList,
+			List<RequireSkillVO> requireSkillList) throws Exception {
+
 		TeamDTO team = new TeamDTO();
 
 		team.setTeamId(teamInfo.getTeamId());
@@ -400,13 +407,13 @@ public class TeamService {
 			String teamPicPath = UploadFileUtils.uploadFile2(path, team.getTeamId() + ".jpg", file);
 			team.setTeamPic("/resources/image/team/" + team.getTeamId() + ".jpg");
 		}
-		
+
 		teamDAO.updateTeam(team);
 		applicationService.updateInterviewQuestion(interviewList);
 		updateFaq(faqList);
-		List<String> recruitIds=updateRecruit(recruitList);
-		for(int i=0;i<requireSkillList.size();i++) {
-			RequireSkillVO requireSkill=requireSkillList.get(i);
+		List<String> recruitIds = updateRecruit(recruitList);
+		for (int i = 0; i < requireSkillList.size(); i++) {
+			RequireSkillVO requireSkill = requireSkillList.get(i);
 			requireSkill.setRecruitId(recruitIds.get(i));
 			updateRequireSkill(requireSkill);
 		}
@@ -422,11 +429,11 @@ public class TeamService {
 
 		return result;
 	}
-	
+
 	public List<String> getTeamId() throws Exception {
 		List<String> result = null;
 		result = teamDAO.getId();
-		
+
 		return result;
 	}
 
@@ -442,7 +449,7 @@ public class TeamService {
 				maxCnt = Integer.parseInt(str.split("-")[1]);
 			}
 		}
-		
+
 		return tableName + "-" + (maxCnt + 1);
 	}
 
