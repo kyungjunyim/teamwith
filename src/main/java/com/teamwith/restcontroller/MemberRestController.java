@@ -1,6 +1,9 @@
 package com.teamwith.restcontroller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,12 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.org.eclipse.jdt.core.dom.SynchronizedStatement;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.teamwith.service.MemberService;
 import com.teamwith.service.ProfileService;
 import com.teamwith.util.Criteria;
@@ -30,17 +36,16 @@ public class MemberRestController {
 	@Inject
 	private ProfileService profileService;
 
-	
 	@ResponseBody
-	@RequestMapping(value="/bestMember",method=RequestMethod.GET)
-	public List<MemberSearchVO> getBestMember(Criteria cri) throws Exception{
+	@RequestMapping(value = "/bestMember", method = RequestMethod.GET)
+	public List<MemberSearchVO> getBestMember(Criteria cri) throws Exception {
 		System.out.println("bestMember");
-		List<MemberSearchVO> member=memberService.getBestMember(cri);
-		for(MemberSearchVO m:member)
+		List<MemberSearchVO> member = memberService.getBestMember(cri);
+		for (MemberSearchVO m : member)
 			System.out.println(m);
 		return member;
 	}
-	 
+
 	@ResponseBody
 	@RequestMapping(value = "/getEditInfo", method = RequestMethod.GET)
 	public MemberVO memberEditInfo(HttpSession session) {
@@ -55,22 +60,92 @@ public class MemberRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/editInfo/{memberId}", method = RequestMethod.GET)
-	public int memberEditInfoProcess(@PathVariable("memberId") String memberId, String roleId, String regionId1,
-			String regionId2, String memberIntro, HttpServletRequest req) {
-
+	@RequestMapping(value = "/editInfo", method = RequestMethod.GET)
+	public String memberEditInfoProcess(HttpSession session, String roleId, String regionId1, String regionId2,
+			String memberIntro, String memberPic, HttpServletRequest req) {
+		MemberSimpleVO msVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		String memberId;
+		if (msVO == null) {
+			return null;
+		} else {
+			memberId = msVO.getMemberId();
+		}
 		MemberVO member = new MemberVO();
+		member.setMemberPic(memberPic);
 		member.setMemberId(memberId);
 		member.setRoleId(roleId);
 		member.setRegionId1(regionId1);
 		member.setRegionId2(regionId2);
 		member.setMemberIntro(memberIntro);
 		try {
-			return profileService.updateMemberInfo(member);
+			return "" + profileService.updateMemberInfo(member);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			return null;
 		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/image", method = RequestMethod.POST)
+	public String file(HttpSession session, HttpServletRequest req) {
+		MemberSimpleVO msVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+		String memberId;
+		if (msVO == null) {
+			return null;
+		} else {
+			memberId = msVO.getMemberId();
+		}
+
+		String name = null;
+		String fileName = null;
+		String folderTypePath = "c:/data";
+		int sizeLimit = 1000 * 1024 * 1024; // 5메가까지 제한 넘어서면 예외발생
+		MultipartRequest multi = null;
+		try {
+			multi = new MultipartRequest(req, folderTypePath, sizeLimit, new DefaultFileRenamePolicy());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Enumeration files = multi.getFileNames();
+
+		// 파일 정보가 있다면
+		if (files.hasMoreElements()) {
+			name = (String) files.nextElement();
+			fileName = multi.getFilesystemName(name);
+		}
+
+		File file = multi.getFile(name);
+		String newFilename = null;
+
+		if (file != null) {
+			String rootPath = session.getServletContext().getRealPath("/");
+			String attachPath = "resources\\image\\member\\" + memberId;
+			String filename = fileName;
+			try {
+				newFilename = uploadFile(rootPath, attachPath, filename, file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println(newFilename);
+		return newFilename;
+	}
+
+	private String uploadFile(String uploadPath, String attachPath, String originalName, File fileData)
+			throws Exception {
+		String newFilename = attachPath + ".png";
+
+		String[] str = attachPath.split("\\\\");
+		String memId = str[str.length - 1];
+		File dir = new File(uploadPath);
+		if (!dir.exists()) {
+			dir.mkdirs(); // 존재하지 않는 모든 폴더 생성
+		}
+		File target = new File(uploadPath, newFilename);
+		FileCopyUtils.copy(fileData, target);
+		return "/resources/image/member/" + memId + ".png";
 	}
 
 	@ResponseBody
