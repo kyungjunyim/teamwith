@@ -120,7 +120,7 @@
 					</div>
 				</c:if>
 				<c:if test="${sessionScope.memberSimpleVO.memberId ne requestScope.teamInfo.memberId }">
-				<div class="team_leader_info">
+				<div class="team_leader_info" onclick="location = '/polog/${teamInfo.memberId }'">
 					<div class="col">
 						<img src="${teamInfo.memberPic }" class="team_detail_img_mid">
 					</div>
