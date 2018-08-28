@@ -203,7 +203,7 @@
 				<c:if test="${not empty teamInfo }">
 							value="${teamInfo.teamEndDate }"
 						</c:if>
-				name="teamEndDate" type="date"
+				name="teamEndDate" type="date" id="date" 
 				class="form-control team_regist_form_inputbox_mendatory">
 		</div>
 	</div>
@@ -492,6 +492,11 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 	$('document').ready(function(e) {
+		
+		$('#date').prop('min',function(){
+			return new Date().toJSON().split('T')[0];
+		});
+		
 		$("#registBtn").click(function(e) {
 			$('#registForm').submit();
 		});
