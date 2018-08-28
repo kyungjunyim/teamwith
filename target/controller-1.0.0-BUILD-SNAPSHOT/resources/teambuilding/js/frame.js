@@ -12,4 +12,8 @@
 	
 	$("#find_account").on("click", function() {
 		$("#btn_find_account").click();
-	})
+	});
+	
+	$("#label_remove_member").on("click", function() {
+		$("#btn_remove_member").click();
+	});

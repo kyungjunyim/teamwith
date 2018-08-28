@@ -18,6 +18,19 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>my-repo1</id>
+			<name>your custom repo</name>
+			<url>http://maven.geomajas.org/</url>
+		</repository>
+			<repository>
+			<id>my-repo2</id>
+			<name>your custom repo2</name>
+			<url>http://maven.jahia.org/maven2/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -203,12 +216,9 @@
 		</dependency>
 		<!-- ppt -->
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-<!-- <dependency>
-    <groupId>org.apache.poi</groupId>
-    <artifactId>poi</artifactId>
-    <version>3.17</version>
-</dependency> -->
-		
+		<!-- <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi</artifactId> 
+			<version>3.17</version> </dependency> -->
+
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-scratchpad</artifactId>
@@ -236,6 +246,17 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.9</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/oreilly/cos -->
+		<!-- https://mvnrepository.com/artifact/com.oreilly.servlet/com.springsource.com.oreilly.servlet -->
+
+		<!-- https://mvnrepository.com/artifact/oreilly/cos -->
+		<dependency>
+          <groupId>servlets.com</groupId>
+          <artifactId>cos</artifactId>
+          <version>05Nov2002</version>
+      </dependency> 
+
+
 
 	</dependencies>
 
