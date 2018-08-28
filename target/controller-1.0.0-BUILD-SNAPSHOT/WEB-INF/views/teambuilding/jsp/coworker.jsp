@@ -17,27 +17,22 @@
 </head>
 
 <body>
-	<div
-		class="team_detail_row team_detail_content_interval">
-		<div class="row team_detail_row_title team_detail_title_content_font">합류한 팀원</div>
+	<div class="team_detail_row team_detail_content_interval">
+		<div class="team_detail_row_title team_detail_title_content_font">합류한 팀원</div>
 		<c:if test="${empty teamMembers }">
-			<div class="row team_detail_row_detail team_detail_row_text team_detail_content_interval">
+			<div class="team_detail_row_detail team_detail_row_text team_detail_content_interval">
 				<label class="team_detail_img_small_text">합류한 팀원이 없습니다.</label>
 			</div>
 		</c:if>
+		<div class="row coworker_row">
 		<c:forEach items="${teamMembers }" var="member">
-			<form action="polog.do" method="post" id="${member.memberId }">
-				<input type="hidden" name="memberId" value="${member.memberId }">
-				<div id="teamMember"
-					class="row team_detail_row_detail team_detail_row_text team_detail_hover_opacity team_detail_content_interval team_detail_leader_effect"
-					onclick="$('#${member.memberId}').submit()">
-					<img src="${member.memberPic }"
-						class="rounded-circle team_detail_img_small"><label
-						class="team_detail_img_small_text">${member.memberName }&nbsp;
-						${member.roleId }</label>
+				<div id="teamMember" class="coworker_col" onclick="location = '/polog/${member.memberId }'">
+					<div><img src="${member.memberPic }" class="team_detail_img_sm"></div>
+					<div><label class="coworker_text">${member.memberName }님</label></div>
+					<div><label class="coworker_text text_orange" style="font-size: 14px;">${applicationScope.roleList[member.roleId] }</label></div>
 				</div>
-			</form>
 		</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

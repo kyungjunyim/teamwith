@@ -14,15 +14,15 @@
 	</resultMap>
 	
 	<select id="searchPortfolioSimpleAll" resultMap="result">
-		select B.portfolio_id,B.portfolio_pic,B.member_id,B.member_name,B.portfolio_title,B.portfolio_best,B.project_category_id
- 		,B.portfolio_intro,B.portfolio_update_date
-		from (
-		select rownum as rnum ,A.portfolio_id,A.portfolio_pic,A.member_id,A.member_name,A.portfolio_title,A.portfolio_best,A.project_category_id
+		SELECT
+		B.portfolio_id,B.portfolio_pic,B.member_id,B.member_name,B.portfolio_title,B.portfolio_best,B.project_category_id,B.portfolio_intro,B.portfolio_update_date
+		FROM (
+		SELECT rownum as rnum ,A.portfolio_id,A.portfolio_pic,A.member_id,A.member_name,A.portfolio_title,A.portfolio_best,A.project_category_id
  		,A.portfolio_intro,A.portfolio_update_date
  		from (
  		select *
  		from portfolio_simple_view
- 		order by portfolio_update_date) A
+ 		order by portfolio_update_date desc) A
  		where rownum <![CDATA[<=]]>	${perPageNum*page}) B
  		where B.rnum <![CDATA[>=]]> ${((page-1)*10)+1}
 	</select>

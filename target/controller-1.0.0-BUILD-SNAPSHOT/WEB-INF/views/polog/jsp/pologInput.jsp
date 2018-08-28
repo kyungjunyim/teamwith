@@ -78,8 +78,8 @@ button[type=submit]:hover {
 </style>
 <body>
 
-	<form action="/polog/edit/${sessionScope.memberSimpleVO.memberId }" method="post" id="profile_form"
-		enctype="multipart/form-data">
+	<form action="/polog/edit/${sessionScope.memberSimpleVO.memberId }"
+		method="post" id="profile_form" enctype="multipart/form-data">
 		<input type='hidden' name="memberId"
 			value="${sessionScope.memberSimpleVO.memberId }">
 		<div class="profile" id="profile">
@@ -91,7 +91,7 @@ button[type=submit]:hover {
 					<tbody>
 						<tr>
 
-							<th><i class="material-icons">Settings</i></th>
+							<th><i class="material-icons">settings</i>&nbsp;&nbsp;&nbsp;Settings</th>
 						</tr>
 						<tr>
 							<td>폴로그 제목</td>
@@ -122,7 +122,8 @@ button[type=submit]:hover {
 		</div>
 		<div>
 
-			<button type="submit" style="margin: 50px 42%;">수정하기</button>
+			<button type="submit"
+				style="margin: 50px 42%; width: 150px; font-size: 18px;">수정하기</button>
 
 		</div>
 	</form>

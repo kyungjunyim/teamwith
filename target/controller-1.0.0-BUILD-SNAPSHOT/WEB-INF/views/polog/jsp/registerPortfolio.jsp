@@ -13,6 +13,41 @@
 
 <title>Insert title here</title>
 <script>
+$(document).ready(function(){
+	var s=Math.floor(Math.random() * 5) + 1;
+	switch(s){
+	case 1:
+		$('.product_con').css('background',"url('/resources/image/배경.jpg')");
+		$('.product_con').css('background-size',"100% 100%");
+		$('.product_con').css('background-repeat',"no-repeat");
+		$('.product_con').css('backgorund-position',"center center");
+		break;
+	case 2:
+		$('.product_con').css('background',"url('/resources/image/배경2.jpg')");
+		$('.product_con').css('background-size',"100% 100%");
+		$('.product_con').css('background-repeat',"no-repeat");
+		$('.product_con').css('backgorund-position',"center center");
+		break;
+	case 3:
+		$('.product_con').css('background',"url('/resources/image/배경4.jpg')");
+		$('.product_con').css('background-size',"100% 100%");
+		$('.product_con').css('background-repeat',"no-repeat");
+		$('.product_con').css('backgorund-position',"center center");
+		break;
+	case 4:
+		$('.product_con').css('background',"url('/resources/image/배경5.jpg')");
+		$('.product_con').css('background-size',"100% 100%");
+		$('.product_con').css('background-repeat',"no-repeat");
+		$('.product_con').css('backgorund-position',"center center");
+		break;
+	case 5:
+		$('.product_con').css('background',"url('/resources/image/배경6.jpg')");
+		$('.product_con').css('background-size',"100% 100%");
+		$('.product_con').css('background-repeat',"no-repeat");
+		$('.product_con').css('backgorund-position',"center center");
+		break;
+	}
+});
 var index=-1;
 var order=1;
 
@@ -221,6 +256,10 @@ $(function(){
   font-style: normal;
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/materialicons/v39/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+  
+
+
+
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -248,11 +287,21 @@ $(function(){
 
 body {
 	font-family: nanumSquareRound;
+	color:white
 }
 *{ margin:0;padding:0;text-decoration:none}
 li{list-style:none}
 
-.product_con{ position:relative; width:100%; height:100vh;margin:0 auto;background-color: #ffecdf}
+.product_con{ position:relative; width:100%; height:100vh;margin:0 auto;
+background:url('/resources/image/배경5.jpg');
+background-size: 100% 100%;
+background-repeat:no-repeat;
+backgorund-position:center center;
+    
+
+
+
+}
 .product_con .product_list{overflow:hidden;position:relative;width:100%; height:97vh;}
 .product_con .product_list li{ width:100%;position:absolute;left:0;}
 .product_con .product_list li:nth-child(1){left:0px;}
@@ -315,20 +364,20 @@ font-size:80%;margin-left:11%;margin-top:2%
 	margin:0 auto;
 	margin-top:5%;
 	text-align:center;
-	background-color:#ffddc9;
+	border:2px solid white
 }
 .bottom_content{
 	width:55%;
 	height:38vh;
 	font-size:200%;
 	margin:0 auto;
-	
 }
 .pic_box{
 width:80%;
  height:73%;
 margin:0 auto;
-background-color: #ffddc9;
+/* background-color: #ffddc9; */
+border:2px solid white;
 }
 .registerPortfolioInput{
 	color:black;
@@ -348,7 +397,7 @@ background-color: #ffddc9;
 #deleteBtn{
 	right: 5%;
     position: absolute;
-    top: 1%;
+    top: 3%;
 }
 .second_content{
 	font-size:60%;
@@ -422,12 +471,52 @@ input:checked + .slider:before {
 .porjectCategoryBtn{
 font-size:50%;
 }
+.mycol{
+	margin-right:6%;
+	margin-left:6%;
+}
+.team_regist_btn_color {
+	width: 160px;
+	padding: 0px 10px;
+	font-size: 23px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+.bottom-btn{
+	color:white;
+	background-color:#776e8c00;
+	border:1px solid white;
+}
+.bottom-btn:hover{
+	background-color:#776e8c;
+}
+
+
+.teamwith_logo {
+    
+    width: 40px;
+}
+.logo {
+    border: 0;
+    display: inline-block;
+    font-size: 0.8em;
+    position:fixed;
+    top:3%;
+    left:1%;
+    line-height: inherit;
+    padding: 0 1.5em;
+    background-color:none;
+}
 </style>
 </head>
 <body style="height:100%">
+
 <div class="product_con">
+<a href="/" class="logo"><img class="teamwith_logo"  src="/resources/image/logo/logoBox.png"> </a>
 <form action="/portfolio/register" method="post" enctype="multipart/form-data">
-    <ul class="product_list">
+
+    <ul class="product_list">	
    
         <li>
         	<div class="left_box" >
@@ -495,7 +584,7 @@ font-size:50%;
     
     
     
-      <input class="btn addBtn btn-warning" type="submit" value="등록완료"/>
+      <input class="btn addBtn bottom-btn" type="submit" value="등록완료"/>
     </form>
  
      <i class="btn_prev material-icons">arrow_left</i>
@@ -504,22 +593,21 @@ font-size:50%;
    <jsp:include page="portfolioLayoutModal.jsp"/> 
 </div>
 <form action="/polog/${sessionScope.memberSimpleVO.memberId }">
-		<button type="submit" class="btn portfolioExitBtn btn-warning">돌아가기</button>
+		<button type="submit" class="btn portfolioExitBtn bottom-btn">내 폴로그로</button>
 	</form>
 <div id="layout1" style="display:none">
 <jsp:include page="portfolioContentLayout1.jsp"/>
-<input type="file" name="portfolioFile" value="split">
-<button type="button" class="btn btn-warning" id="deleteBtn" >삭제</button>
+<button type="button" class="btn bottom-btn" id="deleteBtn" >삭제</button>
 <input type="hidden" name="layoutId" value="layout-1"/>
 </div>
 <div id="layout2" style="display:none">
 <jsp:include page="portfolioContentLayout2.jsp"/>
-<button type="button" class="btn btn-warning" id="deleteBtn">삭제</button>
+<button type="button" class="btn bottom-btn" id="deleteBtn">삭제</button>
 <input type="hidden" name="layoutId" value="layout-2"/>
 </div>
 <!-- 카테고리모달 -->
-	<div class="modal team_regist_modal_font" id="categoryModal">
-						<div class="modal-dialog modal-lg">
+	<div class="modal team_regist_modal_font" id="categoryModal" style="color:black">
+						<div class="modal-dialog modal-lg" style="max-width:45%;font-size:120%">
 							<div class="modal-content">
 								<div class="modal-header team_regist_modal_title">분야 선택</div>
 								<!-- Modal body -->
@@ -528,7 +616,7 @@ font-size:50%;
 										<c:if test="${(i.index mod 3) eq 0}">
 											<div class="row team_regist_big_modal_interval">
 										</c:if>
-										<div class="col team_regist_modal_element">
+										<div class="col team_regist_modal_element mycol">
 											<input name="projectcategoryid" type="radio"
 												class="form-check-input" value="${project.key }">${project.value }
 										</div>
@@ -536,13 +624,16 @@ font-size:50%;
 											</div>
 										</c:if>
 								</c:forEach>
-								<div class="row">
+								<div class="row modalrow" style="margin-left: 75%;margin-top:5%">
 									<button type="button" id="modalOkbtn"
-										class="btn btn-mid team_regist_btn_color team_regist_big_modal_btn_position"
+										class="btn btn-mid btn-outline-danger"
 										data-dismiss="modal">확인</button>
+										
 								</div>
+								
 							</div>
 						</div>
 					</div>
+					
 </body>
 </html>

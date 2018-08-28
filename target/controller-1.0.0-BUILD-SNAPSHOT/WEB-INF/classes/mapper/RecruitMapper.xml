@@ -18,6 +18,10 @@
 	<delete id="removeRecruitByRecruitId" parameterType="string">
 		delete from recruit_tb where recruit_id=#{recruitId}
 	</delete>
+	<!-- 팀의 모든 모집 삭제 -->
+	<delete id="removeRecruitByTeamId" parameterType="string">
+		delete from recruit_tb where team_id=#{teamId}
+	</delete>
 	<!-- recruit_tb의 모든 속성 수정 -->
 	<update id="updateRecruitAll" parameterType="RecruitDTO">
 		update recruit_tb set recruit_id=#{recruitId}, team_id=#{teamId}, recruit_people_num=#{recruitPeopleNum},recruit_preference=#{recruitPreference},recruit_explain=#{recruitExplain},role_id=#{roleId} where recruit_id=#{recruitId}

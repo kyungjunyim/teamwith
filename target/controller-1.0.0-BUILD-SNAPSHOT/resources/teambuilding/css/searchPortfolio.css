@@ -1,60 +1,90 @@
-.portfolio_search_big_modal_btn_position{
-	margin-left: 320px; 
-	margin-bottom: 20px; 
-	margin-top: 30px;	
+.portfolio_search_big_modal_btn_position {
+	margin-left: 320px;
+	margin-bottom: 20px;
+	margin-top: 30px;
 }
-.portfolio_search_big_modal_interval{
-	margin-top:15px;
+
+.portfolio_search_big_modal_interval {
+	margin-top: 15px;
 }
-.portfolio_search_modal_font{
-	font-size:18px;
+
+.portfolio_search_modal_font {
+	font-size: 18px;
 }
-.portfolio_search_modal_element{
-	margin-left:20px;
+..modal_check_box {
+	height: 40px;
 }
-.portfolio_search_pagenation{
-	margin:auto;
-	font-size:25px;
+.btn_color_small {
+	width: 100px;
+	margin: auto;
+	padding: 0;
+	font-size: 15px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
 }
-.portfolio_search_title {
-	width: 860px;
+.btn_color_small:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
+
+.portfolio_search_modal_element {
+	margin-left: 20px;
+}
+
+.portfolio_search_pagenation {
+	margin: auto;
 	font-size: 25px;
-	font-weight: bold;
-	margin: 10px;
 }
+
+.portfolio_search_title {
+    width: 860px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px;
+    margin-top: 20px;
+}
+
 .portfolio_search_row_whole {
 	width: 840px;
 	margin: 10px 60px;
-	padding: 0;	
+	padding: 0;
 }
+
 .portfolio_search_content_row {
 	width: 360px;
 	margin: 0 5px;
 	padding: 0;
 }
+
 .portfolio_search_content {
 	width: 360px;
 	padding: 0;
 	margin: 0;
 }
+
 .portfolio_search_image_col {
 	width: 120px;
 	height: 120px;
 	padding: 0;
 	margin: 10px;
 }
+
 .portfolio_search_image {
 	width: 120px;
 	height: 120px;
-	border-radius: 7px;	
+	border-radius: 7px;
 }
+
 .portfolio_search_content_text {
 	color: #002b5a;
-	font-size: 25px;
+	font-size: 18px;
 	width: 220px;
 	padding: 10px 0;
 	margin: 0;
 }
+
 .portfolio_search_text {
 	text-align: center;
 	width: 220px;
@@ -63,51 +93,80 @@
 	line-height: 40px;
 }
 
-.portfolio_search_bar_position{
-	margin-top:10px;
-	margin-left:10px;
+.portfolio_search_bar_position {
+	width: 860px;
+	margin: 0;
+	height: 50px;
 }
+
 .portfolio_search_layout {
 	width: 860px;
-	margin: 0 10px 10px 0;
+	margin: 0;
 	background-color: #ffffff;
 	border-radius: 7px;
 }
-.portfolio_search_modal_title{
-	color: #ff4111;
-	text-align: center;
+.modal_check_box {
+	height: 40px;
 }
-.portfolio_search_indent{
-	margin-left:20px;
-}
-.portfolio_search_modal_btn_position{
-	margin-left: 70px; 
-	margin-bottom: 20px; 
-	margin-top: 30px;
-}
-.portfolio_search_modal_btn_position2{
-	margin-left: 150px; 
-	margin-bottom: 20px;
-	margin-top: 30px;
-}
-.search_portfolio_btn_color {
-	width: 140px;
+
+.btn_color {
+	width: 50px;
+	height: 30px;
 	padding: 0px 10px;
-	font-size: 23px;
+	font-size: 14px;
 	color: #002b5a;
 	background-color: #ffffff;
 	border-color: #002b5a;
 }
+
+.btn_color:hover {
+	color: #ff4111;
+	background-color: #f7e7e3;
+	border-color: #ff4111;
+}
+
+.portfolio_search_modal_title {
+	color: #ff4111;
+	text-align: center;
+}
+
+.portfolio_search_indent {
+	margin-left: 20px;
+}
+
+.portfolio_search_modal_btn_position {
+	margin-left: 70px;
+	margin-bottom: 20px;
+	margin-top: 30px;
+}
+
+.portfolio_search_modal_btn_position2 {
+	margin-left: 150px;
+	margin-bottom: 20px;
+	margin-top: 30px;
+}
+
+.search_portfolio_btn_color {
+	width: 140px;
+	padding: 0px 10px;
+	font-size: 17px;
+	color: #002b5a;
+	background-color: #ffffff;
+	border-color: #002b5a;
+}
+
 .search_portfolio_btn_color:hover {
 	color: #ff4111;
 	background-color: #f7e7e3;
 	border-color: #ff4111;
 }
+
 .search_portfolio_btn {
 	height: 30px;
 	line-height: 15px;
 	background-color: #f2f2f2;
 }
+
 .search_portfolio_btn_submit {
 	width: 140px;
 	padding: 0px 10px;
@@ -116,6 +175,16 @@
 	background-color: #ff4111;
 	opacity: 0.7;
 }
+
 .search_portfolio_input {
-	width: 300px;
+	font-size: 14px;
+	width: 200px;
+	height: 31px;
+}
+
+.portfolio_search_intro {
+	color: #002b5a;
+	font-size: 16px;
+	margin: 0 20px;
+	margin-bottom: 10px;
 }

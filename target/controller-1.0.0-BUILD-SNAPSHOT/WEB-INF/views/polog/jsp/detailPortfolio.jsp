@@ -12,6 +12,43 @@
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <title>Insert title here</title>
 <script>
+$(document).ready(function(){
+	$(document).ready(function(){
+		var s=Math.floor(Math.random() * 5) + 1;
+		switch(s){
+		case 1:
+			$('.product_con').css('background',"url('/resources/image/배경.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
+			break;
+		case 2:
+			$('.product_con').css('background',"url('/resources/image/배경2.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
+			break;
+		case 3:
+			$('.product_con').css('background',"url('/resources/image/배경4.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
+			break;
+		case 4:
+			$('.product_con').css('background',"url('/resources/image/배경5.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
+			break;
+		case 5:
+			$('.product_con').css('background',"url('/resources/image/배경6.jpg')");
+			$('.product_con').css('background-size',"100% 100%");
+			$('.product_con').css('background-repeat',"no-repeat");
+			$('.product_con').css('backgorund-position',"center center");
+			break;
+		}
+	});
+});
 $(function(){
     var selNum = 0,
         $proList = $(".product_lis, li"),
@@ -107,11 +144,18 @@ $(function(){
 
 body {
 	font-family: nanumSquareRound;
+	color:white
 }
 *{ margin:0;padding:0;text-decoration:none}
 li{list-style:none}
 
-.product_con{ position:relative; width:100%; height:100vh;margin:0 auto; border:1px solid #e4ecf4;;background-color: #ffecdf;}
+.product_con{ position:relative; width:100%; height:100vh;margin:0 auto; border:1px solid white;
+background:url('/resources/image/배경5.jpg');
+background-size: 100% 100%;
+background-repeat:no-repeat;
+backgorund-position:center center;
+
+}
 .product_con .product_list{overflow:hidden;position:relative;width:100%; height:97vh;}
 .product_con .product_list li{ width:100%;position:absolute;left:0;}
 .product_con .product_list li:nth-child(1){left:0px;}
@@ -197,16 +241,45 @@ font-size:80%;margin-left:11%;margin-top:2%
 	bottom:5%;
 	right:12%;
 }
+.portfolioModifyBtn{
+	position:fixed;
+	top:5%;
+	right:5%;
+}
 .pic_box{
 width:80%;
  height:73%;
 margin:0 auto;
-background-color: #ffddc9;
+border: 2px solid white;
+}
+.bottom-btn{
+	color:white;
+	background-color:#776e8c00;
+	border:1px solid white;
+}
+.bottom-btn:hover{
+	background-color:#776e8c;
+}
+.teamwith_logo {
+    
+    width: 40px;
+}
+.logo {
+    border: 0;
+    display: inline-block;
+    font-size: 0.8em;
+    position:fixed;
+    top:3%;
+    left:1%;
+    line-height: inherit;
+    padding: 0 1.5em;
+    background-color:none;
 }
 </style>
 </head>
 <body>
 <div class="product_con">
+<a href="/" class="logo"><img class="teamwith_logo"  src="/resources/image/logo/logoBox.png"> </a>
     <ul class="product_list">
    
         <li>
@@ -270,13 +343,16 @@ background-color: #ffddc9;
     <i class="btn_prev material-icons">arrow_left</i>
     <i class="btn_next material-icons">arrow_right</i>	
 	<form action="/polog/${portfolio.memberId }">
-		<button type="submit" class="btn portfolioExitBtn">돌아가기</button>
+		<button type="submit" class="btn portfolioExitBtn bottom-btn">내 폴로그로</button>
 	</form>
 	<!-- controller에 지우고 여긴 memberSimpleVO 바꾸기 테스트용임-->
 	<c:if test="${portfolio.memberId eq sessionScope.memberSimpleVO.memberId }">
 	<form action="/portfolio/remove/${portfolio.portfolioId}" method="post">
 		<input type="hidden" name="memberId" value="${portfolio.memberId }">
-		<button type="submit" class="btn portfolioRemoveBtn">삭제하기</button>
+		<button type="submit" class="btn portfolioRemoveBtn bottom-btn">삭제하기</button>
+	</form>
+	<form action="/portfolio/edit/${portfolio.portfolioId }" method="get">
+		<button type="submit" class="btn portfolioModifyBtn bottom-btn">수정하기</button>
 	</form>
 	</c:if>
     

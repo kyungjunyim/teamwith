@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,19 +19,19 @@
 </head>
 <body>
 	<div class="team_detail_row team_detail_content_interval">
-		<div class="row team_detail_row_title team_detail_title_content_font">추천 팀원</div>
-		<form action="polog.do" method="post" id="teamMember1">
-			<input type="hidden" name="memberId" value="hwang">				
-		<div id="teamMember" class="row team_detail_row_detail team_detail_row_text team_detail_hover_opacity team_detail_content_interval team_detail_leader_effect" onclick="$('#teamMember1').submit()">
-			<img src="/resources/image/member/hwang.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">조란 기획자 </label><label class="text_orange team_detail_img_small_text">일치율: 89%</label>
+		<div class="team_detail_row_title team_detail_title_content_font">추천 팀원</div>
+		<div class="row coworker_row">
+			<c:forEach items="${recommendedMemberList }" var="recommendedMember">
+				<c:if test="${teamInfo.memberId != recommendedMember.memberId }">
+				<div id="teamMember" class="coworker_col" onclick="location = '/polog/${recommendedMember.memberId }'">
+					<div><img src="${recommendedMember.memberPic }" class="team_detail_img_sm"></div>
+					<div><label class="coworker_text">${recommendedMember.memberName }님</label></div>
+					<div><label class="coworker_text text_orange">일치율 ${fn:substring(recommendedMember.rate, 0, 4) }%</label></div>
+					<div><label class="coworker_text" style="font-size: 14px;">${applicationScope.roleList[recommendedMember.roleId] }</label></div>
+				</div>
+				</c:if>
+			</c:forEach>
 		</div>
-		</form>
-		<form action="/teamwith/polog/jsp/polog.do" method="post" id="teamMember2">
-			<input type="hidden" name="memberId" value="kim">
-		<div class="row team_detail_row_detail team_detail_row_text team_detail_hover_opacity team_detail_content_interval team_detail_leader_effect" onclick="$('#teamMember2').submit()">
-			<img src="/resources/image/member/kim.jpg" class="rounded-circle team_detail_img_small"><label class="team_detail_img_small_text">임경준 디자이너 </label><label class="text_orange team_detail_img_small_text">일치율: 13%</label>
-		</div>
-		</form>
 	</div>
 </body>
 </html>
