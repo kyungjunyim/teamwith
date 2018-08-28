@@ -311,7 +311,7 @@ body {
 
 .main_portfolio_text_name {
 	height: 27px;
-	font-size: 16px;
+	font-size: 15px;
 	width: 85px;
 	margin: 0;
 	padding: 0;
@@ -321,7 +321,7 @@ body {
 
 .main_portfolio_text_title {
 	height: 30px;
-	font-size: 17px;
+	font-size: 14px;
 	color: #ff4111;
 	cursor: pointer;
 }
@@ -336,7 +336,7 @@ body {
 .btn_more {
 	width: 140px;
 	padding: 0px 10px;
-	font-size: 18px;
+	font-size: 16px;
 	color: #002b5a;
 	background-color: #ffffff;
 	border-color: #002b5a;

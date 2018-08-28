@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,20 +20,27 @@
 				<div class="row main_row">
 					<jsp:include page="teamSearchBar.jsp" />
 				</div> 
-				<c:if test="${not empty recommendedTeamList }">
+				<c:if test="${isSearch == 'false' && not empty recommendedTeamList }">
 					<div class="row main_row">
 						<jsp:include page="recommendedTeam.jsp" />
 					</div>
 				</c:if>
-				<c:if test="${not empty recentTeamList }">				
+				<c:if test="${isSearch == 'false'}">				
 				<div class="row main_row">
 					<jsp:include page="mainRecentTeam.jsp" />
 				</div>
 				</c:if>
-				<c:if test="${not empty resultTeamList }">
-				<div class="row main_row">
-					<jsp:include page="teamSearchResult.jsp" />
-				</div>
+				<c:if test="${isSearch == 'true'}">
+					<c:if test="${fn:length(resultTeamList) == 0 }">
+						<div class="row main_row" style="min-height: 576px;">
+							<jsp:include page="teamSearchResult.jsp" />
+						</div>
+					</c:if>
+					<c:if test="${fn:length(resultTeamList) != 0 }">
+						<div class="row main_row">
+							<jsp:include page="teamSearchResult.jsp" />
+						</div>						
+					</c:if>
 				</c:if>
 			</div>
 			<div class="col-xs-6 side_container">

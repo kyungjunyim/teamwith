@@ -131,6 +131,7 @@
 		SELECT ROWNUM AS RNUM, Z.* FROM (
 		SELECT * FROM member_search_view 
 		WHERE member_public = 0
+		AND total_praise_cnt > 0
 		ORDER BY total_praise_cnt DESC
 		) Z WHERE ROWNUM < #{page}+#{perPageNum}
 		) WHERE RNUM >= #{page}

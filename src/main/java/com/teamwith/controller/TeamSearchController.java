@@ -62,7 +62,7 @@ public class TeamSearchController {
 			List<TeamRateVO> resultList = recommendTeam();
 			model.addAttribute("recommendedTeamList", resultList);
 		}
-
+		model.addAttribute("isSearch", "false");
 		return "teambuilding/jsp/teamSearch";
 	}
 
@@ -73,6 +73,7 @@ public class TeamSearchController {
 				&& (keyword == null || keyword.trim().equals(""))) {
 			return teamSearch(session, model);
 		} else {
+			model.addAttribute("isSearch", "true");
 			model.addAttribute("recentTeamList", null);
 			model.addAttribute("recommendedTeamList", null);
 			List<String> resultIdList = null;
@@ -91,6 +92,13 @@ public class TeamSearchController {
 				}
 				regionCri.addCriteria("regionList", regionList);
 				teamIdListByRegion = teamService.searchTeam(regionCri);
+				if (teamIdListByRegion != null) {
+					resultIdList = new ArrayList<String>();
+					resultIdList.addAll(teamIdListByRegion);
+				}
+			}
+			else {
+				teamIdListByRegion = teamService.getTeamId();
 				if (teamIdListByRegion != null) {
 					resultIdList = new ArrayList<String>();
 					resultIdList.addAll(teamIdListByRegion);
@@ -238,7 +246,7 @@ public class TeamSearchController {
 					resultTeamList.add(teamSimpleVO);
 				}
 			}
-
+			
 			model.addAttribute("resultTeamList", resultTeamList);
 			return "teambuilding/jsp/teamSearch";
 		}

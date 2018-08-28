@@ -23,9 +23,11 @@
 				<div class="row main_row">
 					<jsp:include page="mainRecentTeam.jsp" />
 				</div>
+				<c:if test="${not empty bestMemberList }">
 				<div class="row main_row" style="margin-bottom: 0px;">
 					<jsp:include page="mainBestMember.jsp" />
 				</div>
+				</c:if>
 			</div>
 			<div class="col-xs-6 side_container">
 				<c:if test="${empty sessionScope.memberSimpleVO }">
@@ -43,7 +45,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row row_whole">
+		<div class="row row_whole" style="margin-top: 0;">
 			<jsp:include page="footer.jsp" />
 		</div>
 	</div>
