@@ -24,7 +24,7 @@
 					<jsp:include page="mainRecentTeam.jsp" />
 				</div>
 				<c:if test="${not empty bestMemberList }">
-				<div class="row main_row" style="margin-bottom: 0px;">
+				<div class="row main_row">
 					<jsp:include page="mainBestMember.jsp" />
 				</div>
 				</c:if>
