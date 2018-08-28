@@ -24,6 +24,7 @@ import com.teamwith.service.TeamService;
 import com.teamwith.vo.MemberPraiseCntVO;
 import com.teamwith.vo.MemberPraiseVO;
 import com.teamwith.vo.MemberSearchVO;
+import com.teamwith.vo.TeamSimpleVO;
 
 @Controller
 @RequestMapping(value = "/praise")
@@ -71,14 +72,24 @@ public class PraiseController {
 		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		logger.info(sd.format(new Date()));
 		List<String> joinTeamIds = applicationService.getJoinedTeamId(actor);
+		try {
+			List<TeamSimpleVO> teamVOs = teamService.getMyTeam(actor);
+			for (TeamSimpleVO t : teamVOs) {
+				joinTeamIds.add(t.getTeamId());
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("result", "false");
 
 		try {
 			for (String id : joinTeamIds) {
 
-				if (teamService.getTeamInfo(id).getTeamEndDate().compareTo(sd.format(new Date()).toString()) < 0) {
-
+				// 모집 마감일이 지났거나, 팀 상태가 모집 마감이거나
+				if (teamService.getTeamInfo(id).getTeamEndDate().compareTo(sd.format(new Date()).toString()) < 0
+						|| teamService.getTeamInfo(id).getTeamStatus().equals("1")) {
+					teamService.getTeamInfo(id).setTeamStatus("1");
 					for (int i = 0; i < applicationService.getTeamMember(id).size(); i++) {
 						List<MemberSearchVO> members = applicationService.getTeamMember(id);
 						for (MemberSearchVO m : members) {

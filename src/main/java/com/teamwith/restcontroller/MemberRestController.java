@@ -50,8 +50,14 @@ public class MemberRestController {
 	@RequestMapping(value = "/getEditInfo", method = RequestMethod.GET)
 	public MemberVO memberEditInfo(HttpSession session) {
 		try {
-			MemberSimpleVO member = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
-			return profileService.getMyInfo(member.getMemberId());
+			MemberSimpleVO msVO = (MemberSimpleVO) session.getAttribute("memberSimpleVO");
+			String memberId;
+			if (msVO == null) {
+				return null;
+			} else {
+				memberId = msVO.getMemberId();
+			}
+			return profileService.getMyInfo(memberId);
 
 		} catch (Exception e) {
 			e.printStackTrace();
