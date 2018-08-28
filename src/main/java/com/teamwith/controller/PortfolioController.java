@@ -27,7 +27,7 @@ import com.teamwith.vo.PortfolioContentVO;
 import com.teamwith.vo.PortfolioVO;
 @Controller
 @RequestMapping(value="/portfolio")
-@MultipartConfig(maxFileSize=1024*1024*10)
+@MultipartConfig(maxFileSize=1024*1024*5000)
 public class PortfolioController {
 	
 	private static final Logger logger=LoggerFactory.getLogger(PortfolioController.class);

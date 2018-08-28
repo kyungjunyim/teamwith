@@ -32,7 +32,7 @@ public class UploadFileUtils {
 		System.out.println("fileName = "+fileName);
 		File file=new File(filePath+fileName);
 		FileInputStream fis=new FileInputStream(file);
-		XMLSlideShow ppt=new XMLSlideShow(fis);
+		XMLSlideShow ppt=new XMLSlideShow(fis);//ppt 읽기쓰기
 		fis.close();
 		Dimension pgsize=ppt.getPageSize();
 		XSLFSlide[] slide=ppt.getSlides();

@@ -11,6 +11,16 @@
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/teambuilding/css/frame.css">
 <link rel="stylesheet" href="/resources/teambuilding/css/myTeam.css">
+<style>
+.txt_line {
+ 
+
+  overflow:hidden;
+   text-overflow:ellipsis;
+    white-space:nowrap; 
+    }
+
+</style>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -37,8 +47,8 @@
 								<tr>
 									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)"><img src="${myTeam.teamPic }"
 										class="rounded-circle team_image"></td>
-									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${myTeam.teamName }</td>
-									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${myTeam.teamProjectName }</td>
+									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)"><div class="txt_line" style="width:150px;height:100%">${myTeam.teamName }</div></td>
+									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)"><div class="txt_line" style="width:150px;height:100%">${myTeam.teamProjectName }</div></td>
 									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${applicationScope.projectList[myTeam.projectCategoryId] }</td>
 									<td id="${fn:substringAfter(myTeam.teamId, 'team-') }" onclick="javascript:clickTrEvent(this)">${fn:substring(myTeam.teamEndDate, 0, 10) }</td>
 									<td class="btn_change_apply btn_cancel">

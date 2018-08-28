@@ -21,7 +21,7 @@
 	</c:if>
 		<form action="#" method="post" id="">
 			<input type="hidden" name="portfolioId" value="${portfolio.portfolioId }">
-			<div class="col-xs-6 portfolio_search_content_row">
+			<div class="col-xs-6 portfolio_search_content_row" >
 				<div class="row portfolio_search_content">
 					<div class="col-xs-6 portfolio_search_image_col">
 						<img src="/resources/image/portfolio/${portfolio.portfolioId }.jpg" class="portfolio_search_image">
