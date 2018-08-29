@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teamwith.service.PologService;
 import com.teamwith.service.ProfileService;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.MemberVO;
 import com.teamwith.vo.PortfolioContentVO;
 import com.teamwith.vo.PortfolioSimpleVO;

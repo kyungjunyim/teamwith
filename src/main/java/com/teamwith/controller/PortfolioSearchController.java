@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.teamwith.service.PologService;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.PortfolioSimpleVO;
 import com.teamwith.vo.TeamRateVO;

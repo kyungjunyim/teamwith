@@ -15,7 +15,7 @@ import com.teamwith.dao.MemberSkillDAO;
 import com.teamwith.dto.MemberPraiseDTO;
 import com.teamwith.dto.MemberProjectCategoryDTO;
 import com.teamwith.dto.MemberSkillDTO;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.MainProfileVO;
 import com.teamwith.vo.MemberPraiseCntVO;
 import com.teamwith.vo.MemberPraiseVO;

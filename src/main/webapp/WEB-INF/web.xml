@@ -27,7 +27,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>com.teamwith.util.FileLoaderListener</listener-class>
+		<listener-class>com.teamwith.dao.FileLoaderDAO</listener-class>
 	</listener>
 
 	<!-- Processes application requests -->

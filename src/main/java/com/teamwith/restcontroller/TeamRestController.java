@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.TeamService;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MyApplicationVO;
 import com.teamwith.vo.TeamSimpleVO;

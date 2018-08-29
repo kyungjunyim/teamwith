@@ -22,7 +22,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.teamwith.service.MemberService;
 import com.teamwith.service.ProfileService;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.MemberSearchVO;
 import com.teamwith.vo.MemberSimpleVO;
 import com.teamwith.vo.MemberVO;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.teamwith.service.MemberService;
 import com.teamwith.service.TeamService;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.MemberSearchVO;
 import com.teamwith.vo.TeamSimpleVO;
 

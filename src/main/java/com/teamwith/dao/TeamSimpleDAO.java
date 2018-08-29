@@ -4,7 +4,7 @@ package com.teamwith.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.TeamSimpleVO;
 
 public interface TeamSimpleDAO {

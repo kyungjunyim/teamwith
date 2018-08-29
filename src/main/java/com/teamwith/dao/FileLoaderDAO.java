@@ -1,4 +1,4 @@
-package com.teamwith.util;
+package com.teamwith.dao;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,7 +21,7 @@ import javax.servlet.annotation.WebListener;
 import org.springframework.web.context.ContextLoaderListener;
 
 @WebListener
-public class FileLoaderListener extends ContextLoaderListener {
+public class FileLoaderDAO extends ContextLoaderListener {
 
 	Map<String, String> praises = new HashMap<String, String>();
 	Map<String, String> projects = new HashMap<String, String>();

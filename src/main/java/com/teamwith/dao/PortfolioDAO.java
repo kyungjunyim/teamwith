@@ -3,7 +3,7 @@ package com.teamwith.dao;
 import java.util.List;
 
 import com.teamwith.dto.PortfolioDTO;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.PortfolioSimpleVO;
 
 public interface PortfolioDAO {

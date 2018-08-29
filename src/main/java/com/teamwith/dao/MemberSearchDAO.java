@@ -2,7 +2,7 @@ package com.teamwith.dao;
 
 import java.util.List;
 
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.MemberSearchVO;
 
 public interface MemberSearchDAO {
