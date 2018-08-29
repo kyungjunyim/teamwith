@@ -100,8 +100,6 @@ public class PortfolioController {
 			else {
 				param.put(portfolioVO, null);
 			}
-			//MultipartFile [] portfolioFile,String []portfolioURL,String []contentOrder,String [] contentIntro,
-			//String [] portfolioContentName
 			if(contentOrder!=null) {
 				for(int i=0;i<contentOrder.length;i++) {
 					PortfolioContentVO portfolioContent=null;
