@@ -98,46 +98,46 @@ public class MemberService {
 		}
 		return result;
 	}
-	
+
 	public List<String> getMemberIdByRegionList(Criteria cri) throws Exception {
-		if(cri == null) {
+		if (cri == null) {
 			return null;
 		}
 		List<MemberSearchVO> temp = memberSearchDAO.searchMemberIdByRegionList(cri);
 		List<String> result = new ArrayList<String>();
-		
-		for(MemberSearchVO memberSearchVO : temp) {
+
+		for (MemberSearchVO memberSearchVO : temp) {
 			result.add(memberSearchVO.getMemberId());
 		}
 		return result;
 	}
-	
+
 	public List<String> getMemberIdByRoleList(Criteria cri) throws Exception {
-		if(cri == null) {
+		if (cri == null) {
 			return null;
 		}
 		List<MemberSearchVO> temp = memberSearchDAO.searchMemberIdByRoleList(cri);
 		List<String> result = new ArrayList<String>();
-		
-		for(MemberSearchVO memberSearchVO : temp) {
+
+		for (MemberSearchVO memberSearchVO : temp) {
 			result.add(memberSearchVO.getMemberId());
 		}
 		return result;
 	}
-	
+
 	public List<String> getMemberIdByCondition(Criteria cri) throws Exception {
-		if(cri == null) {
+		if (cri == null) {
 			return null;
 		}
 		List<MemberSearchVO> temp = memberSearchDAO.searchMember(cri);
 		List<String> result = new ArrayList<String>();
-		
-		for(MemberSearchVO memberSearchVO : temp) {
+
+		for (MemberSearchVO memberSearchVO : temp) {
 			result.add(memberSearchVO.getMemberId());
 		}
 		return result;
 	}
-	
+
 	public List<String> getMemberBySkillId(List<String> skillId) throws Exception {
 		if (skillId == null) {
 			return null;
@@ -259,10 +259,12 @@ public class MemberService {
 		if (praise == null || praise.isEmpty()) {
 			return -1;
 		}
-
 		int result = memberPraiseDAO.removeMemberPraise(praise.get(0).toDTO());
+
 		for (MemberPraiseVO m : praise) {
-			result = memberPraiseDAO.addMemberPraise(m.toDTO());
+			if (m.getPraiseId() != null) {
+				result = memberPraiseDAO.addMemberPraise(m.toDTO());
+			}
 			if (result != 1) {
 				return -1;
 			}

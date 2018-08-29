@@ -43,19 +43,17 @@ public class PraiseController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
 	public List<MemberPraiseCntVO> updatePraise(Model model, String actor, String target, String[] praise) {
-		logger.info("praise null:" + (praise == null));
 		List<MemberPraiseVO> pl = new ArrayList<MemberPraiseVO>();
 		if (praise == null) {
-			try {
-				memberService.removeMemberPraise(actor, target);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
+			pl.add(new MemberPraiseVO(actor, target, null));
+		}
+		
+		if (praise != null) {
 			for (String p : praise) {
 				pl.add(new MemberPraiseVO(actor, target, p));
 			}
 		}
+
 		List<MemberPraiseCntVO> result = null;
 		try {
 			memberService.updateMemberPraise(pl);
@@ -94,7 +92,8 @@ public class PraiseController {
 						List<MemberSearchVO> members = applicationService.getTeamMember(id);
 						for (MemberSearchVO m : members) {
 							logger.info(m.getMemberId() + "," + target);
-							if (m.getMemberId().equals(target)|| teamService.getTeamInfo(id).getMemberId().equals(target)) {
+							if (m.getMemberId().equals(target)
+									|| teamService.getTeamInfo(id).getMemberId().equals(target)) {
 								map.put("result", "true");
 								logger.info("true");
 								return map;
@@ -113,5 +112,4 @@ public class PraiseController {
 
 	}
 
-	
 }
