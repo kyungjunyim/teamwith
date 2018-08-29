@@ -1,4 +1,4 @@
-package com.teamwith.util;
+package com.teamwith.vo;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.teamwith.dto.TeamDTO;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 
 public interface TeamDAO {
 	public int addTeam(TeamDTO team) throws Exception;

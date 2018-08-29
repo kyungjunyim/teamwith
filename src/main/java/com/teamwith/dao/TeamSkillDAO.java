@@ -4,7 +4,7 @@ package com.teamwith.dao;
 import java.util.List;
 
 import com.teamwith.dto.TeamSkillDTO;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.TeamSkillVO;
 
 public interface TeamSkillDAO {

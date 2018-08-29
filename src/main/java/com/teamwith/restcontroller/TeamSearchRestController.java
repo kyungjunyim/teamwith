@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teamwith.dto.InterviewQuestionDTO;
 import com.teamwith.service.ApplicationService;
 import com.teamwith.service.TeamService;
-import com.teamwith.util.Criteria;
+import com.teamwith.vo.Criteria;
 import com.teamwith.vo.FaqVO;
 import com.teamwith.vo.MemberSearchVO;
 import com.teamwith.vo.MemberSimpleVO;
