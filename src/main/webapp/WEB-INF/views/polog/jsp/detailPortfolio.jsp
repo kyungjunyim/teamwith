@@ -344,7 +344,7 @@ border: 2px solid white;
     <i class="btn_prev material-icons">arrow_left</i>
     <i class="btn_next material-icons">arrow_right</i>	
 	<form action="/polog/${portfolio.memberId }">
-		<button type="submit" class="btn portfolioExitBtn bottom-btn">내 폴로그로</button>
+		<button type="submit" class="btn portfolioExitBtn bottom-btn">폴로그로</button>
 	</form>
 	<!-- controller에 지우고 여긴 memberSimpleVO 바꾸기 테스트용임-->
 	<c:if test="${portfolio.memberId eq sessionScope.memberSimpleVO.memberId }">

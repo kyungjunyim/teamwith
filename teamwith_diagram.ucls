@@ -2123,6 +2123,7 @@
     <end type="TARGET" refId="114" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

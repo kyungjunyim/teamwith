@@ -127,37 +127,15 @@ public class PologService {
 		try {
 			for(int i=0;i<objtmp.length;i++) {
 				if (objtmp[i] instanceof PortfolioVO) {
-					System.out.println("포폴 시작");
 					portfolio = this.registerPortfolio((PortfolioVO) objtmp[i], portfolioAndContent.get(objtmp[i]), rootPath);
 					result = portfolio.getPortfolioId();
-					System.out.println("포폴완료");
 				} else if (objtmp[i] instanceof PortfolioContentVO) {
-					System.out.println("포컨시작");
 					pc = (PortfolioContentVO) objtmp[i];
 					pc.setPortfolioId(portfolio.getPortfolioId());
 					this.registerPortfolioContent(pc, portfolioAndContent.get(objtmp[i]), rootPath);
-					System.out.println("포컨완료");
 				}
 			}
-		}
-		/*try {
-			while (it.hasNext()) {
-				Object obj = it.next();
-				System.out.println("" + obj);
-				if (obj instanceof PortfolioVO) {
-					System.out.println("포폴 시작");
-					portfolio = this.registerPortfolio((PortfolioVO) obj, portfolioAndContent.get(obj), rootPath);
-					result = portfolio.getPortfolioId();
-					System.out.println("포폴완료");
-				} else if (obj instanceof PortfolioContentVO) {
-					System.out.println("포컨시작");
-					pc = (PortfolioContentVO) obj;
-					pc.setPortfolioId(portfolio.getPortfolioId());
-					this.registerPortfolioContent(pc, portfolioAndContent.get(obj), rootPath);
-					System.out.println("포컨완료");
-				}
-			}
-		}*/ catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -189,9 +167,8 @@ public class PologService {
 						rootPath + attachPath + portfolioContent.getPortfolioId(),
 						portfolioContent.getPortfolioContentId() + "." + type, file.getBytes());
 				if (file.getContentType().split("/")[0].equals("application")) {
-					System.out.println("PDF에들옴");
 					savedFileName = UploadFileUtils.uploadPDF(rootPath + attachPath + portfolioContent.getPortfolioId() + "/",
-							portfolioContent.getPortfolioContentId() + ".pptx");// 포폴콘텐츠아이디로하면뎀
+							portfolioContent.getPortfolioContentId() + ".pptx");
 					
 				}
 				portfolioContent
@@ -251,7 +228,6 @@ public class PologService {
 			List<String> portfolioId = portfolioDAO.getId();
 			String portfolioId1=this.generateId(portfolioId, "portfolio");
 			portfolio.setPortfolioId(portfolioId1);
-			System.out.println("포폴아디널이냐"+portfolioId1);
 
 		try {
 			if (file != null) {
