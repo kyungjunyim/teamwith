@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-header h3 {
+.polog_header h3 {
 	line-height: 0;
 	font-size: 2em;
 	margin: 0 0 1em 0;
@@ -19,7 +19,7 @@ header h3:hover {
 </head>
 <body>
 	<div class="inner">
-		<header class="major">
+		<header class="major polog_header">
 			<a href="/polog/${memberVO.memberId }" style="text-decoration: none;"><h3>${pologVO.pologTitle }</h3></a>
 		</header>
 		<div class="content">

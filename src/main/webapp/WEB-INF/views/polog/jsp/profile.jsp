@@ -239,7 +239,7 @@
 					if (data.result == 'true') {
 						$('#p_btn').trigger('click');
 					} else {
-						alert("같은 팀원만 칭찬할 수 있습니다.");
+						alert("팀의 모집이 마감 된 후에 같은 팀원만 칭찬할 수 있습니다.");
 					}
 				}
 
