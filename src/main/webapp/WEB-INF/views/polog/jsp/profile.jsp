@@ -28,14 +28,17 @@
 						<td>이메일</td>
 						<td id="member_email">${memberVO.memberEmail }</td>
 					</tr>
-					<tr>
-						<td>전화번호</td>
-						<td id="member_phone">${memberVO.memberPhone }</td>
-					</tr>
-					<tr>
-						<td>생년월일</td>
-						<td id="member_birth">${memberVO.memberBirth }</td>
-					</tr>
+					<c:if test="${teamMember=='true' }">
+						<tr>
+							<td>전화번호</td>
+							<td id="member_phone">${memberVO.memberPhone }</td>
+						</tr>
+						<tr>
+							<td>생년월일</td>
+							<td id="member_birth">${memberVO.memberBirth }</td>
+						</tr>
+					</c:if>
+
 
 					<tr>
 						<td>활동 지역</td>
@@ -247,52 +250,71 @@
 
 	}
 
-	$(document).ready(function() {
+	$(document)
+			.ready(
+					function() {
 
-		<c:forEach items="${myPraiseList}" var="p">
-		$('input:checkbox[id=${p.praiseId}]')[0].checked = true;
-		</c:forEach>
+						<c:forEach items="${myPraiseList}" var="p">
+						$('input:checkbox[id=${p.praiseId}]')[0].checked = true;
+						</c:forEach>
 
-		var elements = document.getElementsByClassName("profile_box");
-		var i;
-		for (i = 0; i < elements.length; i++) {
+						var elements = document
+								.getElementsByClassName("profile_box");
+						var i;
+						for (i = 0; i < elements.length; i++) {
 
-			elements[i].style.flex = "50%";
-		}
+							elements[i].style.flex = "50%";
+						}
 
-		$('#praise_btn').on('click', function() {
-			var pr = new Array();
-			for (var i = 0; i < 5; i++) {
-				if (document.getElementsByName('praise')[i].checked) {
-					console.log(document.getElementsByName('praise')[i].value);
-					pr.push(document.getElementsByName('praise')[i].value);
+						$('#praise_btn')
+								.on(
+										'click',
+										function() {
+											var pr = new Array();
+											for (var i = 0; i < 5; i++) {
+												if (document
+														.getElementsByName('praise')[i].checked) {
+													console
+															.log(document
+																	.getElementsByName('praise')[i].value);
+													pr
+															.push(document
+																	.getElementsByName('praise')[i].value);
 
-				}
-			}
-			console.log(pr);
+												}
+											}
+											console.log(pr);
 
-			$.ajax({
-				method : 'post',
-				url : '/praise/update',
-				traditional : true,
-				data : {
-					'actor' : '${sessionScope.memberSimpleVO.memberId }',
-					'target' : '${memberVO.memberId }',
-					'praise' : pr
-				},
+											$
+													.ajax({
+														method : 'post',
+														url : '/praise/update',
+														traditional : true,
+														data : {
+															'actor' : '${sessionScope.memberSimpleVO.memberId }',
+															'target' : '${memberVO.memberId }',
+															'praise' : pr
+														},
 
-				success : function(data) {
-					var i = 1; 
-					$(data).each(function(){
-						$('#praise' + i + '_cnt')[0].innerHTML=this.praiseCnt;
-						console.log($('#praise' + i + '_cnt'));
-						i++;
-				});
-					}
+														success : function(data) {
+															var i = 1;
+															$(data)
+																	.each(
+																			function() {
+																				$('#praise'
+																						+ i
+																						+ '_cnt')[0].innerHTML = this.praiseCnt;
+																				console
+																						.log($('#praise'
+																								+ i
+																								+ '_cnt'));
+																				i++;
+																			});
+														}
 
-			});
-		});
+													});
+										});
 
-	});
+					});
 </script>
 </html>

@@ -247,7 +247,6 @@
 			<version>3.9</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/oreilly/cos -->
-		<!-- https://mvnrepository.com/artifact/com.oreilly.servlet/com.springsource.com.oreilly.servlet -->
 
 		<!-- https://mvnrepository.com/artifact/oreilly/cos -->
 		<dependency>
