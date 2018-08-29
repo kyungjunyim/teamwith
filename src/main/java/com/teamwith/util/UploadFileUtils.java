@@ -28,8 +28,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 @Component
 public class UploadFileUtils {
 	public static String uploadPDF(String filePath,String fileName) throws Exception{
-		System.out.println("filePath = "+filePath);
-		System.out.println("fileName = "+fileName);
 		File file=new File(filePath+fileName);
 		FileInputStream fis=new FileInputStream(file);
 		XMLSlideShow ppt=new XMLSlideShow(fis);//ppt 읽기쓰기

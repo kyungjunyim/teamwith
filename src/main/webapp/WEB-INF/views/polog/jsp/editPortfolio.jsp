@@ -145,17 +145,18 @@ $(function(){
     $('#okbtn').click(function(){
     	
 		/* var $test=$($('#layout1').html()); */
-		alert(order);
+		/* alert(order); */
 		var str='';
 		if(index==1){
 			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" accept=".png,.jpg,.jpeg,.bmp,.gif" name="portfolioFile"/>'
 				+'<input type="hidden" name="portfolioContentName" value="image"/>'
 				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==2){
-			str='<input type="text" class="form-control registerPortfolioInput"  name="portfolioURL" style="display:inline;margin-top:30%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
+			str='<div style="width:100%;text-align:right;margin-right:3%"><div class="team_detail_row_title team_detail_title_content_font" '
+				+'style="padding-right: 10px;margin-top: 1%;">동영상 업로드'
+				+'<button type="button" id="info" class="btn btn-md btn_info">?</button></div></div>'
+				+'<input type="text" class="form-control registerPortfolioInput"  name="portfolioURL" style="display:inline;margin-top:30%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
 				+'<input type="hidden" name="portfolioContentName" value="media"/><br>'
-				+'<동영상 등록하는 방법><br>1.Youtube 동영상 화면 우클릭<br>2.소스코드 복사 클릭<br>'
-				+'3. src="https://www.youtube.com/embed/nelSiMnilRw?ecver=1<br>"..." 안에 내용을 복사하여 입력해 주세요'
 				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==3){
 			str='<input type="file" class="btn" style="margin-top: 25%;margin-left:15%" accept=".ppt,.pptx" name="portfolioFile"/>'
@@ -166,11 +167,12 @@ $(function(){
 				+'<input type="hidden" name="portfolioContentName" value="image"/>'
 				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==5){
-			str='<input type="text" class="form-control registerPortfolioInput" name="portfolioURL" style="display:inline;margin-top:40%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
-			+'<input type="hidden" name="portfolioContentName" value="media"/><br>'
-			+'<동영상 등록하는 방법><br>1.Youtube 동영상 화면 우클릭<br>2.소스코드 복사 클릭<br>'
-			+'3. src="https://www.youtube.com/embed/nelSiMnilRw?ecver=1<br>"..." 안에 내용을 복사하여 입력해 주세요'
-			+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
+			str='<div style="width:100%;text-align:right;margin-right:3%"><div class="team_detail_row_title team_detail_title_content_font" '
+				+'style="padding-right: 10px;margin-top: 1%;">동영상 업로드'
+				+'<button type="button" id="info" class="btn btn-md btn_info">?</button></div></div>'
+				+'<input type="text" class="form-control registerPortfolioInput" name="portfolioURL" style="display:inline;margin-top:40%;font-size:100%" placeholder="Youtube URL을 입력해 주세요"/>'
+				+'<input type="hidden" name="portfolioContentName" value="media"/><br>'
+				+'<input type="hidden" name="contentOrder" value="'+order+'"/>';
 		}else if(index==6){
 			str='<input type="file" style="margin-top: 50%" accept=".ppt,.pptx" name="portfolioFile">'
 				+'<input type="hidden" name="portfolioContentName" value="ppt"/>'
@@ -252,6 +254,12 @@ $(function(){
 	$('#modalOkbtn').click(function(){
 		var categoryValue = $('input:radio[name="projectcategoryid"]:checked').val();
 		$('#pci').attr('value',categoryValue);
+	});
+	$(document).on('click','#info',function(){
+    	$('#mediaModal').fadeIn();
+    });
+	$('#mediaClose').click(function(){
+		$('#mediaModal').fadeOut();
 	});
 });
 
@@ -495,6 +503,23 @@ font-size:50%;
     background-color:none;
     z-index:2;
 }
+.btn_info {
+	margin-left: 3px;
+	padding: 0 6px;
+	color: #ff4111;
+	border-radius: 100%;
+	border: 2px solid #ff4111;
+	background:none;
+}
+#mediaClose{
+	float:right;
+	margin-right:5%;
+	margin-top:2%;
+	background-color:white;
+}
+#mediaClose:hover{
+	cursor:pointer;
+}
 </style>
 </head>
 <body style="height:100%">
@@ -610,7 +635,7 @@ font-size:50%;
    <jsp:include page="portfolioLayoutModal.jsp"/> 
 </div>
 <form action="/polog/${sessionScope.memberSimpleVO.memberId }">
-		<button type="submit" class="btn portfolioExitBtn bottom-btn">내 폴로그로</button>
+		<button type="submit" class="btn portfolioExitBtn bottom-btn">폴로그로</button>
 	</form>
 <div id="layout1" style="display:none">
 <jsp:include page="portfolioContentLayout1.jsp"/>
@@ -619,9 +644,38 @@ font-size:50%;
 </div>
 <div id="layout2" style="display:none">
 <jsp:include page="portfolioContentLayout2.jsp"/>
-<button type="button" class="btn btn-warning" id="deleteBtn">삭제</button>
+<button type="button" class="btn bottom-btn" id="deleteBtn">삭제</button>
 <input type="hidden" name="layoutId" value="layout-2"/>
 </div>
+
+<!-- 동영상 모달 -->
+<div style="width:600px;height:450px;background-color:white;position: fixed;text-align:center;
+				color:black;right:35%;top:18%;display:none;border:1px solid #002b5a" id="mediaModal">
+	<div style="margin-bottom:2%">
+		<img src="/resources/image/logo/logoText.png" style="margin-left:3%;margin-top:3%"width="150px" height="40px">
+		<div id="mediaClose">x</div>
+	</div>
+
+	<div style="background-color:black;width:100%;height:0.5%"></div>
+	<div style="margin-top:4%;color:#ff4111;font-weight: bold;font-size:110%;">
+		&lt;동영상 등록 방법><br><br>
+		<div style="text-align:left;padding-left:5%;color:#002b5a">
+		1. Youtube 동영상 화면 우클릭<br>
+		2. 소스코드 복사 클릭<br>
+		3. src="https://www.youtube.com/embed/nelSiMnilRw?ecver=1<br>
+		4. src="..." 안에 내용을 복사하여 입력해 주세요
+		</div>
+	</div>
+	<div style="margin-top:4%;color:#ff4111;font-weight: bold;font-size:110%;">
+		&lt;동영상 등록 팁><br><br>
+		<div style="text-align:left;padding-left:5%;color:#002b5a;">
+		1. 1분 이내의 동영상을 첨부하시는 것이 좋습니다.<br>
+		2. 음성이 들어간 동영상을 첨부하시는 것이 좋습니다.<br>
+		3. 동영상에 캡션으로 설명을 추가하는 것이 좋습니다.<br>
+		</div>
+	</div>
+</div>
+
 <!-- 카테고리모달 -->
 	<div class="modal team_regist_modal_font" id="categoryModal" style="color:black">
 						<div class="modal-dialog modal-lg" style="max-width:45%;font-size:120%">

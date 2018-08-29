@@ -127,37 +127,15 @@ public class PologService {
 		try {
 			for(int i=0;i<objtmp.length;i++) {
 				if (objtmp[i] instanceof PortfolioVO) {
-					System.out.println("포폴 시작");
 					portfolio = this.registerPortfolio((PortfolioVO) objtmp[i], portfolioAndContent.get(objtmp[i]), rootPath);
 					result = portfolio.getPortfolioId();
-					System.out.println("포폴완료");
 				} else if (objtmp[i] instanceof PortfolioContentVO) {
-					System.out.println("포컨시작");
 					pc = (PortfolioContentVO) objtmp[i];
 					pc.setPortfolioId(portfolio.getPortfolioId());
 					this.registerPortfolioContent(pc, portfolioAndContent.get(objtmp[i]), rootPath);
-					System.out.println("포컨완료");
 				}
 			}
-		}
-		/*try {
-			while (it.hasNext()) {
-				Object obj = it.next();
-				System.out.println("" + obj);
-				if (obj instanceof PortfolioVO) {
-					System.out.println("포폴 시작");
-					portfolio = this.registerPortfolio((PortfolioVO) obj, portfolioAndContent.get(obj), rootPath);
-					result = portfolio.getPortfolioId();
-					System.out.println("포폴완료");
-				} else if (obj instanceof PortfolioContentVO) {
-					System.out.println("포컨시작");
-					pc = (PortfolioContentVO) obj;
-					pc.setPortfolioId(portfolio.getPortfolioId());
-					this.registerPortfolioContent(pc, portfolioAndContent.get(obj), rootPath);
-					System.out.println("포컨완료");
-				}
-			}
-		}*/ catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -175,9 +153,9 @@ public class PologService {
 		try {
 			List<String> portfolioContentId = portfolioContentDAO.getId();
 			portfolioContent.setPortfolioContentId(this.generateId(portfolioContentId, "portfolio_content"));
-			
+			String attachPath = "resources/image/portfolio/";
 			if (file != null) {
-				String attachPath = "resources/image/portfolio/";
+				
 				String filename = file.getOriginalFilename();
 				String type = null;
 				if (file.getContentType().split("/")[0].equals("application")) {
@@ -189,17 +167,20 @@ public class PologService {
 						rootPath + attachPath + portfolioContent.getPortfolioId(),
 						portfolioContent.getPortfolioContentId() + "." + type, file.getBytes());
 				if (file.getContentType().split("/")[0].equals("application")) {
-					System.out.println("PDF에들옴");
 					savedFileName = UploadFileUtils.uploadPDF(rootPath + attachPath + portfolioContent.getPortfolioId() + "/",
-							portfolioContent.getPortfolioContentId() + ".pptx");// 포폴콘텐츠아이디로하면뎀
+							portfolioContent.getPortfolioContentId() + ".pptx");
 					
 				}
 				portfolioContent
 				.setPortfolioContentValue("/" + attachPath + portfolioContent.getPortfolioId() + "/" + savedFileName);
 
 			}
+			else {
+				if(portfolioContent.getPortfolioContentName().equals("image")) {
+					portfolioContent.setPortfolioContentValue("/" + attachPath + "default_portfolio_pic.jpg");
+				}
+			}
 			res = portfolioContentDAO.addPortfolioContent(portfolioContent.toDTO());
-			System.out.println("portfolioContentValue = "+portfolioContent.getPortfolioContentValue());
 		} catch (Exception e) {
 			check = false;
 			e.printStackTrace();
@@ -251,18 +232,22 @@ public class PologService {
 			List<String> portfolioId = portfolioDAO.getId();
 			String portfolioId1=this.generateId(portfolioId, "portfolio");
 			portfolio.setPortfolioId(portfolioId1);
-			System.out.println("포폴아디널이냐"+portfolioId1);
-
+			String attachPath = "resources/image/portfolio/";
 		try {
-			if (file != null) {
-				String attachPath = "resources/image/portfolio/";
+			if (file.getSize()!=0&&file != null) {
+				
 				String filename = file.getOriginalFilename();
 				String type = file.getContentType().split("/")[1];
 				String newFileName = UploadFileUtils.uploadFile2(rootPath + attachPath + portfolio.getPortfolioId(),
 						portfolio.getPortfolioId() + "." + type, file.getBytes());
 				portfolio.setPortfolioPic("/" + attachPath + portfolio.getPortfolioId() + "/" + newFileName);
-				res = portfolioDAO.addPortfolio(portfolio.toDTO());
+				
+			}else {
+				
+				portfolio.setPortfolioPic("/" + attachPath + "default_portfolio_pic.jpg");
+				System.out.println(portfolio.getPortfolioPic());
 			}
+			res = portfolioDAO.addPortfolio(portfolio.toDTO());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("포폴등록이널이넹?");
