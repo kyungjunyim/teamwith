@@ -65,7 +65,6 @@ public class PologServiceInterceptor extends HandlerInterceptorAdapter {
 		// my polog or (public and existent member) -> set Attributes
 		request.setAttribute("memberVO", mem);
 		request.setAttribute("pologVO", pologService.getPologInfo(memberId));
-		System.out.println("team member?" + isTeamMember(mem.getMemberId(), memberId));
 		if (isTeamMember(mem.getMemberId(), memberId)) {
 
 			request.setAttribute("teamMember", "true");
@@ -95,7 +94,6 @@ public class PologServiceInterceptor extends HandlerInterceptorAdapter {
 				for (int i = 0; i < applicationService.getTeamMember(id).size(); i++) {
 					List<MemberSearchVO> members = applicationService.getTeamMember(id);
 					for (MemberSearchVO m : members) {
-						System.out.println(m.getMemberName());
 						if (m.getMemberId().equals(target)
 								|| teamService.getTeamInfo(id).getMemberId().equals(target)) {
 							return true;
