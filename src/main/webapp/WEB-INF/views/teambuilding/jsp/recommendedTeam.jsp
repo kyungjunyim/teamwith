@@ -67,7 +67,7 @@
 			</c:if>
 			<c:set var="lastIndex" value="${status.index }" />
 		</c:forEach>
-		<c:if test="${lastIndex == 0 }">
+		<c:if test="${lastIndex % 2 == 0 }">
 			</div>	
 		</c:if>
 	</c:if>
