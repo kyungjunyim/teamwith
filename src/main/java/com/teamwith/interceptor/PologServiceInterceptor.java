@@ -65,7 +65,9 @@ public class PologServiceInterceptor extends HandlerInterceptorAdapter {
 		// my polog or (public and existent member) -> set Attributes
 		request.setAttribute("memberVO", mem);
 		request.setAttribute("pologVO", pologService.getPologInfo(memberId));
+		System.out.println("team member?" + isTeamMember(mem.getMemberId(), memberId));
 		if (isTeamMember(mem.getMemberId(), memberId)) {
+
 			request.setAttribute("teamMember", "true");
 		}
 		return true;
@@ -77,6 +79,10 @@ public class PologServiceInterceptor extends HandlerInterceptorAdapter {
 			List<TeamSimpleVO> teamVOs = teamService.getMyTeam(actor);
 			for (TeamSimpleVO t : teamVOs) {
 				joinTeamIds.add(t.getTeamId());
+
+			}
+			for (String id : joinTeamIds) {
+				System.out.println("team name:" + id);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -89,7 +95,9 @@ public class PologServiceInterceptor extends HandlerInterceptorAdapter {
 				for (int i = 0; i < applicationService.getTeamMember(id).size(); i++) {
 					List<MemberSearchVO> members = applicationService.getTeamMember(id);
 					for (MemberSearchVO m : members) {
-						if (m.getMemberId().equals(target)) {
+						System.out.println(m.getMemberName());
+						if (m.getMemberId().equals(target)
+								|| teamService.getTeamInfo(id).getMemberId().equals(target)) {
 							return true;
 						}
 

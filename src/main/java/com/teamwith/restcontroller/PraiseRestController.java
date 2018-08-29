@@ -95,7 +95,8 @@ public class PraiseRestController {
 							for (MemberSearchVO m : members) {
 
 								// 사용자와 칭찬 타겟이 같은 팀이었다면
-								if (m.getMemberId().equals(target)) {
+								if (m.getMemberId().equals(target)
+										|| teamService.getTeamInfo(id).getMemberId().equals(target)) {
 									// 사용자가 이전에 타겟을 칭찬한 내역 정보를 불러와서 반환
 									// 여기까지 못 오는 경우 null반환
 									List<MemberPraiseVO> myPraiseList = memberService.getMemberPriase(actor, target);

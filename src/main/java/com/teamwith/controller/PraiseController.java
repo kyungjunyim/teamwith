@@ -94,7 +94,7 @@ public class PraiseController {
 						List<MemberSearchVO> members = applicationService.getTeamMember(id);
 						for (MemberSearchVO m : members) {
 							logger.info(m.getMemberId() + "," + target);
-							if (m.getMemberId().equals(target)) {
+							if (m.getMemberId().equals(target)|| teamService.getTeamInfo(id).getMemberId().equals(target)) {
 								map.put("result", "true");
 								logger.info("true");
 								return map;
