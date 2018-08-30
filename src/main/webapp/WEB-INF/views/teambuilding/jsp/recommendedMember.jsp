@@ -36,7 +36,7 @@
 				</div>
 				<div class="modal-body modal_text" style="text-align: center;">
 					<span class="text_blue">추천 팀원은 팀장이 입력한</span><br>
-					<span class="text_orange">지역, 관심 분야, 요구 기술, 역할</span><span class="text_blue"> 등에 따라<br>
+					<span class="text_orange">지역, 관심 분야, 요구 기술, 역할</span><!----><span class="text_blue"> 등에 따라<br>
 					자동으로 추천되는 회원 목록입니다.<br>
 					더욱 정확한 추천을 위해</span><span class="text_orange"> 팀의 정보를 업데이트 해보세요!</span>
 				</div>
