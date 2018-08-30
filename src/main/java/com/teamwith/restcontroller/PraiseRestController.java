@@ -93,7 +93,8 @@ public class PraiseRestController {
 						for (int i = 0; i < applicationService.getTeamMember(id).size(); i++) {
 							List<MemberSearchVO> members = applicationService.getTeamMember(id);
 							for (MemberSearchVO m : members) {
-
+								System.out.println(
+										m.getMemberId() + ",team leader:" + teamService.getTeamInfo(id).getMemberId());
 								// 사용자와 칭찬 타겟이 같은 팀이었다면
 								if (m.getMemberId().equals(target)
 										|| teamService.getTeamInfo(id).getMemberId().equals(target)) {

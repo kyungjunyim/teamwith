@@ -20,7 +20,7 @@
 				<div class="row main_row">
 					<jsp:include page="teamSearchBar.jsp" />
 				</div> 
-				<c:if test="${isSearch == 'false' && not empty recommendedTeamList }">
+				<c:if test="${isSearch == 'false' && not empty sessionScope.memberSimpleVO }">
 					<div class="row main_row">
 						<jsp:include page="recommendedTeam.jsp" />
 					</div>

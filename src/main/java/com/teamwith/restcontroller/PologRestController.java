@@ -77,31 +77,31 @@ public class PologRestController {
 
 	}
 
-	public boolean isTeamMember(String actor, String target) {
-		List<String> joinTeamIds = applicationService.getJoinedTeamId(actor);
+	public boolean isMyTeamApplicant(String myMemberId, String target) {
+		List<String> myTeamIds = new ArrayList<String>();
 		try {
-			List<TeamSimpleVO> teamVOs = teamService.getMyTeam(actor);
+			List<TeamSimpleVO> teamVOs = teamService.getMyTeam(myMemberId);
 			for (TeamSimpleVO t : teamVOs) {
-				joinTeamIds.add(t.getTeamId());
+				myTeamIds.add(t.getTeamId());
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
 		try {
-			for (String id : joinTeamIds) {
+			for (String id : myTeamIds) {
 
-				// 같은 팀 멤버인지 확인, 모집날짜와 상관 없음.
-				for (int i = 0; i < applicationService.getTeamMember(id).size(); i++) {
-					List<MemberSearchVO> members = applicationService.getTeamMember(id);
-					for (MemberSearchVO m : members) {
-						if (m.getMemberId().equals(target)) {
+				for (ApplicantVO applicant : applicationService.getApplicant(id)) {
+					// 내가 찾고자하는 대상이 팀의 지원자일 경우
+					if (applicant.getMemberId().equals(target)) {
+						// 지원자의 상태가 지원완료이거나 합류인 경우
+						if (applicant.getApplicationStatus().equals("0")
+								|| applicant.getApplicationStatus().equals("1")) {
 							return true;
 						}
-
 					}
-
 				}
+
 			}
 
 		} catch (Exception e) {
@@ -144,5 +144,6 @@ public class PologRestController {
 	      return false;
 
 	   }
+
 
 }

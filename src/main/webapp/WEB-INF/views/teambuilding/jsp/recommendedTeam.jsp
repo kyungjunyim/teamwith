@@ -15,7 +15,7 @@
 		tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 		aria-hidden="true">
 		<div class="modal-dialog modal-md modal-dialog-centered"
-			role="document">
+			style="max-width: 420px;" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">
@@ -28,11 +28,12 @@
 					</button>
 				</div>
 				<div class="modal-body modal_text" style="text-align: center;">
-					<span class="text_blue">추천 팀은 회원님이 입력하신</span><br> <span
+					<span class="text_blue">팀위드는 회원님의</span><br> <span
 						class="text_orange">지역, 관심 분야, 보유 기술, 역할</span><span
-						class="text_blue"> 등에 따라<br> 자동으로 추천되는 팀입니다.<br>
-						더욱 정확한 추천을 위해
-					</span><span class="text_orange"> 프로필을 업데이트 해보세요!</span>
+						class="text_blue">에 따라 <br>팀을 추천해드립니다.<br> <br>더욱
+						정확한 추천을 위해
+					</span><br> <span class="text_orange">폴로그에서 프로필을 업데이트</span><span
+						class="text_blue">해보세요!</span>
 				</div>
 			</div>
 		</div>
@@ -75,7 +76,7 @@
 			<c:set var="lastIndex" value="${status.index }" />
 		</c:forEach>
 		<c:if test="${lastIndex % 2 == 0 }">
-			</div>
+			</div>	
 		</c:if>
 	</c:if>
 </body>
