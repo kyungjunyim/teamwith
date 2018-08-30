@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
-public class CommomExceptionAdvice {
-	private static final Logger logger = LoggerFactory.getLogger(CommomExceptionAdvice.class);
+public class CommonExceptionAdvice {
+	private static final Logger logger = LoggerFactory.getLogger(CommonExceptionAdvice.class);
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView common(Exception e) {
